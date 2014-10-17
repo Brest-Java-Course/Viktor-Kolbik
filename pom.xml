@@ -1,0 +1,26 @@
+<project>
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.epam.brest.courses</groupId>
+        <artifactId>sampleusermanagement</artifactId>
+        <version>1.0.0-SNAPHOST</version>
+        <packaging>pom</packaging>
+
+        <modules>
+                <module>app-core</module>
+        </modules>
+
+        <properties>
+                <project.built.sourceEncoding>UTF-8</project.built.sourceEncoding>        
+        </properties>
+
+        <dependencyManagement>
+                <dependencies>
+                        <dependency>
+                                <groupId>junit</groupId>
+                                <artifactId>junit</artifactId>
+                                <version>4.11</version>
+                                <scope>test</scope>                
+                        </dependency>        
+                </dependencies>
+        </dependencyManagement>
+</project>
