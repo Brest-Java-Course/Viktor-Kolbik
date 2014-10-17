@@ -1,5 +1,4 @@
 package com.epam.brest.courses.domain;
-
 public class User{
         private Long userId;
         private String login;
