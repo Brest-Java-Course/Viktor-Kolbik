@@ -1,4 +1,5 @@
 package com.epam.brest.courses.domain;
+import java.io.BufferedInputStream;
 
 public class User{
         private Long userId;
