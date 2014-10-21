@@ -1,0 +1,32 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>app-dao</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>com.epam.brest.courses</groupId>
+        <version>1.0.0-SNAPHOST</version>
+        <artifactId>sampleusermanagement</artifactId>
+    </parent>
+
+    <properties>
+        <project.built.sourceEncoding>UTF-8</project.built.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.epam.brest.courses</groupId>
+            <artifactId>app-core</artifactId>
+            <version>1.0.0-SNAPHOST</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+    <!--
+            <build>
+                    <testSourceDirectory>тут источник тестов (но в моём случае пока не надо)</testSourceDirectory>
+            </build>
+    -->
+</project>

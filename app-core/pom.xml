@@ -19,4 +19,9 @@
                         <artifactId>junit</artifactId>            
                 </dependency>        
         </dependencies>
+<!--
+        <build>
+                <testSourceDirectory>тут источник тестов (но в моём случае пока не надо)</testSourceDirectory>
+        </build>
+-->
 </project>
