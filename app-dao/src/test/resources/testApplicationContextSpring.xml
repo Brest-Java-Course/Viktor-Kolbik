@@ -18,4 +18,8 @@ http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
         <property name="password" value="" />
     </bean>
 
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="create-tables.sql"/>
+        <jdbc:script location="data-script.sql"/>
+    </jdbc:initialize-database>
 </beans>
