@@ -7,5 +7,6 @@ public interface  UserDao {
 
     public void addUser(User user);
     public List<User> getUser();
-    public void remoteUser(Long userid);
+    public User getUserById(Long id);
+    public void removeUser(Long userId);
 }

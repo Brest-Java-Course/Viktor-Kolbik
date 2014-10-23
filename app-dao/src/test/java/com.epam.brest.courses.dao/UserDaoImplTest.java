@@ -8,9 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/testApplicationContextSpring.xml"})
@@ -22,10 +20,8 @@ public class UserDaoImplTest {
     @Test
     public void getUsers(){
         List<User> users = userDao.getUser();
-      //  JOptionPane(null, users.get(0).get);
         assertNotNull(users);
         assertFalse(users.isEmpty());
-
     }
 
     @Test
@@ -43,5 +39,21 @@ public class UserDaoImplTest {
         users = userDao.getUser();
         assertEquals(sizeBefore, users.size() - 1);
 
+    }
+
+    @Test
+    public void removeUser(){
+        List<User> users = userDao.getUser();
+        int sizeBefore = users.size();
+        userDao.removeUser(1L);
+
+        assertEquals(sizeBefore, userDao.getUser().size() + 1);
+    }
+
+    @Test
+    public void getUserById(){
+        User user = userDao.getUserById(2L);
+        System.out.println(user.getLogin() + "  -  " + user.getUserName());
+        assertNotNull(user);
     }
 }
