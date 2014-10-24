@@ -52,8 +52,10 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserById(){
-        User user = userDao.getUserById(2L);
+        Long testId = 1L;
+        User user = userDao.getUserById(testId);
         assertNotNull(user);
+        assertTrue(user.getUserId() == testId);
     }
 
     @Test

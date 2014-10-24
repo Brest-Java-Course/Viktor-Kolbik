@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,7 +20,17 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void addUser(User user){
-        jdbcTemplate.update("insert into USER (userId, login, name) values (?, ?, ?)", user.getUserId(), user.getLogin(), user.getUserName());
+        PreparedStatement p =  null;
+        try {
+            p = jdbcTemplate.getDataSource().getConnection().prepareStatement("insert into USER (userId, login, name) values (?, ?, ?)");
+            p.setLong(1, user.getUserId());
+            p.setString(2, user.getLogin());
+            p.setString(3, user.getUserName());
+            p.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //jdbcTemplate.update("insert into USER (userId, login, name) values (?, ?, ?)", user.getUserId(), user.getLogin(), user.getUserName());
     }
 
     @Override
@@ -38,7 +49,15 @@ public class UserDaoImpl implements UserDao{
     }
     @Override
     public void removeUser(Long userId){
-        jdbcTemplate.update("delete from USER where userId = ?", userId);
+        PreparedStatement p =  null;
+        try {
+            p = jdbcTemplate.getDataSource().getConnection().prepareStatement("select userId, login, name from USER where userId = ?");
+            p.setLong(1, userId);
+            p.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //jdbcTemplate.update("delete from USER where userId = ?", userId);
     }
 
     public class UserMapper implements RowMapper<User> {
