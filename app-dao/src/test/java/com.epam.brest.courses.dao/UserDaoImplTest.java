@@ -53,7 +53,14 @@ public class UserDaoImplTest {
     @Test
     public void getUserById(){
         User user = userDao.getUserById(2L);
-        System.out.println(user.getLogin() + "  -  " + user.getUserName());
         assertNotNull(user);
+    }
+
+    @Test
+    public void getUserByLogin(){
+        String testLogin = "userLogin2";
+        User user = userDao.getUserByLogin(testLogin);
+        assertNotNull(user);
+        assertTrue(testLogin.equals(user.getLogin()));
     }
 }
