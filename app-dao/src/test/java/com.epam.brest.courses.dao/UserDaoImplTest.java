@@ -14,55 +14,78 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"classpath:/testApplicationContextSpring.xml"})
 public class UserDaoImplTest {
 
+    private static final long REMOVE_TEST_ID = 2L;
+    private static final long ADD_TEST_ID = 5L;
+    private static final long SELECT_TEST_ID = 3L;
+    private static final String SELECT_TEST_LOGIN = "simpson";
+    private static final String USER_NAME = "tania";
+    private static final String ADD_USER_LOGIN = "her login";
+
     @Autowired
     private UserDao userDao;
 
     @Test
     public void getUsers(){
-        List<User> users = userDao.getUser();
+        List<User> users = userDao.getUsers();
         assertNotNull(users);
         assertFalse(users.isEmpty());
     }
 
     @Test
     public void addUser(){
-        List<User> users = userDao.getUser();
+        List<User> users = userDao.getUsers();
 
         int sizeBefore = users.size();
         User user = new User();
-        user.setUserId(3L);
-        user.setUserName("tanja");
-        user.setLogin("tt");
+        user.setUserId(ADD_TEST_ID);
+        user.setUserName(USER_NAME);
+        user.setLogin(ADD_USER_LOGIN);
 
         userDao.addUser(user);
 
-        users = userDao.getUser();
+        users = userDao.getUsers();
         assertEquals(sizeBefore, users.size() - 1);
-
     }
 
     @Test
     public void removeUser(){
-        List<User> users = userDao.getUser();
+        List<User> users = userDao.getUsers();
         int sizeBefore = users.size();
-        userDao.removeUser(1L);
-
-        assertEquals(sizeBefore, userDao.getUser().size() + 1);
+        userDao.removeUser(REMOVE_TEST_ID);
+        assertEquals(sizeBefore, userDao.getUsers().size() + 1);
     }
 
     @Test
     public void getUserById(){
-        Long testId = 1L;
-        User user = userDao.getUserById(testId);
+        User user = userDao.getUserById(SELECT_TEST_ID);
         assertNotNull(user);
-        assertTrue(user.getUserId() == testId);
+        assertTrue(user.getUserId() == SELECT_TEST_ID);
     }
 
     @Test
     public void getUserByLogin(){
-        String testLogin = "userLogin2";
-        User user = userDao.getUserByLogin(testLogin);
+        User user = userDao.getUserByLogin(SELECT_TEST_LOGIN);
         assertNotNull(user);
-        assertTrue(testLogin.equals(user.getLogin()));
+        assertEquals(SELECT_TEST_LOGIN, user.getLogin());
+    }
+
+    @Test
+    public void getUsersByName(){
+        List<User> users = userDao.getUsersByName(USER_NAME);
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+    }
+
+    @Test
+    public void updateUser(){
+        User updatedUser;
+        User user = new User();
+        user.setUserId(SELECT_TEST_ID);
+        user.setUserName(USER_NAME + SELECT_TEST_LOGIN);
+        user.setLogin(SELECT_TEST_LOGIN + USER_NAME);
+        userDao.updateUser(user);
+        updatedUser = userDao.getUserById(SELECT_TEST_ID);
+        assertEquals(USER_NAME + SELECT_TEST_LOGIN, updatedUser.getUserName());
+        assertEquals(SELECT_TEST_LOGIN + USER_NAME, updatedUser.getLogin());
     }
 }

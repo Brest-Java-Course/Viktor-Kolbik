@@ -1,22 +1,26 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>app-dao</artifactId>
+    <artifactId>app-service</artifactId>
     <packaging>jar</packaging>
 
     <parent>
+        <artifactId>sampleusermanagement</artifactId>
         <groupId>com.epam.brest.courses</groupId>
         <version>1.0.0-SNAPHOST</version>
-        <artifactId>sampleusermanagement</artifactId>
     </parent>
 
     <properties>
-        <project.built.sourceEncoding>UTF-8</project.built.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.epam.brest.courses</groupId>
             <artifactId>app-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.brest.courses</groupId>
+            <artifactId>app-dao</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -52,4 +56,5 @@
             <artifactId>log4j-core</artifactId>
         </dependency>
     </dependencies>
+
 </project>

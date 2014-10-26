@@ -1,27 +1,30 @@
 <project>
-        <modelVersion>4.0.0</modelVersion>
-        <artifactId>app-core</artifactId>
-        <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>app-core</artifactId>
+    <packaging>jar</packaging>
 
-        <parent>
-                <groupId>com.epam.brest.courses</groupId>           
-                <version>1.0.0-SNAPHOST</version>
-                <artifactId>sampleusermanagement</artifactId>
-        </parent>
+    <parent>
+        <groupId>com.epam.brest.courses</groupId>
+        <version>1.0.0-SNAPHOST</version>
+        <artifactId>sampleusermanagement</artifactId>
+    </parent>
 
-        <properties>
-                <project.built.sourceEncoding>UTF-8</project.built.sourceEncoding>        
-        </properties>
+    <properties>
+        <project.built.sourceEncoding>UTF-8</project.built.sourceEncoding>
+    </properties>
 
-        <dependencies>
-                <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>            
-                </dependency>        
-        </dependencies>
-<!--
-        <build>
-                <testSourceDirectory>тут источник тестов (но в моём случае пока не надо)</testSourceDirectory>
-        </build>
--->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>

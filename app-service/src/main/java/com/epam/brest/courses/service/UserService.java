@@ -1,12 +1,12 @@
-package com.epam.brest.courses.dao;
+package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.domain.User;
 import java.util.List;
 
-public interface  UserDao {
+public interface UserService {
     public void addUser(User user);
     public List<User> getUsers();
-    public User getUserById(Long id);
+    public User getUserById(Long userId);
     public User getUserByLogin(String login);
     public List<User> getUsersByName(String userName);
     public void updateUser(User user);

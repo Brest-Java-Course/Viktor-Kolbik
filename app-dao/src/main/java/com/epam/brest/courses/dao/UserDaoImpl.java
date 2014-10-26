@@ -1,63 +1,91 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDaoImpl implements UserDao{
 
-    private JdbcTemplate jdbcTemplate;
+    private static final String ADD_NEW_USER_SQL = "insert into SIMPLE_USER (user_id, login, user_name) values (:user_id, :login, :user_name)";
+    private static final String REMOVE_USER_SQL = "delete from SIMPLE_USER where user_id = :user_id";
+    private static final String UPDATE_USER_SQL = "update SIMPLE_USER set login = :login, user_name = :user_name where user_id = :user_id";
+
+    private static final String SELECT_ALL_USERS_SQL = "select user_id, login, user_name from SIMPLE_USER";
+    private static final String SELECT_USERS_BY_NAME_SQL = "select user_id, login, user_name from SIMPLE_USER where user_name = :user_name";
+    private static final String SELECT_USER_BY_ID_SQL = "select user_id, login, user_name from SIMPLE_USER where user_id = :user_id";
+    private static final String SELECT_USER_BY_LOGIN_SQL = "select user_id, login, user_name from SIMPLE_USER where login = :login";
+
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    private static final String USER_ID = "user_id";
+    private static final String LOGIN = "login";
+    private static final String USER_NAME = "user_name";
 
     public void setDataSource(DataSource dataSource){
-        jdbcTemplate = new JdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
     public void addUser(User user){
-        PreparedStatement p =  null;
-        try {
-            p = jdbcTemplate.getDataSource().getConnection().prepareStatement("insert into USER (userId, login, name) values (?, ?, ?)");
-            p.setLong(1, user.getUserId());
-            p.setString(2, user.getLogin());
-            p.setString(3, user.getUserName());
-            p.execute();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        //jdbcTemplate.update("insert into USER (userId, login, name) values (?, ?, ?)", user.getUserId(), user.getLogin(), user.getUserName());
+        Map<String, Object> parameters = new HashMap<String, Object>(3);
+        parameters.put(USER_ID, user.getUserId());
+        parameters.put(LOGIN, user.getLogin());
+        parameters.put(USER_NAME, user.getUserName());
+        namedParameterJdbcTemplate.update(ADD_NEW_USER_SQL, parameters);
     }
 
     @Override
-    public List<User> getUser(){
-        return jdbcTemplate.query("select userId, login, name from USER", new UserMapper());
+    public List<User> getUsers(){
+        //LOGGER.error("getUsers");
+        return namedParameterJdbcTemplate.query(SELECT_ALL_USERS_SQL, new UserMapper());
     }
 
     @Override
     public User getUserById(Long userId){
-        return jdbcTemplate.queryForObject("select userId, login, name from USER where userId = ?", new Object[]{userId}, new UserMapper());
+        Map<String, Object> parameters = new HashMap<String, Object>(1);
+        parameters.put(USER_ID, userId);
+        return namedParameterJdbcTemplate.queryForObject(SELECT_USER_BY_ID_SQL, parameters, new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login){
-        return jdbcTemplate.queryForObject("select userId, login, name from USER where login = ?", new Object[]{login}, new UserMapper());
+        Map<String, Object> parameters = new HashMap<String, Object>(1);
+        parameters.put(LOGIN, login);
+        return namedParameterJdbcTemplate.queryForObject(SELECT_USER_BY_LOGIN_SQL, parameters, new UserMapper());
     }
+
+    @Override
+    public List<User> getUsersByName(String userName){
+        Map<String, Object> parameters = new HashMap<String, Object>(1);
+        parameters.put(USER_NAME, userName);
+        return namedParameterJdbcTemplate.query(SELECT_USERS_BY_NAME_SQL, parameters, new UserMapper());
+    }
+
+    @Override
+    public void updateUser(User user){
+        Map<String, Object> parameters = new HashMap<String, Object>(3);
+        parameters.put(USER_ID, user.getUserId());
+        parameters.put(LOGIN, user.getLogin());
+        parameters.put(USER_NAME, user.getUserName());
+        namedParameterJdbcTemplate.update(UPDATE_USER_SQL, parameters);
+    }
+
     @Override
     public void removeUser(Long userId){
-        PreparedStatement p =  null;
-        try {
-            p = jdbcTemplate.getDataSource().getConnection().prepareStatement("select userId, login, name from USER where userId = ?");
-            p.setLong(1, userId);
-            p.execute();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        //jdbcTemplate.update("delete from USER where userId = ?", userId);
+        Map<String, Object> parameters = new HashMap<String, Object>(1);
+        parameters.put(USER_ID, userId);
+        namedParameterJdbcTemplate.update(REMOVE_USER_SQL, parameters);
     }
 
     public class UserMapper implements RowMapper<User> {
@@ -65,8 +93,8 @@ public class UserDaoImpl implements UserDao{
         public User mapRow(ResultSet rs, int i) throws SQLException {
             User user = new User();
 
-            user.setUserId(rs.getLong("userId"));
-            user.setUserName(rs.getString("name"));
+            user.setUserId(rs.getLong("user_id"));
+            user.setUserName(rs.getString("user_name"));
             user.setLogin(rs.getString("login"));
 
             return user;
