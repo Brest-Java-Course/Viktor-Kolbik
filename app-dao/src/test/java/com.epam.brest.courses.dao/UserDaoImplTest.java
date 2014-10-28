@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/testApplicationContextSpring.xml"})
+@ContextConfiguration(locations = {"classpath:/spring-dao-test.xml"})
 public class UserDaoImplTest {
 
     private static final long REMOVE_TEST_ID = 2L;

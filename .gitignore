@@ -1,2 +1,6 @@
 *~
 target
+
+.idea
+app-dao/app-dao.iml
+app-service/app-service.iml
