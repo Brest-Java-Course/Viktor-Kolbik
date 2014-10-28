@@ -2,10 +2,8 @@ package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.domain.User;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.internal.AssumptionViolatedException;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -16,8 +14,7 @@ import org.springframework.test.context.TestContextManager;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assume.*;
+import static org.junit.Assume.assumeTrue;
 
 @RunWith(Parameterized.class)
 @ContextConfiguration(locations = {"classpath*:/spring-service-test.xml"})
@@ -101,15 +98,4 @@ public class UserParameterizedTest {
 
         return Arrays.asList(params);
     }
-/*
-    @Parameterized.Parameters
-    public static Collection longParams(){
-        Object[][] params = new Object[][]{
-                {null},
-                {-1L},
-                {0L},
-        };
-
-        return Arrays.asList(params);
-    }*/
 }
