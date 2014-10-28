@@ -52,7 +52,7 @@ public class UserServiceImplTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testAddUserWithEmpityName() throws IllegalArgumentException{
+    public void testAddUserWithEmptyName() throws IllegalArgumentException{
         userService.addUser(new User(null, SOME_LOGIN, EMPTY_STRING));
     }
 
@@ -71,11 +71,6 @@ public class UserServiceImplTest {
         userService.addUser(new User(null, EXISTING_LOGIN, SOME_NAME));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testAddUserWithAdminLogin() throws IllegalArgumentException{
-        userService.addUser(new User(null, ADMIN_LOGIN, SOME_NAME));
-    }
-
     @Test
     public void testGetUsers() throws Exception {
         List<User> users = userService.getUsers();
@@ -84,7 +79,7 @@ public class UserServiceImplTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetUserByEqualsZeroId() throws IllegalArgumentException {
+    public void testGetUserByEqualZeroId() throws IllegalArgumentException {
         userService.getUserById(0L);
     }
 

@@ -4,17 +4,20 @@ import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
     private static final String USER_ID_IS_NULL_ERROR = "User's ID can't be null";
+    private static final String GET_USER_BY_ID_MSG = "getUserById({}); ";
+    private static final String GET_USER_BY_LOGIN_MSG = "getUserByLogin({}); ";
     private static final String USER_ID_IS_NOT_NULL_ERROR = "User's ID must be null";
     private static final String USER_ID_IS_LESS_LOW_BORDER_ERROR = "User's ID can't be equals or less one!";
     private static final String USER_REFERENCE_IS_NULL_ERROR =  "Reference is null!";
-    private static final String USER_NAME_IS_EMPTY_OR_NULL_ERROR = "User's name can't be empty!";
-    private static final String USER_LOGIN_IS_EMPTY_OR_NULL_ERROR = "User's login can't be empty!";
+    private static final String USER_NAME_IS_EMPTY_OR_NULL_ERROR = "User's name can't be empty or null!";
+    private static final String USER_LOGIN_IS_EMPTY_OR_NULL_ERROR = "User's login can't be empty or null!";
     private static final String LOGIN_IS_OCCUPIED_ERROR = "User with such login has already existed!";
     private static final String ADMIN_LOGIN = "admin";
     private static final String EMPTY_STRING = "";
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
         } else if(user.getUserName() == null || user.getUserName().equals(EMPTY_STRING)){
             LOGGER.debug(USER_NAME_IS_EMPTY_OR_NULL_ERROR);
             throw new IllegalArgumentException(USER_NAME_IS_EMPTY_OR_NULL_ERROR);
-        } else if(user.getLogin() == null || user.getLogin().equals(EMPTY_STRING) || user.getLogin().equals(ADMIN_LOGIN)){
+        } else if(user.getLogin() == null || user.getLogin().equals(EMPTY_STRING)){
             LOGGER.debug(USER_LOGIN_IS_EMPTY_OR_NULL_ERROR);
             throw new IllegalArgumentException(USER_LOGIN_IS_EMPTY_OR_NULL_ERROR);
         }
@@ -59,22 +62,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
+        User user = null;
+
         if(userId == null || userId <= LOW_BORDER_OF_ID){
             LOGGER.debug(USER_ID_IS_LESS_LOW_BORDER_ERROR);
             throw new IllegalArgumentException(USER_ID_IS_NULL_ERROR);
         }
 
-        return userDao.getUserById(userId);
+        try{
+            user = userDao.getUserById(userId);
+        } catch(EmptyResultDataAccessException e){
+            LOGGER.error(GET_USER_BY_ID_MSG, userId);
+        }
+
+        return user;
     }
 
     @Override
     public User getUserByLogin(String login) {
+        User user = null;
+
         if(login == null || login.equals(EMPTY_STRING)){
             LOGGER.debug(USER_LOGIN_IS_EMPTY_OR_NULL_ERROR);
             throw new IllegalArgumentException(USER_LOGIN_IS_EMPTY_OR_NULL_ERROR);
         }
 
-        return userDao.getUserByLogin(login);
+        try{
+            user = userDao.getUserByLogin(login);
+        } catch(EmptyResultDataAccessException e){
+            LOGGER.error(GET_USER_BY_LOGIN_MSG, login);
+        }
+        return user;
     }
 
     @Override
