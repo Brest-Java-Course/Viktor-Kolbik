@@ -52,21 +52,21 @@ public class UserParameterizedTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetUserById() throws IllegalArgumentException{
         userService.getUserById(user.getUserId());
-        assumeTrue(user.getUserId() != SOME_ID);                            //i suppose, i should get rif of such solutions
+        assumeTrue(user.getUserId() != SOME_ID);                            //i suppose, i should get rid of such solutions
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetUserByLogin() throws IllegalArgumentException{
 
         userService.getUserByLogin(user.getLogin());
-        assumeTrue(!user.getLogin().equals(SOME_LOGIN));                            //i suppose, i should get rif of such solutions
+        assumeTrue(!user.getLogin().equals(SOME_LOGIN));                            //i suppose, i should get rid of such solutions
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetUsersByName() throws IllegalArgumentException{
 
         userService.getUsersByName(user.getUserName());
-        assumeTrue(!user.getUserName().equals(SOME_NAME));                            //i suppose, i should get rif of such solutions
+        assumeTrue(!user.getUserName().equals(SOME_NAME));                            //i suppose, i should get rid of such solutions
     }
 
     @Test(expected = IllegalArgumentException.class)
