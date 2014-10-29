@@ -79,7 +79,7 @@ public class UserParameterizedTest {
     public void testRemoveUser() throws IllegalArgumentException{
 
         userService.removeUser(user.getUserId());
-        assumeTrue(user.getUserId() != SOME_ID);                            //i suppose, i should get rif of such solutions
+        assumeTrue(user.getUserId() != SOME_ID);                            //i suppose, i should get rid of such solutions
     }
 
     @Parameterized.Parameters
