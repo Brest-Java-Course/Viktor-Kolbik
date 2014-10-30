@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao{
     public String selectUserByLoginSql;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger LOGGER = LogManager.getLogger();
+    //private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String USER_ID = "user_id";
     private static final String LOGIN = "login";
