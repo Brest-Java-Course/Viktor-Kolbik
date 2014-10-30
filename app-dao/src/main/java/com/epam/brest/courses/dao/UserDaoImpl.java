@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+        /*
+        * @author      Viktor Kolbik
+        */
 public class UserDaoImpl implements UserDao{
     @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${insert-into-user-path}')).file)}")
     public String addNewUserSql;
@@ -42,6 +45,10 @@ public class UserDaoImpl implements UserDao{
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+    /**
+     * adds new User into bd
+     * @param  user  user, we need to add.
+     */
     @Override
     public void addUser(User user){
         Map<String, Object> parameters = new HashMap<String, Object>(3);
@@ -50,19 +57,34 @@ public class UserDaoImpl implements UserDao{
         parameters.put(USER_NAME, user.getUserName());
         namedParameterJdbcTemplate.update(addNewUserSql, parameters);
     }
-
+    /**
+     * get all users from table
+     * @return List stores all users in the table
+     */
     @Override
     public List<User> getUsers(){
         //LOGGER.error("getUsers");
         return namedParameterJdbcTemplate.query(selectAllUsersSql, new UserMapper());
     }
 
+    /**
+     * get an user by his id
+     * @param userId id of user who we need to get
+     * @return a user with this id
+     */
     @Override
     public User getUserById(Long userId){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(USER_ID, userId);
         return namedParameterJdbcTemplate.queryForObject(selectUserByIdSql, parameters, new UserMapper());
     }
+
+
+    /**
+     * get an user by his login
+     * @param login login of user who we need to get
+     * @return a user with this login
+     */
 
     @Override
     public User getUserByLogin(String login){
@@ -71,6 +93,12 @@ public class UserDaoImpl implements UserDao{
         return namedParameterJdbcTemplate.queryForObject(selectUserByLoginSql, parameters, new UserMapper());
     }
 
+
+    /**
+     * get an user by his id
+     * @param userName userName of user who we need to get
+     * @return a List users with this name
+     */
     @Override
     public List<User> getUsersByName(String userName){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
@@ -78,6 +106,11 @@ public class UserDaoImpl implements UserDao{
         return namedParameterJdbcTemplate.query(selectUsersByNameSql, parameters, new UserMapper());
     }
 
+
+    /**
+     * adds new User into bd
+     * @param  user  user, we need to update.
+     */
     @Override
     public void updateUser(User user){
         Map<String, Object> parameters = new HashMap<String, Object>(3);
@@ -87,6 +120,10 @@ public class UserDaoImpl implements UserDao{
         namedParameterJdbcTemplate.update(updateUserSql, parameters);
     }
 
+    /**
+     * adds new User into bd
+     * @param  userId id of user, we need to remove.
+     */
     @Override
     public void removeUser(Long userId){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
