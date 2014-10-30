@@ -1,0 +1,1 @@
+update SIMPLE_USER set login = :login, user_name = :user_name where user_id = :user_id

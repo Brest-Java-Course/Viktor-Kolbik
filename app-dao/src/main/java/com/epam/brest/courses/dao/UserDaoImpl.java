@@ -4,7 +4,6 @@ import com.epam.brest.courses.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -16,16 +15,21 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDaoImpl implements UserDao{
-
     @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${insert-into-user-path}')).file)}")
-    public String ADD_NEW_USER_SQL;//"insert into SIMPLE_USER (user_id, login, user_name) values (:user_id, :login, :user_name)";
-    private static final String REMOVE_USER_SQL = "delete from SIMPLE_USER where user_id = :user_id";
-    private static final String UPDATE_USER_SQL = "update SIMPLE_USER set login = :login, user_name = :user_name where user_id = :user_id";
+    public String addNewUserSql;
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${delete-from-user-path}')).file)}")
+    public String removeUserSql;
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${update-user-path}')).file)}")
+    public String updateUserSql;
 
-    private static final String SELECT_ALL_USERS_SQL = "select user_id, login, user_name from SIMPLE_USER";
-    private static final String SELECT_USERS_BY_NAME_SQL = "select user_id, login, user_name from SIMPLE_USER where user_name = :user_name";
-    private static final String SELECT_USER_BY_ID_SQL = "select user_id, login, user_name from SIMPLE_USER where user_id = :user_id";
-    private static final String SELECT_USER_BY_LOGIN_SQL = "select user_id, login, user_name from SIMPLE_USER where login = :login";
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-all-users-path}')).file)}")
+    public String selectAllUsersSql;
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-users-by-name-path}')).file)}")
+    public String selectUsersByNameSql;
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-user-by-id-path}')).file)}")
+    public String selectUserByIdSql;
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-user-by-login-path}')).file)}")
+    public String selectUserByLoginSql;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger LOGGER = LogManager.getLogger();
@@ -44,34 +48,34 @@ public class UserDaoImpl implements UserDao{
         parameters.put(USER_ID, user.getUserId());
         parameters.put(LOGIN, user.getLogin());
         parameters.put(USER_NAME, user.getUserName());
-        namedParameterJdbcTemplate.update(ADD_NEW_USER_SQL, parameters);
+        namedParameterJdbcTemplate.update(addNewUserSql, parameters);
     }
 
     @Override
     public List<User> getUsers(){
         //LOGGER.error("getUsers");
-        return namedParameterJdbcTemplate.query(SELECT_ALL_USERS_SQL, new UserMapper());
+        return namedParameterJdbcTemplate.query(selectAllUsersSql, new UserMapper());
     }
 
     @Override
     public User getUserById(Long userId){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(USER_ID, userId);
-        return namedParameterJdbcTemplate.queryForObject(SELECT_USER_BY_ID_SQL, parameters, new UserMapper());
+        return namedParameterJdbcTemplate.queryForObject(selectUserByIdSql, parameters, new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(LOGIN, login);
-        return namedParameterJdbcTemplate.queryForObject(SELECT_USER_BY_LOGIN_SQL, parameters, new UserMapper());
+        return namedParameterJdbcTemplate.queryForObject(selectUserByLoginSql, parameters, new UserMapper());
     }
 
     @Override
     public List<User> getUsersByName(String userName){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(USER_NAME, userName);
-        return namedParameterJdbcTemplate.query(SELECT_USERS_BY_NAME_SQL, parameters, new UserMapper());
+        return namedParameterJdbcTemplate.query(selectUsersByNameSql, parameters, new UserMapper());
     }
 
     @Override
@@ -80,14 +84,14 @@ public class UserDaoImpl implements UserDao{
         parameters.put(USER_ID, user.getUserId());
         parameters.put(LOGIN, user.getLogin());
         parameters.put(USER_NAME, user.getUserName());
-        namedParameterJdbcTemplate.update(UPDATE_USER_SQL, parameters);
+        namedParameterJdbcTemplate.update(updateUserSql, parameters);
     }
 
     @Override
     public void removeUser(Long userId){
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(USER_ID, userId);
-        namedParameterJdbcTemplate.update(REMOVE_USER_SQL, parameters);
+        namedParameterJdbcTemplate.update(removeUserSql, parameters);
     }
 
     public class UserMapper implements RowMapper<User> {
