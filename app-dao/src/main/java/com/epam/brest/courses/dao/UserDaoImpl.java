@@ -3,6 +3,7 @@ package com.epam.brest.courses.dao;
 import com.epam.brest.courses.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,7 +17,8 @@ import java.util.Map;
 
 public class UserDaoImpl implements UserDao{
 
-    private static final String ADD_NEW_USER_SQL = "insert into SIMPLE_USER (user_id, login, user_name) values (:user_id, :login, :user_name)";
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${insert-into-user-path}')).file)}")
+    public String ADD_NEW_USER_SQL;//"insert into SIMPLE_USER (user_id, login, user_name) values (:user_id, :login, :user_name)";
     private static final String REMOVE_USER_SQL = "delete from SIMPLE_USER where user_id = :user_id";
     private static final String UPDATE_USER_SQL = "update SIMPLE_USER set login = :login, user_name = :user_name where user_id = :user_id";
 
