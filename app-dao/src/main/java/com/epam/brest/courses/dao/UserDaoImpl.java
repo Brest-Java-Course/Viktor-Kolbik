@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     /**
-     * adds new User into bd
+     * adds new User into table
      * @param  user  user, we need to add.
      */
     @Override
