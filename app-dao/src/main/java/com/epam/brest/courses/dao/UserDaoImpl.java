@@ -50,8 +50,8 @@ public class UserDaoImpl implements UserDao{
         SqlParameterSource parameters = new MapSqlParameterSource().addValue(USER_ID, user.getUserId())
                 .addValue(LOGIN, user.getLogin()).addValue(USER_NAME, user.getUserName());
         namedParameterJdbcTemplate.update(addNewUserSql, parameters,  keyHolder);
-        return (Long)keyHolder.getKey();
 
+        return (Long)keyHolder.getKey();
     }
 
     @Override
