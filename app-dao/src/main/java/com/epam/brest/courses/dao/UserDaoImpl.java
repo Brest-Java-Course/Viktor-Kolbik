@@ -1,11 +1,13 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -43,17 +45,17 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public void addUser(User user){
-        Map<String, Object> parameters = new HashMap<String, Object>(3);
-        parameters.put(USER_ID, user.getUserId());
-        parameters.put(LOGIN, user.getLogin());
-        parameters.put(USER_NAME, user.getUserName());
-        namedParameterJdbcTemplate.update(addNewUserSql, parameters);
+    public Long addUser(final User user){
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource parameters = new MapSqlParameterSource().addValue(USER_ID, user.getUserId())
+                .addValue(LOGIN, user.getLogin()).addValue(USER_NAME, user.getUserName());
+        namedParameterJdbcTemplate.update(addNewUserSql, parameters,  keyHolder);
+        return (Long)keyHolder.getKey();
+
     }
 
     @Override
     public List<User> getUsers(){
-        //LOGGER.error("getUsers");
         return namedParameterJdbcTemplate.query(selectAllUsersSql, new UserMapper());
     }
 

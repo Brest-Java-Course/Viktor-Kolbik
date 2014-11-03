@@ -33,7 +33,7 @@ public class UserServiceImplMockTest{
 
     private void addUser(User user, String login, boolean flag){
         userDao.addUser(user);
-        expectLastCall();
+        expectLastCall().andReturn(3L);
 
         userDao.getUserByLogin(login);
         expectLastCall().andReturn(flag == true ? user : null);

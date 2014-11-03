@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"classpath:/spring-dao-test.xml"})
 public class UserDaoImplTest {
 
-    private static final long REMOVE_TEST_ID = 2L;
-    private static final long ADD_TEST_ID = 5L;
-    private static final long SELECT_TEST_ID = 3L;
+    private static final Long REMOVE_TEST_ID = 2L;
+    private static final Long ADD_TEST_ID = 5L;
+    private static final Long SELECT_TEST_ID = 3L;
     private static final String SELECT_TEST_LOGIN = "simpson";
     private static final String USER_NAME = "tania";
     private static final String ADD_USER_LOGIN = "her login";
@@ -41,7 +41,8 @@ public class UserDaoImplTest {
         user.setUserName(USER_NAME);
         user.setLogin(ADD_USER_LOGIN);
 
-        userDao.addUser(user);
+        Long id = userDao.addUser(user);
+        assertEquals(id, ADD_TEST_ID);
 
         users = userDao.getUsers();
         assertEquals(sizeBefore, users.size() - 1);
