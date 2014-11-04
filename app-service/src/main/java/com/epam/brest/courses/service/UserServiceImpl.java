@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public Long addUser(User user) {
         if(user == null){
             LOGGER.debug(USER_REFERENCE_IS_NULL_ERROR);
             throw new IllegalArgumentException(USER_REFERENCE_IS_NULL_ERROR);
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException(LOGIN_IS_OCCUPIED_ERROR);
         }
 
-        userDao.addUser(user);
+        return userDao.addUser(user);
     }
 
     @Override

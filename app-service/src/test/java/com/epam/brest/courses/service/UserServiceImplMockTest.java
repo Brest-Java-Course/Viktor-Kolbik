@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
 import static org.easymock.EasyMock.*;
 
@@ -39,8 +41,17 @@ public class UserServiceImplMockTest{
         expectLastCall().andReturn(flag == true ? user : null);
 
         replay(userDao);
-        userService.addUser(user);
+        Long id = userService.addUser(user);
+        assertNotNull(id);
+        assertEquals(id, (Long)3L);
         verify(userDao);
+    }
+
+    @Test
+    public void addRightUser(){
+        User user = UserDataFixture.getExistingUser(SOME_LOGIN);
+
+        addUser(user, user.getLogin(), false);
     }
 
     @Test(expected = IllegalArgumentException.class)
