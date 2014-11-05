@@ -32,16 +32,18 @@ public class UserRestController {
         }
     }
 
-    @RequestMapping(value = "/login/{login}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<User> getUserByLogin( @PathVariable String login) {
-        try {
+    @RequestMapping(value = "/login/{login}", method = RequestMethod.GET)
+    public ResponseEntity<User> getUserByLogin(@PathVariable String login) {
             User user = userService.getUserByLogin(login);
             return new ResponseEntity(user, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity("User not found for login=" + login + " error:"
-                    + ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getUsersByName(@PathVariable String name) {
+        List users = userService.getUsersByName(name);
+        return new ResponseEntity(users, HttpStatus.OK);
     }
 
     @ResponseBody
@@ -54,25 +56,21 @@ public class UserRestController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Long> addUser(@RequestBody User user) {
-        System.out.println(user);
         Long id = userService.addUser(user);
-        System.out.println(id);
         return new ResponseEntity(id, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody User user) {
-        System.out.println(user);
         userService.updateUser(user);
-
-        return new ResponseEntity("User with id = " + user.getUserId() + " was updated.", HttpStatus.OK);
+        return new ResponseEntity("User for id = " + user.getUserId() + " was updated.", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity removeUser(@PathVariable Long id) {
         userService.removeUser(id);
-        return new ResponseEntity("It is not the empty string", HttpStatus.OK);
+        return new ResponseEntity("User for id = " + id + " was removed", HttpStatus.OK);
     }
 }

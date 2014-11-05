@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 import static org.easymock.EasyMock.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -25,8 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:/spring-rest-mock-test.xml"})
+@ContextConfiguration(locations = {"classpath:/spring-rest-mock-test.xml"})
 public class UserRestControllerMockTest {
+
+    private static final Long USERS_ID = 5L;
+    private static final String  USERS_NAME = "viktor";
 
     private MockMvc mockMvc;
 
@@ -50,13 +54,12 @@ public class UserRestControllerMockTest {
     @Test
     public void testAddUser() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
-        User user = new User(3L, "some", "thing");
+        User user = UserDataFixture.getExistingUserById(USERS_ID);
 
-        expect(userService.addUser(user)).andReturn(new Long(3L));
+        expect(userService.addUser(user)).andReturn(user.getUserId());
         replay(userService);
 
         String userJson = objectMapper.writeValueAsString(user);
-       // System.out.println(userJson);
 
         this.mockMvc.perform(
                 post("/users")
@@ -70,18 +73,36 @@ public class UserRestControllerMockTest {
         verify(userService);
     }
 
-    @Test
-    public void testGetUserById() throws Exception{
 
-        expect(userService.getUserById(5L)).andReturn(UserDataFixture.getUserWithNotNullUserId(5L));
+    @Test
+    public void testGetUsersByName() throws Exception{
+        List<User> users = UserDataFixture.getExistingUsersByName(USERS_NAME);
+
+        expect(userService.getUsersByName(users.get(0).getUserName())).andReturn(users);
         replay(userService);
 
-        mockMvc.perform(get("/users/5")
+        this.mockMvc.perform(
+                get("/users/name/" + users.get(0).getUserName())
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        verify(userService);
+    }
+
+    @Test
+    public void testGetUserById() throws Exception{
+        User user = UserDataFixture.getExistingUserById(USERS_ID);
+        expect(userService.getUserById(user.getUserId())).andReturn(user);
+        replay(userService);
+
+        mockMvc.perform(get("/users/" + user.getUserId())
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"userId\":5,\"login\":\"some login\",\"userName\":\"some name\"}"));
+                .andExpect(content().string("{\"userId\":5,\"login\":\"petrovich\",\"userName\":\"login\"}"));
 
         verify(userService);
     }
@@ -105,10 +126,9 @@ public class UserRestControllerMockTest {
     @Test
     public void updateUser() throws Exception {
 
-        final User user = new User(3L, "login", "user_name");
+        final User user = UserDataFixture.getExistingUserById(3L);
         String userJson = new ObjectMapper().writeValueAsString(user);
 
-        // you need to have equals() becuase easymock will use this method to compare objects
         userService.updateUser(user);
         expectLastCall().once();
 
@@ -142,14 +162,13 @@ public class UserRestControllerMockTest {
 
     @Test
     public void deleteUserTest() throws Exception {
-        User user = UserDataFixture.getNewUser();
-        userService.removeUser(3L);
+        userService.removeUser(USERS_ID);
         expectLastCall();
 
         replay(userService);
 
         ResultActions result = this.mockMvc.perform(
-                delete("/users/3"))
+                delete("/users/" + USERS_ID))
                 .andDo(print());
         result.andExpect(status().isOk());
 
