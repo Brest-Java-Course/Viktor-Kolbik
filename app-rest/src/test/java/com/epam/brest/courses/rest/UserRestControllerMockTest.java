@@ -52,7 +52,7 @@ public class UserRestControllerMockTest {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = new User(3L, "some", "thing");
 
-        expect(userService.addUser(null)).andReturn(new Long(3L));
+        expect(userService.addUser(user)).andReturn(new Long(3L));
         replay(userService);
 
         String userJson = objectMapper.writeValueAsString(user);
@@ -67,7 +67,7 @@ public class UserRestControllerMockTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
 
-        verify();
+        verify(userService);
     }
 
     @Test
@@ -82,6 +82,8 @@ public class UserRestControllerMockTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("{\"userId\":5,\"login\":\"some login\",\"userName\":\"some name\"}"));
+
+        verify(userService);
     }
 
     @Test
@@ -90,21 +92,25 @@ public class UserRestControllerMockTest {
         expect(userService.getUserByLogin(user.getLogin())).andReturn(user);
         replay(userService);
 
-        mockMvc.perform(get("/login/{login}")
+        mockMvc.perform(get("/users/login/some login")
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"userId\":5,\"login\":\"some login\",\"userName\":\"some name\"}"));
+                .andExpect(content().string("{\"userId\":null,\"login\":\"some login\",\"userName\":\"some name\"}"));
+
+        verify(userService);
     }
 
     @Test
     public void updateUser() throws Exception {
 
-        User user = new User(3L, "login", "user_name");
+        final User user = new User(3L, "login", "user_name");
         String userJson = new ObjectMapper().writeValueAsString(user);
 
+        // you need to have equals() becuase easymock will use this method to compare objects
         userService.updateUser(user);
+        expectLastCall().once();
 
         replay(userService);
 
@@ -121,7 +127,7 @@ public class UserRestControllerMockTest {
     @Test
     public void testGetUsers() throws Exception{
         expect(userService.getUsers()).andReturn(UserDataFixture.getExistingUsers());
-        replay();
+        replay(userService);
 
         this.mockMvc.perform(
                 get("/users")
@@ -129,7 +135,9 @@ public class UserRestControllerMockTest {
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(""));
+                .andExpect(content().string("[{\"userId\":4,\"login\":\"some login1\",\"userName\":\"some name1\"},{\"userId\":5,\"login\":\"some login2\",\"userName\":\"some name2\"},{\"userId\":6,\"login\":\"some login3\",\"userName\":\"some name3\"}]"));
+
+        verify(userService);
     }
 
     @Test
@@ -138,11 +146,13 @@ public class UserRestControllerMockTest {
         userService.removeUser(3L);
         expectLastCall();
 
-        replay();
+        replay(userService);
 
         ResultActions result = this.mockMvc.perform(
                 delete("/users/3"))
                 .andDo(print());
         result.andExpect(status().isOk());
+
+        verify(userService);
     }
 }
