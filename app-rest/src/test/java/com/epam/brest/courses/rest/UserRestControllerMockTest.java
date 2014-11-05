@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 public class UserRestControllerMockTest {
 
     private static final Long USERS_ID = 5L;
-    private static final String  USERS_NAME = "viktor";
+    private static final String  USERS_NAME = "vik";
 
     private MockMvc mockMvc;
 
