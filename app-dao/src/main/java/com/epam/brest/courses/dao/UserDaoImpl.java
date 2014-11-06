@@ -4,6 +4,7 @@ import com.epam.brest.courses.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -100,10 +101,14 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("UserDao.getUserByLogin() starts for " + login);
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(LOGIN, login);
+        User user = null;
 //!!!!!!!!!!!!!!!org.springframework.dao.EmptyResultDataAccessException
-        User user = namedParameterJdbcTemplate.queryForObject(selectUserByLoginSql, parameters, new UserMapper());
-        LOGGER.debug("UserDao.getUserByLogin() ends with " + user);
-        return user;
+        try{
+            return namedParameterJdbcTemplate.queryForObject(selectUserByLoginSql, parameters, new UserMapper());
+        }catch(EmptyResultDataAccessException e){
+            LOGGER.debug("attemption to get user from UserDao.getUserByLogin() for " + login + "which doesn't exists");
+            return user;
+        }
     }
 
 

@@ -65,7 +65,7 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserByLogin(){
-        User user = userDao.getUserByLogin(SELECT_TEST_LOGIN+23);
+        User user = userDao.getUserByLogin(SELECT_TEST_LOGIN);
         assertNotNull(user);
         assertEquals(SELECT_TEST_LOGIN, user.getLogin());
     }
