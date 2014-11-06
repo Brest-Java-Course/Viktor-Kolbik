@@ -2,6 +2,8 @@ package com.epam.brest.courses.rest;
 
 import com.epam.brest.courses.domain.User;
 import com.epam.brest.courses.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import java.util.List;
 public class UserRestController {
     @Resource
     private UserService userService;
+
+    private static final Logger LOGGER = LogManager.getLogger(UserService.class);
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -56,6 +60,7 @@ public class UserRestController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Long> addUser(@RequestBody User user) {
+        LOGGER.debug("UserRestController.addUser() starts for " + user);
         Long id = userService.addUser(user);
         return new ResponseEntity(id, HttpStatus.CREATED);
     }

@@ -12,6 +12,7 @@
         <module>app-dao</module>
         <module>app-service</module>
         <module>app-rest</module>
+        <module>app-web</module>
     </modules>
 
     <properties>
@@ -33,13 +34,18 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.epam.brest.courses</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>app-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.epam.brest.courses</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>app-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>app-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -82,7 +88,6 @@
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
                 <version>2.3.1</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

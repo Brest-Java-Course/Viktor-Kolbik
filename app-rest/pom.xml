@@ -19,10 +19,6 @@
     <dependencies>
         <dependency>
             <groupId>com.epam.brest.courses</groupId>
-            <artifactId>app-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.epam.brest.courses</groupId>
             <artifactId>app-service</artifactId>
         </dependency>
         <dependency>

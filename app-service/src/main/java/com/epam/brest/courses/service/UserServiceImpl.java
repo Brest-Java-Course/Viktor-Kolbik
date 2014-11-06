@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private static final String LOGIN_IS_OCCUPIED_ERROR = "User with such login has already existed!";
     private static final String ADMIN_LOGIN = "admin";
     private static final String EMPTY_STRING = "";
-    private static final Long LOW_BORDER_OF_ID = 1L;                //because i suppose admin has id 1L and we can't change his data
+    private static final Long LOW_BORDER_OF_ID = 0L;                //because i suppose admin has id 1L and we can't change his data
     private static final Logger LOGGER = LogManager.getLogger(UserService.class);
     private UserDao userDao;
 
@@ -31,8 +31,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long addUser(User user) {
+
+        LOGGER.debug("UserService.addUser() starts for " + user);
+
         if(user == null){
-            LOGGER.debug(USER_REFERENCE_IS_NULL_ERROR);
+            LOGGER.debug(USER_REFERENCE_IS_NULL_ERROR );
             throw new IllegalArgumentException(USER_REFERENCE_IS_NULL_ERROR);
         } else if(user.getUserId() != null){
             LOGGER.debug(USER_ID_IS_NOT_NULL_ERROR);
@@ -51,7 +54,7 @@ public class UserServiceImpl implements UserService {
             LOGGER.debug(LOGIN_IS_OCCUPIED_ERROR);
             throw new IllegalArgumentException(LOGIN_IS_OCCUPIED_ERROR);
         }
-
+        LOGGER.debug("UserService.addUser() ends for " + user);
         return userDao.addUser(user);
     }
 

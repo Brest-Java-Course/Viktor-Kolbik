@@ -1,6 +1,8 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,24 +22,24 @@ import java.util.Map;
         * @author      Viktor Kolbik
         */
 public class UserDaoImpl implements UserDao{
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${insert-into-user-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert-into-user-path}')).inputStream)}")
     public String addNewUserSql;
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${delete-from-user-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${delete-from-user-path}')).inputStream)}")
     public String removeUserSql;
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${update-user-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${update-user-path}')).inputStream)}")
     public String updateUserSql;
 
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-all-users-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select-all-users-path}')).inputStream)}")
     public String selectAllUsersSql;
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-users-by-name-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select-users-by-name-path}')).inputStream)}")
     public String selectUsersByNameSql;
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-user-by-id-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select-user-by-id-path}')).inputStream)}")
     public String selectUserByIdSql;
-    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select-user-by-login-path}')).file)}")
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select-user-by-login-path}')).inputStream)}")
     public String selectUserByLoginSql;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    //private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String USER_ID = "user_id";
     private static final String LOGIN = "login";
@@ -53,12 +55,17 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public Long addUser(final User user){
+        LOGGER.debug("UserDaoImpl.addUser() starts for " + user);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource().addValue(USER_ID, user.getUserId())
                 .addValue(LOGIN, user.getLogin()).addValue(USER_NAME, user.getUserName());
         namedParameterJdbcTemplate.update(addNewUserSql, parameters,  keyHolder);
 
-        return (Long)keyHolder.getKey();
+        Long id = (Long)keyHolder.getKey();
+
+        LOGGER.debug("UserDaoImpl.addUser() ends with " + id);
+
+        return id;
     }
     /**
      * get all users from table
@@ -90,9 +97,13 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public User getUserByLogin(String login){
+        LOGGER.debug("UserDao.getUserByLogin() starts for " + login);
         Map<String, Object> parameters = new HashMap<String, Object>(1);
         parameters.put(LOGIN, login);
-        return namedParameterJdbcTemplate.queryForObject(selectUserByLoginSql, parameters, new UserMapper());
+//!!!!!!!!!!!!!!!org.springframework.dao.EmptyResultDataAccessException
+        User user = namedParameterJdbcTemplate.queryForObject(selectUserByLoginSql, parameters, new UserMapper());
+        LOGGER.debug("UserDao.getUserByLogin() ends with " + user);
+        return user;
     }
 
 
