@@ -1,6 +1,6 @@
-package com.epam.brest.courses.dao.exception;
+package com.epam.brest.courses.service.exception;
 
-public class UserForLoginNotFoundException extends RootException{
+public class UserForLoginNotFoundException extends RootException {
     private String login;
 
     public UserForLoginNotFoundException(String message, String login){

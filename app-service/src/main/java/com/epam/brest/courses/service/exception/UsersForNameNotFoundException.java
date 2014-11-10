@@ -1,4 +1,4 @@
-package com.epam.brest.courses.dao.exception;
+package com.epam.brest.courses.service.exception;
 
 /**
  * Created by simpson on 9.11.14.

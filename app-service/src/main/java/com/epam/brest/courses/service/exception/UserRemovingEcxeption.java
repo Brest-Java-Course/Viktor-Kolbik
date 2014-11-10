@@ -1,6 +1,4 @@
-package com.epam.brest.courses.dao.exception;
-
-import com.epam.brest.courses.domain.User;
+package com.epam.brest.courses.service.exception;
 
 public class UserRemovingEcxeption extends RootException {
     private Long userId;

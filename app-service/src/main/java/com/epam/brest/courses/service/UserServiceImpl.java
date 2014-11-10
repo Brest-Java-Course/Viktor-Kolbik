@@ -1,7 +1,6 @@
 package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.dao.UserDao;
-import com.epam.brest.courses.dao.exception.UserForLoginNotFoundException;
 import com.epam.brest.courses.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

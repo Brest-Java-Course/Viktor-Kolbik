@@ -1,4 +1,4 @@
-package com.epam.brest.courses.dao.exception;
+package com.epam.brest.courses.service.exception;
 
 import com.epam.brest.courses.domain.User;
 
