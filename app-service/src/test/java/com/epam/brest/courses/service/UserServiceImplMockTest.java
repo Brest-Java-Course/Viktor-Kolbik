@@ -12,14 +12,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertSame;
+import static junit.framework.Assert.*;
 import static org.easymock.EasyMock.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:/spring-service-mock-test.xml"})
-public class UserServiceImplMockTest{
+@ContextConfiguration(locations = {"classpath:/spring-service-mock-test.xml"})
+public class UserServiceImplMockTest {
     @Autowired
     private UserService userService;
 
@@ -33,29 +31,43 @@ public class UserServiceImplMockTest{
         reset(userDao);
     }
 
-    private void addUser(User user, String login, boolean flag){
+    private void addUser(User user, String login, boolean flag) {
         userDao.addUser(user);
         expectLastCall().andReturn(3L);
 
         userDao.getUserByLogin(login);
-        expectLastCall().andReturn(flag == true ? user : null);
+
+        if (flag) {
+            expectLastCall().andThrow(new IllegalArgumentException("smth wrong with add user"));
+        } else {
+            expectLastCall().andReturn(user);
+        }
 
         replay(userDao);
         Long id = userService.addUser(user);
         assertNotNull(id);
-        assertEquals(id, (Long)3L);
+        assertEquals(id, (Long) 3L);
         verify(userDao);
     }
 
-    @Test
-    public void addRightUser(){
+    @Test(expected = IllegalArgumentException.class)
+    public void addCorrectUser() {
         User user = UserDataFixture.getExistingUser(SOME_LOGIN);
+        userDao.addUser(user);
+        expectLastCall().andReturn(3L);
 
-        addUser(user, user.getLogin(), false);
+        userDao.getUserByLogin(user.getLogin());
+        expectLastCall().andReturn(user.getUserId());
+
+        replay(userDao);
+        Long id = userService.addUser(user);
+        assertNotNull(id);
+        assertEquals(id, (Long) 3L);
+        verify(userDao);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addNullUser() throws IllegalArgumentException{
+    public void addNullUser() throws IllegalArgumentException {
         User user = UserDataFixture.getNullUser();
 
         addUser(user, null, false);
@@ -69,42 +81,42 @@ public class UserServiceImplMockTest{
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addUserWithNotNullId() throws IllegalArgumentException{
+    public void addUserWithNotNullId() throws IllegalArgumentException {
         User user = UserDataFixture.getUserWithNotNullUserId(15L);
 
         addUser(user, user.getLogin(), false);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addUserWithNullName() throws IllegalArgumentException{
+    public void addUserWithNullName() throws IllegalArgumentException {
         User user = UserDataFixture.getNewUserWithNullName();
 
         addUser(user, user.getLogin(), false);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addUserWithEmptyName() throws IllegalArgumentException{
+    public void addUserWithEmptyName() throws IllegalArgumentException {
         User user = UserDataFixture.getUserWithEmptyLogin();
 
         addUser(user, user.getLogin(), false);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addUserWithNullLogin() throws IllegalArgumentException{
+    public void addUserWithNullLogin() throws IllegalArgumentException {
         User user = UserDataFixture.getUserWithNullLogin();
 
         addUser(user, user.getLogin(), false);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addExistingUser() throws IllegalArgumentException{
+    public void addExistingUser() throws IllegalArgumentException {
         User user = UserDataFixture.getExistingUser(SOME_LOGIN);
 
         addUser(user, user.getLogin(), true);
     }
 
     @Test
-    public void getUsers(){
+    public void getUsers() {
         List<User> users = UserDataFixture.getExistingUsers();
 
         expect(userDao.getUsers()).andReturn(users);
@@ -114,17 +126,6 @@ public class UserServiceImplMockTest{
         verify(userDao);
 
         assertSame(users, result);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getUserByEqualZeroId() throws IllegalArgumentException {
-        User user = UserDataFixture.getExistingUserWithIdEqualsZero();
-
-        expect(userDao.getUserById(user.getUserId())).andReturn(user);
-
-        replay(userDao);
-        userService.getUserById(user.getUserId());
-        verify(userDao);
     }
 
     @Test(expected = IllegalArgumentException.class)

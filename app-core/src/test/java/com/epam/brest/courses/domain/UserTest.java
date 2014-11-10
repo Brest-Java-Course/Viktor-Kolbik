@@ -10,18 +10,29 @@ public class UserTest {
     private static final String USER_LOGIN = "user login";
 
     private User user;
+    private User userThreeParameters;
+    private User userTwoParameters;
+    private User userThreeParametersEquals;
 
-    @Before
+    @Before                         //method will be run before any test in the class
     public void setUp() throws Exception{
         user = new User();
+        userTwoParameters = new User(USER_LOGIN, USER_NAME);
+        userThreeParameters = new User(USER_ID, USER_LOGIN, USER_NAME);
+        userThreeParametersEquals = new User(USER_ID, USER_LOGIN, USER_NAME);
     }
 
     @Test
-    public void testConstructorWithParameters() throws Exception{
-        User user1 = new User(USER_ID, USER_LOGIN, USER_NAME);
-        assertEquals(USER_ID, user1.getUserId());
-        assertEquals(USER_LOGIN, user1.getLogin());
-        assertEquals(USER_NAME, user1.getUserName());
+    public void testConstructorWithTwoParameters() throws Exception{
+        assertEquals(USER_LOGIN, userTwoParameters.getLogin());
+        assertEquals(USER_NAME, userTwoParameters.getUserName());
+    }
+
+    @Test
+    public void testConstructorWithThreeParameters() throws Exception{
+        assertEquals(USER_ID, userThreeParameters.getUserId());
+        assertEquals(USER_LOGIN, userThreeParameters.getLogin());
+        assertEquals(USER_NAME, userThreeParameters.getUserName());
     }
 
     @Test
@@ -40,5 +51,11 @@ public class UserTest {
     public void testGetLogin() throws Exception{
         user.setLogin(USER_LOGIN);
         assertEquals(USER_LOGIN, user.getLogin());
+    }
+
+    @Test
+    public void testEquals() throws Exception{
+        assertTrue(userThreeParameters.equals(userThreeParametersEquals));
+        assertFalse(userTwoParameters.equals(userThreeParametersEquals));
     }
 }

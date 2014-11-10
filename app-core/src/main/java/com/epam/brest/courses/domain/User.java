@@ -1,40 +1,90 @@
 package com.epam.brest.courses.domain;
 
+/**
+ * POJO object that presents a simple user.
+ * @author Kolbik Viktor
+ */
 public class User {
     private Long userId;
     private String login;
     private String userName;
 
+    /** Default Constructor.
+     *  The default behaviour of this object is
+     *  <ul>
+     *  <li>All fields are null</li>
+     *  </ul>
+     */
     public User(){
-
     }
 
-    public User(Long userId, String login, String userName){
+    /** Constructor with two parameters.
+     *  id has the default value(null).
+     *  @param login User's login.
+     *  @param userName User's name.
+     */
+    public User(String login, String userName){
+        this.login = login;
+        this.userName = userName;
+    }
+
+    /** Constructor with two parameters.
+     *  @param userId User's id.
+     *  @param login User's login.
+     *  @param userName User's name.
+     */
+    public User(Long userId, String login, String userName) {
         this.userId = userId;
         this.login = login;
         this.userName = userName;
     }
 
+    /**
+     * gets User's id
+     * @return User's id.
+     */
     public Long getUserId() {
         return userId;
     }
 
+    /**
+     * sets User's id
+     * @param userId User's id
+     */
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+
+    /**
+     * gets User's login
+     * @return User's login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * sets User's login
+     * @param login User's login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+
+    /**
+     * gets User's name
+     * @return User's name
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * sets User's name
+     * @param userName User's name
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }

@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -17,7 +18,7 @@ public class UserDaoImplTest {
     private static final Long REMOVE_TEST_ID = 2L;
     private static final Long ADD_TEST_ID = 5L;
     private static final Long SELECT_TEST_ID = 3L;
-    private static final String SELECT_TEST_LOGIN = "simpson";
+    private static final String SELECT_TEST_LOGIN = "elo4ka";
     private static final String USER_NAME = "tania";
     private static final String ADD_USER_LOGIN = "her login";
 
@@ -32,7 +33,7 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void addUser(){
+    public void addCorrectUser(){
         List<User> users = userDao.getUsers();
 
         int sizeBefore = users.size();
@@ -49,7 +50,7 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void removeUser(){
+    public void removeCorrectUser(){
         List<User> users = userDao.getUsers();
         int sizeBefore = users.size();
         userDao.removeUser(REMOVE_TEST_ID);

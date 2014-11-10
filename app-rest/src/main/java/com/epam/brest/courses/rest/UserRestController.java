@@ -61,7 +61,12 @@ public class UserRestController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Long> addUser(@RequestBody User user) {
         LOGGER.debug("UserRestController.addUser() starts for " + user);
-        Long id = userService.addUser(user);
+        Long id = null;
+        try{
+            userService.addUser(user);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<Long>(id, HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity(id, HttpStatus.CREATED);
     }
 
