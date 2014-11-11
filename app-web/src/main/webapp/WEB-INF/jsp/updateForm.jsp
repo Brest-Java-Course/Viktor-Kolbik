@@ -16,15 +16,6 @@ pageEncoding="UTF-8"%>
                 background: blanchedalmond;
             }
 
-            .test{
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: blanchedalmond;
-            }
-
 
             html {
                 min-height: 100%
@@ -43,14 +34,18 @@ pageEncoding="UTF-8"%>
                 width: 120px;
                 text-align: left
             }
-            input[type="text"] {
+            label {
+                display: inline-block;
+                width: 120px;
+                text-align: left
+            }
+            input[type="text"]{
                 margin: 0;
                 padding: 2px;
                 border: 1px solid;
                 border-color: #999 #ccc #ccc;
                 border-radius: 2px
             }
-
 
             .features-table
             {
@@ -124,73 +119,28 @@ pageEncoding="UTF-8"%>
 
     <body>
         <div class="main">
-            <c:if test="${errorCreation}">
-                <script type="text/javascript"> alert("ERROR while creating user")</script>
-            </c:if>
-            <c:if test="${errorRemoving}">
-                <script type="text/javascript"> alert("ERROR while creating user")</script>
+            <c:if test="${userExistedError}">
+                <script type="text/javascript"> alert("ERROR while updating user. User, with such login, has already existed")</script>
             </c:if>
 
-            <form action="${pageContext.request.contextPath}/mvc/usersByName" method="get">
-                <table align="right">
-                    <tbody>
-                        <tr>
-                            <td><input type="text" id="name" name="name" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td><input type="submit" value="get users by name" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-
-            <form action="${pageContext.request.contextPath}/mvc/submitData" method="post">
+            <form action="${pageContext.request.contextPath}/mvc/updateUser" method="put">
                 <table>
                     <tbody>
-                        <tr>
-                            <td><label for="name">name</label></td><td><input type="text" id="name" name="name" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="login">login</label></td><td><input type="text" id="login" name="login" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td></td><td><input type="reset" name="Reset" value="reset">
-                                <input type="submit" value="add the user" /></td>
-                        </tr>
+                    <input type="text" id="id" name="id" value="${user.userId}" hidden="true"/><br>
+                    <tr>
+                        <td><label for="login">login</label></td>
+                        <td><input type="text" id="login" name="login" value="${user.login}" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="name">name</label></td>
+                        <td><input type="text" id="name" name="name" value="${user.userName}" /></td>
+                    </tr>
+                    <input type="reset" name="Reset" value="reset">
+                    <input type="submit" value="update the user" />
                     </tbody>
                 </table>
             </form>
-            <TABLE class="features-table" summary="list users."> 
-
-                <c:choose>
-                    <c:when test="${usersByName}">
-                        <CAPTION><a href="${pageContext.request.contextPath}/mvc/">REFERENCE TO LIST WITH ALL USERS</a></CAPTION>
-                    </c:when>
-                    <c:otherwise>
-                        <CAPTION>LIST USERS</CAPTION>
-                    </c:otherwise>
-                </c:choose>
-
-                <COLGROUP align="center"><COLGROUP align="left"> <COLGROUP align="center" span="2"><COLGROUP align="center" span="3">
-                <tr><td><h2>Id</h2><td><h2>Login</h2><td><h2>Name</h2><td><h2>Update</h2><td><h2>Delete</h2>
-
-                <c:forEach var="user" items="${users}">
-                    <TR>
-                        <TD class="grey"> <c:out value="${user.userId}"></c:out> 
-                    <TD class="green"><c:out value="${user.login}"></c:out>
-                    <TD class="green"> <c:out value="${user.userName}"></c:out>
-                    <TD class="grey"> <form action="${pageContext.request.contextPath}/mvc/fillInUpdateForm" method="put">
-                            <input type="text" id="id" name="id" value="${user.userId}" hidden="true" />
-                            <input type="text" id="login" name="login" value="${user.login}" hidden="true" />
-                            <input type="text" id="name" name="name" value="${user.userName}" hidden="true" />
-                            <input type="submit" value="update" />
-                        </form>
-                    <TD class="grey"> <form action="${pageContext.request.contextPath}/mvc/removeUser" method="delete">
-                            <input type="text" id="id" name="id" value="${user.userId}" hidden="true" />
-                            <input type="submit" value="remove" />
-                        </form>
-                </c:forEach>
-
+            <a href="${pageContext.request.contextPath}/mvc/">REFERENCE TO LIST WITH ALL USERS</a>
         </div>
 
     </body>

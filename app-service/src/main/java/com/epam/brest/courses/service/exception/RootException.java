@@ -1,7 +1,7 @@
 package com.epam.brest.courses.service.exception;
 
 /**
- * Created by simpson on 9.11.14.
+ * Created to separate my exceptions from Other
  */
 public class RootException extends RuntimeException {
     public RootException(String message){

@@ -1,8 +1,6 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,6 +20,7 @@ import java.util.Map;
  * presents DAO class, that provides access to DB
  * @author Viktor Kolbik
  */
+//@Repository
 public class UserDaoImpl implements UserDao {
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert-into-user-path}')).inputStream)}")
     public String addNewUserSql;
@@ -40,7 +39,6 @@ public class UserDaoImpl implements UserDao {
     public String selectUserByLoginSql;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String USER_ID = "user_id";
     private static final String LOGIN = "login";
@@ -115,7 +113,6 @@ public class UserDaoImpl implements UserDao {
         return namedParameterJdbcTemplate.query(selectUsersByNameSql, parameters, new UserMapper());
     }
 
-
     /**
      * adds new User into bd
      * @param user user, we need to update.
@@ -141,6 +138,9 @@ public class UserDaoImpl implements UserDao {
         namedParameterJdbcTemplate.update(removeUserSql, parameters);
     }
 
+    /**
+     * Fills in User's objects
+     */
     public class UserMapper implements RowMapper<User> {
         @Override
         public User mapRow(ResultSet rs, int i) throws SQLException {

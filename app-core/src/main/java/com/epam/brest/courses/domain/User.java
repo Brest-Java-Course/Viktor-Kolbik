@@ -11,9 +11,8 @@ public class User {
 
     /** Default Constructor.
      *  The default behaviour of this object is
-     *  <ul>
-     *  <li>All fields are null</li>
-     *  </ul>
+     * All fields are null
+
      */
     public User(){
     }

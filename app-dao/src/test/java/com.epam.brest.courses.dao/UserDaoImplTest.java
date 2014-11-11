@@ -33,7 +33,7 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void addCorrectUser(){
+    public void addUser(){
         List<User> users = userDao.getUsers();
 
         int sizeBefore = users.size();
@@ -50,7 +50,7 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void removeCorrectUser(){
+    public void removeUser(){
         List<User> users = userDao.getUsers();
         int sizeBefore = users.size();
         userDao.removeUser(REMOVE_TEST_ID);
@@ -86,6 +86,7 @@ public class UserDaoImplTest {
         user.setUserName(USER_NAME + SELECT_TEST_LOGIN);
         user.setLogin(SELECT_TEST_LOGIN + USER_NAME);
         userDao.updateUser(user);
+
         updatedUser = userDao.getUserById(SELECT_TEST_ID);
         assertEquals(USER_NAME + SELECT_TEST_LOGIN, updatedUser.getUserName());
         assertEquals(SELECT_TEST_LOGIN + USER_NAME, updatedUser.getLogin());
