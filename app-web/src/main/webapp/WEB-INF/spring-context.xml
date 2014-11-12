@@ -16,8 +16,8 @@
     <import resource="classpath:spring-service.xml"/>
 
     <jdbc:initialize-database data-source="dataSource">
-        <jdbc:script location="WEB-INF/create-tables.sql"/>
-        <jdbc:script location="WEB-INF/data-script.sql"/>
+        <jdbc:script location="WEB-INF/sql/create-tables.sql"/>
+        <jdbc:script location="WEB-INF/sql/data-script.sql"/>
     </jdbc:initialize-database>
 
     <mvc:annotation-driven/>

@@ -128,7 +128,7 @@ pageEncoding="UTF-8"%>
                 <script type="text/javascript"> alert("ERROR while creating user")</script>
             </c:if>
             <c:if test="${errorRemoving}">
-                <script type="text/javascript"> alert("ERROR while creating user")</script>
+                <script type="text/javascript"> alert("ERROR while removing user!")</script>
             </c:if>
 
             <form action="${pageContext.request.contextPath}/mvc/usersByName" method="get">
