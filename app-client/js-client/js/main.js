@@ -23,7 +23,7 @@ $('#btnSave').click(function () {
         addUser();
     else
         updateUser();
-    return true;
+    return false;
 });
 
 function addUser() {
@@ -43,6 +43,8 @@ function addUser() {
         }
     });
 }
+
+
 function updateUser() {
     console.log('updateUser');
     $.ajax({
@@ -120,20 +122,6 @@ function search(searchKey) {
     } else {
         findByLogin(searchKey);
     }
-}
-
-function findAll() {
-    console.log('findAll');
-    $.ajax({
-        type: 'GET',
-        url: REST_URL,
-        dataType: "json", // data type of response
-        success: renderList,
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-            alert('findAll: ' + textStatus);
-        }
-    });
 }
 
 function findByLogin(login) {
