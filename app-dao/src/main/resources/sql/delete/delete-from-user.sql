@@ -1,1 +1,0 @@
-delete from SIMPLE_USER where user_id = :user_id

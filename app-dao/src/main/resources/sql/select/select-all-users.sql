@@ -1,1 +1,0 @@
-select user_id, login, user_name from SIMPLE_USER

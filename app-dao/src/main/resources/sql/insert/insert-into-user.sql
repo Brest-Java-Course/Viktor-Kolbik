@@ -1,1 +1,0 @@
-insert into SIMPLE_USER (user_id, login, user_name) values (:user_id, :login, :user_name)

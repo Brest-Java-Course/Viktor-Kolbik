@@ -1,1 +1,0 @@
-INSERT INTO SIMPLE_USER (login, user_name) VALUES ('admin', 'admin');
