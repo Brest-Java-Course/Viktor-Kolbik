@@ -18,6 +18,11 @@ $('#userList').on('click', 'a', function () {
     findById($(this).data('identity'));
 });
 
+$('#btnRem').click(function () {
+    removeUser();
+    return false;
+});
+
 $('#btnSave').click(function () {
     if ($('#userId').val() == '')
         addUser();
@@ -44,14 +49,28 @@ function addUser() {
     });
 }
 
+function removeUser() {
+    console.log('remUser');
+    $.ajax({
+        type: 'DELETE',
+        contentType: 'application/json',
+        url: REST_URL + '/' + $('#userId').val(),
+        data: formToJSON(),
+        success: function (data, textStatus, jqXHR) {
+            alert('User removed successfully');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('addUser error: ' + textStatus);
+        }
+    });
+}
 
 function updateUser() {
     console.log('updateUser');
     $.ajax({
         type: 'PUT',
         contentType: 'application/json',
-        url: REST_URL + '/' + $('#userId').val(),
-        dataType: "json",
+        url: REST_URL,
         data: formToJSON(),
         success: function (data, textStatus, jqXHR) {
             alert('User updated successfully');

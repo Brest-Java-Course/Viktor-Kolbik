@@ -24,11 +24,11 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-servlets</artifactId>
-                <version>9.2.4.v20141103</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.eclipse.jetty</groupId>-->
+                <!--<artifactId>jetty-servlets</artifactId>-->
+                <!--<version>9.2.4.v20141103</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>app-core</artifactId>
