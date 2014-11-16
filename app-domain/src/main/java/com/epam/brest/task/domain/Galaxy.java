@@ -24,9 +24,14 @@ public class Galaxy {
     private Long distance;
 
     /**
-     * the Set, that stores all stars at this galaxy
+     * the Long, that presents an average age of  all stars into this galaxy
      */
-    private Set<Star> stars;
+    private Long averageAge;
+
+    /**
+     * the Long, that presents an average mass of  all stars into this galaxy
+     */
+    private Double averageMass;
 
     public Galaxy(){
 
@@ -41,27 +46,6 @@ public class Galaxy {
         this.galaxyId = galaxyId;
         this.name = name;
         this.distance = distance;
-    }
-
-    public Galaxy(String name, Long distance, Set<Star> stars) {
-        this.name = name;
-        this.distance = distance;
-        this.stars = stars;
-    }
-
-    public Galaxy(Long galaxyId, String name, Long distance, Set<Star> stars) {
-        this.galaxyId = galaxyId;
-        this.name = name;
-        this.distance = distance;
-        this.stars = stars;
-    }
-
-    public Set<Star> getStars() {
-        return stars;
-    }
-
-    public void setStars(Set<Star> stars) {
-        this.stars = stars;
     }
 
     public Long getGalaxyId() {
@@ -88,13 +72,30 @@ public class Galaxy {
         this.distance = distance;
     }
 
+    public Double getAverageMass() {
+        return averageMass;
+    }
+
+    public void setAverageMass(Double averageMass) {
+        this.averageMass = averageMass;
+    }
+
+    public Long getAverageAge() {
+        return averageAge;
+    }
+
+    public void setAverageAge(Long averageAge) {
+        this.averageAge = averageAge;
+    }
+
     @Override
     public String toString() {
         return "Galaxy{" +
                 "galaxyId=" + galaxyId +
                 ", name='" + name + '\'' +
                 ", distance=" + distance +
-                ", stars=" + stars +
+                ", averageAge=" + averageAge +
+                ", averageMass=" + averageMass +
                 '}';
     }
 
@@ -105,10 +106,11 @@ public class Galaxy {
 
         Galaxy galaxy = (Galaxy) o;
 
+        if (averageAge != null ? !averageAge.equals(galaxy.averageAge) : galaxy.averageAge != null) return false;
+        if (averageMass != null ? !averageMass.equals(galaxy.averageMass) : galaxy.averageMass != null) return false;
         if (distance != null ? !distance.equals(galaxy.distance) : galaxy.distance != null) return false;
         if (galaxyId != null ? !galaxyId.equals(galaxy.galaxyId) : galaxy.galaxyId != null) return false;
         if (name != null ? !name.equals(galaxy.name) : galaxy.name != null) return false;
-        if (stars != null ? !stars.equals(galaxy.stars) : galaxy.stars != null) return false;
 
         return true;
     }
@@ -118,7 +120,8 @@ public class Galaxy {
         int result = galaxyId != null ? galaxyId.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (distance != null ? distance.hashCode() : 0);
-        result = 31 * result + (stars != null ? stars.hashCode() : 0);
+        result = 31 * result + (averageAge != null ? averageAge.hashCode() : 0);
+        result = 31 * result + (averageMass != null ? averageMass.hashCode() : 0);
         return result;
     }
 }
