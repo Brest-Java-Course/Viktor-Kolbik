@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--A property resource configurer that resolves placeholders in bean property values
+        of context definitions. It pulls values from a properties file into bean definitions.-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:hsqldb.properties</value>
+                <value>classpath:sql-script.properties</value>
+            </list>
+        </property>
+        <!--
+        Set whether to ignore unresolvable placeholders.
+            Default is "false": An exception will be thrown if a placeholder cannot be resolved.-->
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean id="galaxyDao" class="com.epam.brest.task.dao.GalaxyDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.url}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+</beans>
