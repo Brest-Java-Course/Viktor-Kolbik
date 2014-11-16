@@ -1,7 +1,6 @@
 package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.Galaxy;
-import com.epam.brest.task.domain.Star;
 
 import java.util.Set;
 
@@ -13,8 +12,7 @@ public interface GalaxyDao {
 
     public Galaxy getGalaxyById(Long id);
     public Galaxy getGalaxyByName(String name);
-    public Galaxy getGalaxyByStar(Star star);
+    public Galaxy getGalaxyByStar(Long id);
     public Set<Galaxy> getAllGalaxies();
-    public Set<Galaxy> getGalaxiesClotherThan(Long distance);
-    public Set<Galaxy> getGalaxiesFartherThan(Long distance);
+    public Set<Galaxy> getGalaxiesByDistance(Long distance, Boolean flag);
 }
