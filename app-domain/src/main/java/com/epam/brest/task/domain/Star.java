@@ -113,9 +113,8 @@ public class Star {
         if (date != null ? !date.equals(star.date) : star.date != null) return false;
         if (mass != null ? !mass.equals(star.mass) : star.mass != null) return false;
         if (name != null ? !name.equals(star.name) : star.name != null) return false;
-        if (starId != null ? !starId.equals(star.starId) : star.starId != null) return false;
+        return !(starId != null ? !starId.equals(star.starId) : star.starId != null);
 
-        return true;
     }
 
     @Override

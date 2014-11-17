@@ -21,8 +21,7 @@ public class GalaxyTest extends TestCase {
     private static final Long DISTANCE = 1000000L;
     private static final Long AVERAGE_AGE = 9999999L;
     private static final Double AVERAGE_MASS = 9.5;
-    private static final Star STAR1 = new Star(1L, "first galaxy", 1L, 1.1, new Date(114, 5, 9));
-    private static final Star STAR2 = new Star(2L, "second galaxy", 2L, 2.2, new Date(115, 1, 1));
+    private static final Date DATE = new Date(2014 - 1900, 5, 5);
 
     private Galaxy galaxy;
 
@@ -33,16 +32,29 @@ public class GalaxyTest extends TestCase {
         assertNull(galaxy.getDistance());
         assertNull(galaxy.getName());
         assertNull(galaxy.getAverageAge());
+        assertNull(galaxy.getAverageMass());
 
-        galaxy = new Galaxy(NAME, DISTANCE);
+        galaxy = new Galaxy(NAME, DISTANCE, DATE);
         assertNull(galaxy.getGalaxyId());
-        assertNotNull(galaxy.getDistance());
-        assertNotNull(galaxy.getName());
+        assertEquals(galaxy.getDistance(), DISTANCE);
+        assertEquals(galaxy.getName(), NAME);
+        assertEquals(galaxy.getDate(), DATE);
+        assertNull(galaxy.getAverageAge());
+        assertNull(galaxy.getAverageMass());
 
-        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE);
-        assertNotNull(galaxy.getGalaxyId());
-        assertNotNull(galaxy.getDistance());
-        assertNotNull(galaxy.getName());
+        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE);
+        assertEquals(galaxy.getGalaxyId(), GALAXY_ID);
+        assertEquals(galaxy.getDistance(), DISTANCE);
+        assertEquals(galaxy.getName(), NAME);
+        assertNull(galaxy.getAverageAge());
+        assertNull(galaxy.getAverageMass());
+
+        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS);
+        assertEquals(galaxy.getGalaxyId(), GALAXY_ID);
+        assertEquals(galaxy.getDistance(), DISTANCE);
+        assertEquals(galaxy.getName(), NAME);
+        assertEquals(galaxy.getAverageAge(), AVERAGE_AGE);
+        assertEquals(galaxy.getAverageMass(), AVERAGE_MASS, 0.01);
     }
 
     @Test
@@ -52,29 +64,36 @@ public class GalaxyTest extends TestCase {
         galaxy.setGalaxyId(GALAXY_ID);
         galaxy.setName(NAME);
         galaxy.setDistance(DISTANCE);
+        galaxy.setAverageAge(AVERAGE_AGE);
+        galaxy.setAverageMass(AVERAGE_MASS);
+        galaxy.setDate(DATE);
 
         assertEquals(galaxy.getGalaxyId(), GALAXY_ID);
         assertEquals(galaxy.getName(), NAME);
         assertEquals(galaxy.getDistance(), DISTANCE);
+        assertEquals(galaxy.getAverageAge(), AVERAGE_AGE);
+        assertEquals(galaxy.getAverageMass(), AVERAGE_MASS, 0.01);
+        assertEquals(galaxy.getDate(), DATE);
     }
 
     @Test
     public void testToString() throws Exception {
-        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE);
-        assertEquals(galaxy.toString(), "Galaxy{galaxyId=1, name='MG55', distance=1000000, averageAge=null, averageMass=null}");
+        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS);
+        assertEquals(galaxy.toString(), "Galaxy{galaxyId=1, " +
+                "name='MG55', distance=1000000, averageAge=9999999, averageMass=9.5}");
     }
 
     @Test
     public void testEqualsTheSameGalaxy() throws Exception {
-        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE);
+        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE);
 
         assertTrue(galaxy.equals(galaxy));
     }
 
     @Test
     public void testHashCode() throws Exception {
-        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE);
-        Galaxy galaxy2 = new Galaxy(GALAXY_ID, NAME, DISTANCE);
+        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS);
+        Galaxy galaxy2 = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS);
 
         if (galaxy.equals(galaxy2)) {
             assertEquals(galaxy.hashCode(), galaxy2.hashCode());
@@ -85,7 +104,7 @@ public class GalaxyTest extends TestCase {
 
     @Theory
     public void testEquals(final Object testData[]) throws Exception {
-        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE);
+        galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE);
 
         assertEquals(galaxy.equals(testData[0]), testData[1]);
     }
@@ -95,8 +114,9 @@ public class GalaxyTest extends TestCase {
             {null, false},
             {new Object(), false},
             {new Galaxy(), false},
-            {new Galaxy(NAME, DISTANCE), false},
-            {new Galaxy(GALAXY_ID, NAME, DISTANCE), true},
+            {new Galaxy(NAME, DISTANCE, DATE), false},
+            {new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE), true},
+            {new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS), false},
     };
 
 

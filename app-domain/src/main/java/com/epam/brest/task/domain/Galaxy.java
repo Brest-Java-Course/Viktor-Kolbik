@@ -1,6 +1,6 @@
 package com.epam.brest.task.domain;
 
-import java.util.Set;
+import java.sql.Date;
 
 /**
  * POJO object that presents a Galaxy.
@@ -33,19 +33,36 @@ public class Galaxy {
      */
     private Double averageMass;
 
+    /**
+     * the Date, that presents an date of discovering of the galaxy
+     */
+
+    private Date date;
+
     public Galaxy(){
 
     }
 
-    public Galaxy(String name, Long distance) {
+    public Galaxy(String name, Long distance, Date date) {
         this.name = name;
         this.distance = distance;
+        this.date = date;
     }
 
-    public Galaxy(Long galaxyId, String name, Long distance) {
+    public Galaxy(Long galaxyId, String name, Long distance, Date date) {
         this.galaxyId = galaxyId;
         this.name = name;
         this.distance = distance;
+        this.date = date;
+    }
+
+    public Galaxy(Long galaxyId, String name, Long distance, Date date, Long averageAge, Double averageMass) {
+        this.galaxyId = galaxyId;
+        this.name = name;
+        this.distance = distance;
+        this.averageAge = averageAge;
+        this.averageMass = averageMass;
+        this.date = date;
     }
 
     public Long getGalaxyId() {
@@ -86,6 +103,14 @@ public class Galaxy {
 
     public void setAverageAge(Long averageAge) {
         this.averageAge = averageAge;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
