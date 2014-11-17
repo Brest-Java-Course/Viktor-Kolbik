@@ -15,5 +15,7 @@ public interface StarDao {
     public Set<Star> getAllStars();
     public Set<Star> getStarsByGalaxyId(Long Id, Long Pos, Long amount);
     public Set<Star> getStarsByAge(Long age, Boolean flag);
+    public Set<Star> getStarsByAge(Long lowBorder, Long topBorder);
     public Set<Star> getStarsByMass(Double mass, Boolean flag);
+    public Set<Star> getStarsByMass(Double lowBorder, Double topBorder);
 }
