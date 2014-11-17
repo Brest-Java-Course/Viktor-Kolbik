@@ -55,7 +55,7 @@ public class Star {
         return starId;
     }
 
-    public void setStarId(Long starId) {
+    public void setStarId(final Long starId) {
         this.starId = starId;
     }
 
@@ -63,7 +63,7 @@ public class Star {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -71,7 +71,7 @@ public class Star {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(final Long age) {
         this.age = age;
     }
 
@@ -79,7 +79,7 @@ public class Star {
         return mass;
     }
 
-    public void setMass(Double mass) {
+    public void setMass(final Double mass) {
         this.mass = mass;
     }
 
@@ -87,7 +87,7 @@ public class Star {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(final Date date) {
         this.date = date;
     }
 
@@ -103,7 +103,7 @@ public class Star {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof Star)) return false;
 

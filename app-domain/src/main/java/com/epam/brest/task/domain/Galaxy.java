@@ -43,20 +43,20 @@ public class Galaxy {
 
     }
 
-    public Galaxy(String name, Long distance, Date date) {
+    public Galaxy(final String name, final Long distance, final Date date) {
         this.name = name;
         this.distance = distance;
         this.date = date;
     }
 
-    public Galaxy(Long galaxyId, String name, Long distance, Date date) {
+    public Galaxy(final Long galaxyId, final String name, final Long distance, final Date date) {
         this.galaxyId = galaxyId;
         this.name = name;
         this.distance = distance;
         this.date = date;
     }
 
-    public Galaxy(Long galaxyId, String name, Long distance, Date date, Long averageAge, Double averageMass) {
+    public Galaxy(final Long galaxyId, final String name, final Long distance, final Date date, final Long averageAge, final Double averageMass) {
         this.galaxyId = galaxyId;
         this.name = name;
         this.distance = distance;
@@ -69,7 +69,7 @@ public class Galaxy {
         return galaxyId;
     }
 
-    public void setGalaxyId(Long galaxyId) {
+    public void setGalaxyId(final Long galaxyId) {
         this.galaxyId = galaxyId;
     }
 
@@ -77,7 +77,7 @@ public class Galaxy {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -85,7 +85,7 @@ public class Galaxy {
         return distance;
     }
 
-    public void setDistance(Long distance) {
+    public void setDistance(final Long distance) {
         this.distance = distance;
     }
 
@@ -93,7 +93,7 @@ public class Galaxy {
         return averageMass;
     }
 
-    public void setAverageMass(Double averageMass) {
+    public void setAverageMass(final Double averageMass) {
         this.averageMass = averageMass;
     }
 
@@ -101,7 +101,7 @@ public class Galaxy {
         return averageAge;
     }
 
-    public void setAverageAge(Long averageAge) {
+    public void setAverageAge(final Long averageAge) {
         this.averageAge = averageAge;
     }
 
@@ -109,7 +109,7 @@ public class Galaxy {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(final Date date) {
         this.date = date;
     }
 
@@ -125,7 +125,7 @@ public class Galaxy {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof Galaxy)) return false;
 
