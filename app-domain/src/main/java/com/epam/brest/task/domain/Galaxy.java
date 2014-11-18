@@ -121,11 +121,12 @@ public class Galaxy {
                 ", distance=" + distance +
                 ", averageAge=" + averageAge +
                 ", averageMass=" + averageMass +
+                ", date=" + date +
                 '}';
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Galaxy)) return false;
 
@@ -133,6 +134,7 @@ public class Galaxy {
 
         if (averageAge != null ? !averageAge.equals(galaxy.averageAge) : galaxy.averageAge != null) return false;
         if (averageMass != null ? !averageMass.equals(galaxy.averageMass) : galaxy.averageMass != null) return false;
+        if (date != null ? !date.equals(galaxy.date) : galaxy.date != null) return false;
         if (distance != null ? !distance.equals(galaxy.distance) : galaxy.distance != null) return false;
         if (galaxyId != null ? !galaxyId.equals(galaxy.galaxyId) : galaxy.galaxyId != null) return false;
         if (name != null ? !name.equals(galaxy.name) : galaxy.name != null) return false;
@@ -147,6 +149,7 @@ public class Galaxy {
         result = 31 * result + (distance != null ? distance.hashCode() : 0);
         result = 31 * result + (averageAge != null ? averageAge.hashCode() : 0);
         result = 31 * result + (averageMass != null ? averageMass.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 }
