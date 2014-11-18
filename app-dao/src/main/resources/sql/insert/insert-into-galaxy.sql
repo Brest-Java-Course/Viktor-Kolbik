@@ -1,1 +1,0 @@
-INSERT INTO GALAXY (galaxyId, name, distance) VALUES (:galaxyId, :name, :distance)

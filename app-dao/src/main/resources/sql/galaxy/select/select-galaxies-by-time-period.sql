@@ -1,0 +1,1 @@
+SELECT galaxyId, name, distance, discoverDate FROM GALAXY WHERE (discoverDate >= :discoverDate1 AND discoverDate <= :discoverDate2);

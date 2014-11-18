@@ -1,0 +1,1 @@
+SELECT galaxyId, name, distance, discoverDate FROM GALAXY
