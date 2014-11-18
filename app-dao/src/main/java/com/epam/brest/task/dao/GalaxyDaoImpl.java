@@ -224,7 +224,8 @@ public class GalaxyDaoImpl implements GalaxyDao {
             galaxy.setName(rs.getString("name"));
             galaxy.setDistance(rs.getLong("distance"));
             galaxy.setDate(rs.getDate("discoverDate"));
-
+            galaxy.setAverageAge(rs.getLong("averageAge"));
+            galaxy.setAverageMass(rs.getDouble("averageMass"));
             return galaxy;
         }
     }

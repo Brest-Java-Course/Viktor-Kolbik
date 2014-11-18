@@ -132,4 +132,12 @@ public class GalaxyDaoImplTest {
         assertFalse(isEmpty(galaxies));
 
     }
+
+    @Test
+    public void testGetAllGalaxies(){
+        Set<Galaxy> galaxies = galaxyDao.getAllGalaxies();
+        assertNotNull(galaxies);
+        assertFalse(isEmpty(galaxies));
+
+    }
 }
