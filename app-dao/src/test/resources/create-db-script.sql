@@ -1,4 +1,14 @@
 CREATE TABLE GALAXY(
   galaxyId BIGINT IDENTITY,
   name VARCHAR(50) NOT NULL,
-  distance BIGINT NOT NULL);
+  distance BIGINT NOT NULL,
+  discoverDate DATE NOT NULL);
+
+  CREATE TABLE STAR(
+    starId BIGINT IDENTITY,
+    name VARCHAR(50) NOT NULL,
+    age BIGINT NOT NULL,
+    mass BIGINT NOT NULL,
+    discoverDate DATE NOT NULL,
+    galaxyId BIGINT NOT NULL,
+    UNIQUE (name));
