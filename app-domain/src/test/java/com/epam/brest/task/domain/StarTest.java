@@ -17,6 +17,7 @@ public class StarTest extends TestCase {
     private static final Long AGE = 1000000L;
     private static final Double MASS = 2.4;
     private static final Date DATE = new Date(2014 - 1900, 10, 15);
+    private static final Long GALAXY_ID = 1L;
 
     private Star star;
 
@@ -36,7 +37,7 @@ public class StarTest extends TestCase {
         assertEquals(star.getMass(), MASS);
         assertEquals(star.getName(), NAME);
 
-        star = new Star(STAR_ID, NAME, AGE, MASS, DATE);
+        star = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
         assertEquals(star.getStarId(), STAR_ID);
         assertEquals(star.getAge(), AGE);
         assertEquals(star.getDate(), DATE);
@@ -64,29 +65,30 @@ public class StarTest extends TestCase {
 
     @Test
     public void testToString() throws Exception {
-        star = new Star(STAR_ID, NAME, AGE, MASS, DATE);
-        assertEquals(star.toString(), "Star{starId=1, name='MG55', age=1000000, mass=2.4, date=2014-11-15}");
+        star = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
+        assertEquals(star.toString(), "Star{starId=1, name='MG55', age=1000000, mass=2.4," +
+                " date=2014-11-15, galaxyId=1}");
     }
 
 
     @Theory
     public void testEquals(final Object testData[]) throws Exception {
-        star = new Star(STAR_ID, NAME, AGE, MASS, DATE);
+        star = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
 
         assertEquals(star.equals(testData[0]), testData[1]);
     }
 
     @Test
     public void testEqualsTheSameStar() throws Exception {
-        star = new Star(STAR_ID, NAME, AGE, MASS, DATE);
+        star = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
 
         assertTrue(star.equals(star));
     }
 
     @Test
     public void testHashCode() throws Exception {
-        star = new Star(STAR_ID, NAME, AGE, MASS, DATE);
-        Star star2 = new Star(STAR_ID, NAME, AGE, MASS, DATE);
+        star = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
+        Star star2 = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
 
         if (star.equals(star2)) {
             assertEquals(star.hashCode(), star2.hashCode());
@@ -101,9 +103,8 @@ public class StarTest extends TestCase {
             {new Object(), false},
             {new Star(), false},
             {new Star(NAME, AGE, MASS, DATE), false},
-            {new Star(STAR_ID, NAME, AGE, MASS, DATE), true},
-            {new Star(STAR_ID, NAME, AGE, MASS + 1, DATE), false},
-            {new Star(STAR_ID, NAME, AGE, MASS, new Date(2014 - 1900, 10, 15)), true}
+            {new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID), true},
+            {new Star(STAR_ID, NAME, AGE, MASS + 1, DATE, GALAXY_ID), false},
 
     };
 }

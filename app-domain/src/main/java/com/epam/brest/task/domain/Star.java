@@ -33,6 +33,8 @@ public class Star {
      */
     private Date date;
 
+    private Long galaxyId;
+
     public Star() {
     }
 
@@ -43,12 +45,13 @@ public class Star {
         this.date = date;
     }
 
-    public Star(Long starId, String name, Long age, Double mass, Date date) {
+    public Star(Long starId, String name, Long age, Double mass, Date date, Long galaxyId) {
         this.starId = starId;
         this.name = name;
         this.age = age;
         this.mass = mass;
         this.date = date;
+        this.galaxyId = galaxyId;
     }
 
     public Long getStarId() {
@@ -91,6 +94,14 @@ public class Star {
         this.date = date;
     }
 
+    public Long getGalaxyId() {
+        return galaxyId;
+    }
+
+    public void setGalaxyId(Long galaxyId) {
+        this.galaxyId = galaxyId;
+    }
+
     @Override
     public String toString() {
         return "Star{" +
@@ -99,11 +110,12 @@ public class Star {
                 ", age=" + age +
                 ", mass=" + mass +
                 ", date=" + date +
+                ", galaxyId=" + galaxyId +
                 '}';
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Star)) return false;
 
@@ -111,10 +123,12 @@ public class Star {
 
         if (age != null ? !age.equals(star.age) : star.age != null) return false;
         if (date != null ? !date.equals(star.date) : star.date != null) return false;
+        if (galaxyId != null ? !galaxyId.equals(star.galaxyId) : star.galaxyId != null) return false;
         if (mass != null ? !mass.equals(star.mass) : star.mass != null) return false;
         if (name != null ? !name.equals(star.name) : star.name != null) return false;
-        return !(starId != null ? !starId.equals(star.starId) : star.starId != null);
+        if (starId != null ? !starId.equals(star.starId) : star.starId != null) return false;
 
+        return true;
     }
 
     @Override
@@ -124,6 +138,7 @@ public class Star {
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (mass != null ? mass.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (galaxyId != null ? galaxyId.hashCode() : 0);
         return result;
     }
 }
