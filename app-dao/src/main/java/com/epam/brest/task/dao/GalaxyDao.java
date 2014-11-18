@@ -7,27 +7,18 @@ import java.util.Set;
 
 public interface GalaxyDao {
 
-    public Long addGalaxy(Galaxy galaxy);
-    public void updateGalaxy(Galaxy galaxy);
-    public void removeGalaxy(Long id);
+    public Long addGalaxy(final Galaxy galaxy);
+    public void updateGalaxy(final Galaxy galaxy);
+    public void removeGalaxy(final Long id);
 
-    public Galaxy getGalaxyById(Long id);
-    public Galaxy getGalaxyByName(String name);
-    public Galaxy getGalaxyByStarId(Long id);
+    public Galaxy getGalaxyById(final Long id);
+    public Galaxy getGalaxyByName(final String name);
     public Set<Galaxy> getAllGalaxies();
 
-    public Set<Galaxy> getGalaxiesByDate(Date date);
-    public Set<Galaxy> getGalaxiesByDate(Date date, Boolean flag);
-    public Set<Galaxy> getGalaxiesByDate(Date lowBorder, Date topBorder);
+    public Set<Galaxy> getGalaxiesByDate(final Date date);
+    public Set<Galaxy> getGalaxiesByDate(final Date date, final Boolean flag);
+    public Set<Galaxy> getGalaxiesByDate(final Date lowBorder, final Date topBorder);
 
-    /**
-     *
-     * @param distance
-     * @param flag false - clother then distance, true - farther then distance
-     * @return
-     */
-    public Set<Galaxy> getGalaxiesByDistance(Long distance, Boolean flag);
-    public Set<Galaxy> getGalaxiesByDistance(Long lowBorder, Long topBorder);
-    public Long getAverageMassOfStars();
-    public Long getAverageAgeOfStars();
+    public Set<Galaxy> getGalaxiesByDistance(final Long distance, final Boolean flag);
+    public Set<Galaxy> getGalaxiesByDistanceInterval(final Long lowBorder, final Long topBorder);
 }
