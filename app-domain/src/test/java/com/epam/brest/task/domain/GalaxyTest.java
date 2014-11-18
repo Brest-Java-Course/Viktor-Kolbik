@@ -79,8 +79,8 @@ public class GalaxyTest extends TestCase {
     @Test
     public void testToString() throws Exception {
         galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS);
-        assertEquals(galaxy.toString(), "Galaxy{galaxyId=1, " +
-                "name='MG55', distance=1000000, averageAge=9999999, averageMass=9.5}");
+        assertEquals(galaxy.toString(), "Galaxy{galaxyId=1, name='MG55', distance=1000000, " +
+                "averageAge=9999999, averageMass=9.5, date=2014-06-05}");
     }
 
     @Test
