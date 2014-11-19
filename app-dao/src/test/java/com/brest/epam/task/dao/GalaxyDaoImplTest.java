@@ -74,13 +74,14 @@ public class GalaxyDaoImplTest {
     @Test
     public void testGetGalaxyById(){
         Galaxy galaxy = galaxyDao.getGalaxyById(GALAXY_ID_TO_SELECT);
+        assertNotNull(galaxy);
         assertEquals(galaxy.getName(), GALAXY_NAME_TO_SELECT);
         assertEquals(galaxy.getDistance(), GALAXY_DISTANCE_TO_SELECT);
         assertEquals(galaxy.getDate(), GALAXY_DATE_TO_SELECT);
     }
 
     @Test
-    public void testGetGalaxyByDate(){
+    public void testGetGalaxiesByDate(){
         Set<Galaxy> galaxies = galaxyDao.getGalaxiesByDate(new Date(2014 - 1900, 4, 3));
         assertNotNull(galaxies);
         assertFalse(isEmpty(galaxies));
