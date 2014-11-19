@@ -11,7 +11,8 @@
         <property name="locations">
             <list>
                 <value>classpath:hsqldb.properties</value>
-                <value>classpath:sql-script.properties</value>
+                <value>classpath:/sql-properties/galaxy-sql-script.properties</value>
+                <value>classpath:/sql-properties/star-sql-script.properties</value>
             </list>
         </property>
         <!--
