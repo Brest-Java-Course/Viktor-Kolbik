@@ -1,6 +1,8 @@
 package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.Galaxy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,9 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class GalaxyDaoImpl implements GalaxyDao {
 
@@ -58,7 +57,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public void setDataSource(DataSource dataSource) {
+    public void setDataSource(final DataSource dataSource) {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -82,7 +81,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public void updateGalaxy(Galaxy galaxy) {
+    public void updateGalaxy(final Galaxy galaxy) {
         LOGGER.debug("starts with " + galaxy);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(GALAXY_ID, galaxy.getGalaxyId())
@@ -96,7 +95,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public void removeGalaxy(Long id) {
+    public void removeGalaxy(final Long id) {
         LOGGER.debug("starts with id = " + id);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(GALAXY_ID, id);
@@ -107,7 +106,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Galaxy getGalaxyById(Long id) {
+    public Galaxy getGalaxyById(final Long id) {
         LOGGER.debug("starts for id = " + id);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(GALAXY_ID, id);
@@ -118,7 +117,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Galaxy getGalaxyByName(String name) {
+    public Galaxy getGalaxyByName(final String name) {
         LOGGER.debug("starts for name = " + name);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(NAME, name);
@@ -141,7 +140,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDate(Date date) {
+    public Set<Galaxy> getGalaxiesByDate(final Date date) {
         LOGGER.debug("starts with " + date);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE, date);
@@ -154,7 +153,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDate(Date date, Boolean flag) {
+    public Set<Galaxy> getGalaxiesByDate(final Date date, final Boolean flag) {
         LOGGER.debug("starts with " + date + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE, date);
@@ -171,7 +170,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDate(Date lowBorder, Date topBorder) {
+    public Set<Galaxy> getGalaxiesByDate(final Date lowBorder, final Date topBorder) {
         LOGGER.debug("starts with " + lowBorder + " and " + topBorder);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE + 1, lowBorder)
@@ -185,7 +184,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDistance(Long distance, Boolean flag) {
+    public Set<Galaxy> getGalaxiesByDistance(final Long distance, final Boolean flag) {
         LOGGER.debug("starts with distance = " + distance + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DISTANCE, distance);
@@ -202,7 +201,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDistanceInterval(Long lowBorder, Long topBorder) {
+    public Set<Galaxy> getGalaxiesByDistanceInterval(final Long lowBorder, final Long topBorder) {
         LOGGER.debug("starts with lowBorder = " + lowBorder + " and topBorder = " + topBorder);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DISTANCE + 1, lowBorder)
