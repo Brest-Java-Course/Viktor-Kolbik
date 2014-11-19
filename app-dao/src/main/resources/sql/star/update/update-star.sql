@@ -1,0 +1,1 @@
+UPDATE STAR SET name = :name, age = :age, mass = :mass, discoverDate = :discoverDate, galaxyId = :galaxyId WHERE starId = :starId
