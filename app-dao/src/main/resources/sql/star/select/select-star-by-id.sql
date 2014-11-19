@@ -1,1 +1,3 @@
-SELECT starId, name, age, mass, discoverDate, galaxyId FROM STAR WHERE starId = :starId
+SELECT starId, name, age, mass, discoverDate, galaxyId
+FROM STAR
+WHERE starId = :starId;

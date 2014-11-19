@@ -1,1 +1,2 @@
-SELECT starId, name, age, mass, discoverDate, galaxyId FROM STAR;
+SELECT starId, name, age, mass, discoverDate, galaxyId
+FROM STAR;

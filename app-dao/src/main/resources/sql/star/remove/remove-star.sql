@@ -1,1 +1,2 @@
-DELETE FROM STAR WHERE starId = :starId;
+DELETE FROM STAR
+WHERE starId = :starId;

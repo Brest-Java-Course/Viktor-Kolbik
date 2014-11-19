@@ -1,1 +1,2 @@
-DELETE FROM GALAXY WHERE galaxyId = :galaxyId;
+DELETE FROM GALAXY
+WHERE galaxyId = :galaxyId;
