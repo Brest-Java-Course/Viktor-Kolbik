@@ -3,7 +3,7 @@
 
 It is a free project to perform the learning task. The project consists of:
 * app-domain layer, that stores two [POJO](http://en.wikipedia.org/wiki/Plain_Old_Java_Object "POJO")(Star and Galaxy) and 		tests(StarTest and GalaxyTest respectively).
-* app-dao hasn't implemented yet.
+* app-dao layer, that provides asses to db.
 * app-service hasn't implemented yet.
 * app-rest-server hasn't implemented yet.
 * app-rest-client hasn't implemented yet.
@@ -12,8 +12,8 @@ It is a free project to perform the learning task. The project consists of:
 
 Required software:
 --------------
-
-  -  [Java jdk-1.7 or newer] (http://www.oracle.com/technetwork/java/javase/downloads/index.html "Download JDK")
+  -  [Ubuntu] (http://www.ubuntu.com/download "Download Ubuntu")
+  -  [Java jdk-1.6 or newer] (http://www.oracle.com/technetwork/java/javase/downloads/index.html "Download JDK")
   -  [Apache Maven 3 or newer] (http://maven.apache.org/download.cgi "Download Maven")
 
 
@@ -24,5 +24,5 @@ Installation
 git clone https://github.com/Brest-Java-Course/Viktor-Kolbik
 ```
 or Download [zip archive](https://codeload.github.com/Brest-Java-Course/Viktor-Kolbik/zip/master "This ")
-	and extract it somwhere
+	and extract it somewhere
 * go to the folder with project and run 'mvn clean', and then 'mvn install' (without single quotes).
