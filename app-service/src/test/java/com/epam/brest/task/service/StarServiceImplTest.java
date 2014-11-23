@@ -33,7 +33,6 @@ public class StarServiceImplTest {
     private static final Double MASS_TO_UPDATE = 16.3;
     private static final String NAME_TO_UPDATE = "Updated name";
     private static final Date DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
-    private static final Long GALAXY_ID_TO_UPDATE = 0L;
     private static final Long GALAXY_ID = 2L;
     private static final Long ID_TO_REMOVE = 4L;
     private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 5);

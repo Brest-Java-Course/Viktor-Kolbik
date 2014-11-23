@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Date;
@@ -17,7 +18,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring-service-test.xml"})
-public class GalaxyServiceImplTest {
+public class GalaxyServiceImplTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private GalaxyService galaxyService;
@@ -28,7 +29,7 @@ public class GalaxyServiceImplTest {
     private static final Long ID_TO_UPDATE = 1L;
     private static final Long ID_TO_ADD = 100L;
     private static final String NAME_TO_ADD = "Added name";
-    private static final Long ID_TO_REMOVE = 0L;
+    private static final Long ID_TO_REMOVE = 5L;
     private static final Long ID_TO_SELECT = 2L;
     private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 4, 2);
     private static final String NAME_TO_SELECT = "G2";
@@ -42,6 +43,7 @@ public class GalaxyServiceImplTest {
 
     @Test
     public void testAddGalaxy() throws Exception {
+
         Set<Galaxy> galaxies = galaxyService.getAllGalaxies();
 
         int sizeBefore = galaxies.size();
@@ -51,6 +53,7 @@ public class GalaxyServiceImplTest {
 
         galaxies = galaxyService.getAllGalaxies();
         assertEquals(sizeBefore, galaxies.size() - 1);
+
     }
 
     @Test
@@ -73,7 +76,7 @@ public class GalaxyServiceImplTest {
 
         galaxyService.removeGalaxy(ID_TO_REMOVE);
 
-        assertEquals(starSizeBefore, starService.getAllStars().size() + 3);
+        assertEquals(starSizeBefore, starService.getAllStars().size() + 2);
         assertEquals(galaxySizeBefore, galaxyService.getAllGalaxies().size() + 1);
     }
 

@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.sql.Date;
@@ -25,7 +26,7 @@ public class GalaxyServiceImpl implements GalaxyService {
     private static final String OCCUPIED_LOGIN_MSG = "User with such login has already existed!";
     private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
 
-    private static final Logger LOGGER = LogManager.getLogger(StarService.class);
+    private static final Logger LOGGER = LogManager.getLogger(GalaxyService.class);
 
     @Override
     public Long addGalaxy(final Galaxy galaxy) {
@@ -91,6 +92,7 @@ public class GalaxyServiceImpl implements GalaxyService {
     }
 
     @Override
+    @Transactional
     public void removeGalaxy(final Long id) {
         LOGGER.debug("starts with " + id);
 
