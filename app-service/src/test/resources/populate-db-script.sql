@@ -13,5 +13,7 @@ INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S5', 5000, 9
 INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S6', 6000, 11.6, '2014-01-06', 2);
 INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S7', 7000, 13.6, '2014-01-07', 2);
 INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S8', 8000, 0.6, '2014-01-08', 3);
-INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S9', 9000, 13.6, '2014-01-09', 3);
-INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S10', 10000, 1.6, '2014-01-10', 4);
+INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S9', 9000, 13.7, '2014-01-09', 3);
+INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S10', 11000, 1.2, '2014-01-10', 4);
+INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S11', 12000, 15.6, '2014-01-09', 5);
+INSERT INTO STAR (name, age, mass, discoverDate, galaxyId) VALUES ('S12', 13000, 18.6, '2014-01-10', 5);
