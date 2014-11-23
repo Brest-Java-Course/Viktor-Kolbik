@@ -7,9 +7,15 @@
         <groupId>com.epam.brest.task</groupId>
         <version>1.0.0-SNAPHOST</version>
     </parent>
+
+    <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>app-domain</artifactId>
+
+    <properties>
+        <project.built.sourceEncoding>UTF-8</project.built.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
