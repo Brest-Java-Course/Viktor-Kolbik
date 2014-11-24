@@ -74,21 +74,16 @@ public class GalaxyServiceImpl implements GalaxyService {
             throw new BadParameterException(BAD_PARAMETER_MSG, galaxy);
         }
 
-        try {
-            galaxyDao.getGalaxyByName(galaxy.getName());
 
+        try {
+            galaxyDao.getGalaxyById(galaxy.getGalaxyId());
+            galaxyDao.updateGalaxy(galaxy);
+            LOGGER.debug("ends");
+        } catch (EmptyResultDataAccessException e2) {
             LOGGER.debug(BAD_PARAMETER_MSG + "\n -> " + galaxy);
             throw new BadParameterException(BAD_PARAMETER_MSG, galaxy);
-        } catch (EmptyResultDataAccessException e) {
-            try {
-                galaxyDao.getGalaxyById(galaxy.getGalaxyId());
-                galaxyDao.updateGalaxy(galaxy);
-                LOGGER.debug("ends");
-            } catch (EmptyResultDataAccessException e2) {
-                LOGGER.debug(BAD_PARAMETER_MSG + "\n -> " + galaxy);
-                throw new BadParameterException(BAD_PARAMETER_MSG, galaxy);
-            }
         }
+
     }
 
     @Override

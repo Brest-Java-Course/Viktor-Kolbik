@@ -62,12 +62,7 @@ public class StarServiceImpl implements StarService {
             throw new BadParameterException(BAD_PARAMETER_MSG, star);
         }
 
-        try{
-            starDao.getStarByName(star.getName());
 
-            LOGGER.debug(BAD_PARAMETER_MSG + "\n -> " + star);
-            throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
-        }catch (EmptyResultDataAccessException e){
             try{
                 starDao.getStarsByGalaxyId(star.getGalaxyId());
                 starDao.updateStar(star);
@@ -76,7 +71,7 @@ public class StarServiceImpl implements StarService {
                 throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
             }
 
-        }
+
     }
 
     @Override
