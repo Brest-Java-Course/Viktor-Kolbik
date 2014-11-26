@@ -40,11 +40,14 @@ public class StarServiceImpl implements StarService {
 
         try{
             starDao.getStarByName(star.getName());
-            LOGGER.debug(BAD_PARAMETER_MSG + "\n -> " + star);
+            LOGGER.debug(OCCUPIED_LOGIN_MSG + "\n -> " + star);
             throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
         }catch (EmptyResultDataAccessException e){
-            return starDao.addStar(star);
+                Set<Star> stars = starDao.getStarsByGalaxyId(star.getGalaxyId());
+                Assert.notEmpty(stars);                                 ////неперехватывается, незабыть исправить!,
+                return starDao.addStar(star);
         }
+
     }
 
     @Override

@@ -131,7 +131,7 @@
 
     <build>
 
-        <finalName>app</finalName>
+        <finalName>universe</finalName>
 
         <pluginManagement>
             <plugins>
