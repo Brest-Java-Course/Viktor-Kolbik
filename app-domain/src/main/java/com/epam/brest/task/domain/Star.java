@@ -24,9 +24,9 @@ public class Star {
     private Long age;
 
     /**
-     * the Double, that presents a mass of a star
+     * the Long, that presents a mass of a star
      */
-    private Double mass;
+    private Long mass;
 
     /**
      * the Date, that presents a date of a discovering of a star
@@ -38,14 +38,14 @@ public class Star {
     public Star() {
     }
 
-    public Star(String name, Long age, Double mass, Date date) {
+    public Star(String name, Long age, Long mass, Date date) {
         this.name = name;
         this.age = age;
         this.mass = mass;
         this.date = date;
     }
 
-    public Star(Long starId, String name, Long age, Double mass, Date date, Long galaxyId) {
+    public Star(Long starId, String name, Long age, Long mass, Date date, Long galaxyId) {
         this.starId = starId;
         this.name = name;
         this.age = age;
@@ -78,11 +78,11 @@ public class Star {
         this.age = age;
     }
 
-    public Double getMass() {
+    public Long getMass() {
         return mass;
     }
 
-    public void setMass(final Double mass) {
+    public void setMass(final Long mass) {
         this.mass = mass;
     }
 

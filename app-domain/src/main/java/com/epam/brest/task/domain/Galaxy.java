@@ -31,7 +31,7 @@ public class Galaxy {
     /**
      * the Long, that presents an average mass of  all stars into this galaxy
      */
-    private Double averageMass;
+    private Long averageMass;
 
     /**
      * the Date, that presents an date of discovering of the galaxy
@@ -56,7 +56,7 @@ public class Galaxy {
         this.date = date;
     }
 
-    public Galaxy(final Long galaxyId, final String name, final Long distance, final Date date, final Long averageAge, final Double averageMass) {
+    public Galaxy(final Long galaxyId, final String name, final Long distance, final Date date, final Long averageAge, final Long averageMass) {
         this.galaxyId = galaxyId;
         this.name = name;
         this.distance = distance;
@@ -89,11 +89,11 @@ public class Galaxy {
         this.distance = distance;
     }
 
-    public Double getAverageMass() {
+    public Long getAverageMass() {
         return averageMass;
     }
 
-    public void setAverageMass(final Double averageMass) {
+    public void setAverageMass(final Long averageMass) {
         this.averageMass = averageMass;
     }
 

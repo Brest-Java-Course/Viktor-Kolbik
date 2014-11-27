@@ -15,7 +15,7 @@ public class StarTest extends TestCase {
     private static final Long STAR_ID = 1L;
     private static final String NAME = "MG55";
     private static final Long AGE = 1000000L;
-    private static final Double MASS = 2.4;
+    private static final Long MASS = 2L;
     private static final Date DATE = new Date(2014 - 1900, 10, 15);
     private static final Long GALAXY_ID = 1L;
 
@@ -66,8 +66,8 @@ public class StarTest extends TestCase {
     @Test
     public void testToString() throws Exception {
         star = new Star(STAR_ID, NAME, AGE, MASS, DATE, GALAXY_ID);
-        assertEquals(star.toString(), "Star{starId=1, name='MG55', age=1000000, mass=2.4," +
-                " date=2014-11-15, galaxyId=1}");
+        assertEquals(star.toString(), "Star{starId=1, name='MG55', age=1000000," +
+                " mass=2, date=2014-11-15, galaxyId=1}");
     }
 
 

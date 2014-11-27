@@ -20,7 +20,7 @@ public class GalaxyTest extends TestCase {
     private static final String NAME = "MG55";
     private static final Long DISTANCE = 1000000L;
     private static final Long AVERAGE_AGE = 9999999L;
-    private static final Double AVERAGE_MASS = 9.5;
+    private static final Long AVERAGE_MASS = 9L;
     private static final Date DATE = new Date(2014 - 1900, 5, 5);
 
     private Galaxy galaxy;
@@ -80,7 +80,7 @@ public class GalaxyTest extends TestCase {
     public void testToString() throws Exception {
         galaxy = new Galaxy(GALAXY_ID, NAME, DISTANCE, DATE, AVERAGE_AGE, AVERAGE_MASS);
         assertEquals(galaxy.toString(), "Galaxy{galaxyId=1, name='MG55', distance=1000000, " +
-                "averageAge=9999999, averageMass=9.5, date=2014-06-05}");
+                "averageAge=9999999, averageMass=9, date=2014-06-05}");
     }
 
     @Test
