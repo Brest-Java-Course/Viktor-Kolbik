@@ -25,11 +25,11 @@ public class StarDaoImplTest {
     private static final String NAME_TO_ADD = "Added name";
     private static final Long ID_TO_ADD = 100L;
     private static final Long AGE_TO_ADD = 3000L;
-    private static final Double MASS_TO_ADD = 51.5;
+    private static final Long MASS_TO_ADD = 51L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
     private static final Long ID_TO_UPDATE = 1L;
     private static final Long AGE_TO_UPDATE = 1036L;
-    private static final Double MASS_TO_UPDATE = 16.3;
+    private static final Long MASS_TO_UPDATE = 16L;
     private static final String NAME_TO_UPDATE = "Updated name";
     private static final Date DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
     private static final Long GALAXY_ID_TO_UPDATE = 0L;
@@ -38,7 +38,7 @@ public class StarDaoImplTest {
     private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 5);
     private static final Long AGE_TO_SELECT = 4000L;
     private static final String NAME_TO_SELECT = "S2";
-    private static final Double MASS_TO_SELECT = 2.3;
+    private static final Long MASS_TO_SELECT = 9L;
     private static final Long ID_TO_SELECT = 2L;
 
     @Test

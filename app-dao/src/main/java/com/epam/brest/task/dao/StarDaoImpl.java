@@ -221,7 +221,7 @@ public class StarDaoImpl implements StarDao {
     }
 
     @Override
-    public Set<Star> getStarsByMass(final Double mass, final Boolean flag) {
+    public Set<Star> getStarsByMass(final Long mass, final Boolean flag) {
         LOGGER.debug("starts with " + mass + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(MASS, mass);
@@ -238,7 +238,7 @@ public class StarDaoImpl implements StarDao {
     }
 
     @Override
-    public Set<Star> getStarsByMass(final Double lowBorder, final Double topBorder) {
+    public Set<Star> getStarsByMass(final Long lowBorder, final Long topBorder) {
         LOGGER.debug("starts with lowBorder = " + lowBorder + ", topBorder = " + topBorder);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(MASS + 1, lowBorder)
@@ -304,7 +304,7 @@ public class StarDaoImpl implements StarDao {
             star.setStarId(rs.getLong("starId"));
             star.setName(rs.getString("name"));
             star.setAge(rs.getLong("age"));
-            star.setMass(rs.getDouble("mass"));
+            star.setMass(rs.getLong("mass"));
             star.setDate(rs.getDate("discoverDate"));
             star.setGalaxyId(rs.getLong("galaxyId"));
             return star;
