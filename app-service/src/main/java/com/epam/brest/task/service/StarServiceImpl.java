@@ -177,7 +177,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
-    public Set<Star> getStarsByMass(final Double mass, final Boolean flag) {
+    public Set<Star> getStarsByMass(final Long mass, final Boolean flag) {
         try {
             Assert.notNull(mass);
             Assert.notNull(mass);
@@ -191,7 +191,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
-    public Set<Star> getStarsByMass(final Double lowBorder, final Double topBorder) {
+    public Set<Star> getStarsByMass(final Long lowBorder, final Long topBorder) {
         try {
             Assert.notNull(lowBorder);
             Assert.notNull(topBorder);

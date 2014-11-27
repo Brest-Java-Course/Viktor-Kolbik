@@ -8,6 +8,6 @@ CREATE TABLE GALAXY(
     starId BIGINT IDENTITY,
     name VARCHAR(50) NOT NULL,
     age BIGINT NOT NULL,
-    mass DOUBLE NOT NULL,
+    mass BIGINT NOT NULL,
     discoverDate DATE NOT NULL,
     galaxyId BIGINT NOT NULL);

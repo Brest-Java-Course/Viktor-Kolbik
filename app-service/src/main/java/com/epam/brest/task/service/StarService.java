@@ -86,15 +86,15 @@ public interface StarService {
      *             so, false means to get stars older than mass parameter
      * @return set of stars for a mass diapason
      */
-    public Set<Star> getStarsByMass(final Double mass, final Boolean flag);
+    public Set<Star> getStarsByMass(final Long mass, final Boolean flag);
 
     /**
      * gets stars for mass diapason
-     * @param lowBorder the Double that is a low mass boundary
-     * @param topBorder the Double that is a top mass boundary
+     * @param lowBorder the Long that is a low mass boundary
+     * @param topBorder the Long that is a top mass boundary
      * @return set of stars for mass diapason
      */
-    public Set<Star> getStarsByMass(final Double lowBorder, final Double topBorder);
+    public Set<Star> getStarsByMass(final Long lowBorder, final Long topBorder);
 
     /**
      * gets stars that were discovered on that date
