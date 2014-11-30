@@ -4,7 +4,6 @@ import com.epam.brest.task.domain.Star;
 import com.epam.brest.task.service.StarService;
 import com.epam.brest.task.service.exception.BadParameterException;
 import com.epam.brest.task.service.exception.TwoBadParametersException;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,9 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/stars")
+@RequestMapping("/restStar")
 public class StarRestController {
+
     @Resource
     private StarService starService;
 
@@ -174,7 +174,7 @@ public class StarRestController {
 
     @ResponseBody
     @RequestMapping(value = "/starsByMassAndFlag/{mass}_{flag}", method = RequestMethod.GET)
-    public ResponseEntity getStarsByMass(@PathVariable Double mass, @PathVariable Boolean flag){
+    public ResponseEntity getStarsByMass(@PathVariable Long mass, @PathVariable Boolean flag){
         LOGGER.debug("starts with -> " + mass + " and " + flag);
 
         try {
@@ -189,11 +189,11 @@ public class StarRestController {
 
     @ResponseBody
     @RequestMapping(value = "/starsByTwoMass/{lowBorder}_{topBorder}", method = RequestMethod.GET)
-    public ResponseEntity getStarsByMass(@PathVariable Double lowBorder, @PathVariable Double topBorder){
-        LOGGER.debug("starts with -> " + lowBorder/100.0 + " and " + topBorder/100.0);
+    public ResponseEntity getStarsByMass(@PathVariable Long lowBorder, @PathVariable Long topBorder){
+        LOGGER.debug("starts with -> " + lowBorder + " and " + topBorder);
 
         try {
-            Set<Star> stars = starService.getStarsByMass(lowBorder/100.0, topBorder/100.0);
+            Set<Star> stars = starService.getStarsByMass(lowBorder, topBorder);
             LOGGER.debug("ends with -> " + stars);
             return new ResponseEntity(stars, HttpStatus.OK);
         } catch (TwoBadParametersException e) {

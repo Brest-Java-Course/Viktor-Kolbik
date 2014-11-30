@@ -33,13 +33,18 @@ public class StarRestControllerMockTest {
     private static final String NAME = "name";
     private static final Long ID = 8L;
     private static final Long AGE = 3000L;
-    private static final Double MASS = 51.5;
+    private static final Long MASS = 51L;
     private static final Date DATE = new Date(2014 - 1900, 5, 5);
+    private static final String SET_WE_GET = "[{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51,\"date\":\"2014-06-05\",\"galaxyId\":8}," +
+            "{\"starId\":9,\"name\":\"name1\",\"age\":3001,\"mass\":52,\"date\":\"2014-06-05\",\"galaxyId\":9}]";
+
 
     private MockMvc mockMvc;
 
     @Resource
     private StarRestController starRestController;
+
+    private static final String STAR_REST_ROOT = "/restStar";
 
     @Autowired
     private StarService starService;
@@ -65,7 +70,7 @@ public class StarRestControllerMockTest {
         String starJson = objectMapper.writeValueAsString(star);
 
         this.mockMvc.perform(
-                post("/stars")
+                post(STAR_REST_ROOT)
                         .content(starJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -89,7 +94,7 @@ public class StarRestControllerMockTest {
         String starJson = objectMapper.writeValueAsString(star);
 
         this.mockMvc.perform(
-                put("/stars")
+                put(STAR_REST_ROOT)
                         .content(starJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -108,7 +113,7 @@ public class StarRestControllerMockTest {
         replay(starService);
 
         this.mockMvc.perform(
-                delete("/stars/" + ID))
+                delete(STAR_REST_ROOT + "/" + ID))
                 .andDo(print())
                 .andExpect(status().isAccepted());
 
@@ -122,12 +127,12 @@ public class StarRestControllerMockTest {
                 .andReturn(new Star(ID, NAME, AGE, MASS, DATE, ID));
         replay(starService);
 
-        mockMvc.perform(get("/stars/starById/" + ID)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starById/" + ID)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5,\"date\":\"2014-06-05\",\"galaxyId\":8}"));
+                .andExpect(content().string("{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51,\"date\":\"2014-06-05\",\"galaxyId\":8}"));
 
         verify(starService);
     }
@@ -142,14 +147,12 @@ public class StarRestControllerMockTest {
         expect(starService.getStarsByGalaxyId(ID)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByGalaxyId/" + ID)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByGalaxyId/" + ID)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001,\"mass\":52.5,\"date\":\"2014-06-05\"," +
-                        "\"galaxyId\":9},{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5,\"date\":\"2014-06-05\"," +
-                        "\"galaxyId\":8}]"));
+                .andExpect(content().string(SET_WE_GET));
 
         verify(starService);
     }
@@ -160,12 +163,12 @@ public class StarRestControllerMockTest {
         expect(starService.getStarByName(NAME)).andReturn(new Star(ID, NAME, AGE, MASS, DATE, ID));
         replay(starService);
 
-        mockMvc.perform(get("/stars/starByName/" + NAME)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starByName/" + NAME)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5,\"date\":\"2014-06-05\",\"galaxyId\":8}"));
+                .andExpect(content().string("{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51,\"date\":\"2014-06-05\",\"galaxyId\":8}"));
 
         verify(starService);
     }
@@ -180,16 +183,13 @@ public class StarRestControllerMockTest {
         expect(starService.getAllStars()).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/")
+        mockMvc.perform(get(STAR_REST_ROOT)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000," +
-                                "\"mass\":51.5,\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -204,16 +204,13 @@ public class StarRestControllerMockTest {
         expect(starService.getStarsByAge(AGE, true)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByAgeAndFlag/" + AGE + "_" + true)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByAgeAndFlag/" + AGE + "_" + true)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -228,16 +225,13 @@ public class StarRestControllerMockTest {
         expect(starService.getStarsByAge(AGE, AGE + 1)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByTwoAge/" + AGE + "_" + (AGE + 1))
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByTwoAge/" + AGE + "_" + (AGE + 1))
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -252,16 +246,13 @@ public class StarRestControllerMockTest {
         expect(starService.getStarsByMass(MASS, true)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByMassAndFlag/" + MASS + "_" + true)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByMassAndFlag/" + MASS + "_" + true)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -270,21 +261,18 @@ public class StarRestControllerMockTest {
     public void testGetStarByMass1() throws Exception {
         Set<Star> stars = new HashSet<Star>();
         stars.add(new Star(ID, NAME, AGE, MASS, DATE, ID));
-        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1.0, DATE, ID + 1));
+        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1, DATE, ID + 1));
 
-        expect(starService.getStarsByMass(MASS, MASS + 1.0)).andReturn(stars);
+        expect(starService.getStarsByMass(MASS, MASS + 1)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByTwoMass/" + MASS * 100 + "_" + (MASS + 1.0)*100)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByTwoMass/" + MASS + "_" + (MASS + 1))
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -293,22 +281,19 @@ public class StarRestControllerMockTest {
     public void testGetStarByDate0() throws Exception {
         Set<Star> stars = new HashSet<Star>();
         stars.add(new Star(ID, NAME, AGE, MASS, DATE, ID));
-        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1.0, DATE, ID + 1));
+        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1, DATE, ID + 1));
 
 
         expect(starService.getStarsByDate(DATE)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByDate/" + DATE)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByDate/" + DATE)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -317,21 +302,18 @@ public class StarRestControllerMockTest {
     public void testGetStarByDate1() throws Exception {
         Set<Star> stars = new HashSet<Star>();
         stars.add(new Star(ID, NAME, AGE, MASS, DATE, ID));
-        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1.0, DATE, ID + 1));
+        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1, DATE, ID + 1));
 
         expect(starService.getStarsByDate(DATE, true)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByDateAndFlag/" + DATE + "_" + true)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByDateAndFlag/" + DATE + "_" + true)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }
@@ -340,22 +322,19 @@ public class StarRestControllerMockTest {
     public void testGetStarByDate2() throws Exception {
         Set<Star> stars = new HashSet<Star>();
         stars.add(new Star(ID, NAME, AGE, MASS, DATE, ID));
-        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1.0, DATE, ID + 1));
+        stars.add(new Star(ID + 1, NAME + 1, AGE + 1, MASS + 1, DATE, ID + 1));
         Date topBorder = new Date(2014 - 1900, 6, 5);
 
         expect(starService.getStarsByDate(DATE, topBorder)).andReturn(stars);
         replay(starService);
 
-        mockMvc.perform(get("/stars/starsByTwoDate/" + DATE + "_" + topBorder)
+        mockMvc.perform(get(STAR_REST_ROOT + "/starsByTwoDate/" + DATE + "_" + topBorder)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"starId\":9,\"name\":\"name1\",\"age\":3001," +
-                                "\"mass\":52.5,\"date\":\"2014-06-05\",\"galaxyId\":9}," +
-                                "{\"starId\":8,\"name\":\"name\",\"age\":3000,\"mass\":51.5," +
-                                "\"date\":\"2014-06-05\",\"galaxyId\":8}]"));
+                        .string(SET_WE_GET));
 
         verify(starService);
     }

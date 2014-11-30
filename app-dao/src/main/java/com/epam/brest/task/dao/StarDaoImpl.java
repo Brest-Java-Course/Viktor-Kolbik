@@ -57,7 +57,7 @@ public class StarDaoImpl implements StarDao {
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select-stars-by-date-diapason-path}')).inputStream)}")
     public String selectStarsByDateDiapasonSql;
 
-    private static final Logger LOGGER = LogManager.getLogger(GalaxyDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(StarDaoImpl.class);
 
     private static final String STAR_ID = "starId";
     private static final String NAME = "name";

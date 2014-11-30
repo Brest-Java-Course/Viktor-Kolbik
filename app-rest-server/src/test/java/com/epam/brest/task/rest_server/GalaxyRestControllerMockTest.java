@@ -35,8 +35,6 @@ public class GalaxyRestControllerMockTest {
     private static final String NAME = "name";
     private static final Long ID = 8L;
     private static final Long DISTANCE = 3000L;
-    private static final Long AVERAGE_AGE = 300L;
-    private static final Double AVERAGE_MASS = 300.5;
     private static final Date DATE = new Date(2014 - 1900, 5, 5);
 
     private MockMvc mockMvc;
@@ -46,6 +44,13 @@ public class GalaxyRestControllerMockTest {
 
     @Autowired
     private GalaxyService galaxyService;
+
+    private static final String GALAXY_REST_ROOT = "/restGalaxy";
+    private static final String SET_WE_GET = "[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
+            "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
+            "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
+            "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]";
+
 
     @Before
     public void setUp() {
@@ -68,7 +73,7 @@ public class GalaxyRestControllerMockTest {
         String galaxyJson = objectMapper.writeValueAsString(galaxy);
 
         this.mockMvc.perform(
-                post("/galaxies")
+                post(GALAXY_REST_ROOT)
                         .content(galaxyJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -92,7 +97,7 @@ public class GalaxyRestControllerMockTest {
         String starJson = objectMapper.writeValueAsString(galaxy);
 
         this.mockMvc.perform(
-                put("/galaxies")
+                put(GALAXY_REST_ROOT)
                         .content(starJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -111,7 +116,7 @@ public class GalaxyRestControllerMockTest {
         replay(galaxyService);
 
         this.mockMvc.perform(
-                delete("/galaxies/" + ID))
+                delete(GALAXY_REST_ROOT + "/" + ID))
                 .andDo(print())
                 .andExpect(status().isAccepted());
 
@@ -126,7 +131,7 @@ public class GalaxyRestControllerMockTest {
                 .andReturn(galaxy);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxyById/" + ID)
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxyById/" + ID)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
@@ -144,7 +149,7 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getGalaxyByName(NAME)).andReturn(galaxy);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxyByName/" + NAME)
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxyByName/" + NAME)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
@@ -165,16 +170,13 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getAllGalaxies()).andReturn(galaxies);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/")
+        mockMvc.perform(get(GALAXY_REST_ROOT)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-                                "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]"));
+                        .string(SET_WE_GET));
 
         verify(galaxyService);
     }
@@ -188,16 +190,13 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getGalaxiesByDistance(DISTANCE, true)).andReturn(galaxies);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxiesByDistanceAndFlag/" + DISTANCE + "_" + true)
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxiesByDistanceAndFlag/" + DISTANCE + "_" + true)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-                                "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]"));
+                        .string(SET_WE_GET));
 
         verify(galaxyService);
     }
@@ -211,16 +210,13 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getGalaxiesByDistance(DISTANCE, DISTANCE + 1)).andReturn(galaxies);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxiesByTwoDistance/" + DISTANCE + "_" + (DISTANCE + 1))
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxiesByTwoDistance/" + DISTANCE + "_" + (DISTANCE + 1))
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-                                "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]"));
+                        .string(SET_WE_GET));
 
         verify(galaxyService);
     }
@@ -235,16 +231,13 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getGalaxiesByDate(DATE)).andReturn(galaxies);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxiesByDate/" + DATE)
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxiesByDate/" + DATE)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-                                "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]"));
+                        .string(SET_WE_GET));
 
         verify(galaxyService);
     }
@@ -258,16 +251,13 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getGalaxiesByDate(DATE, true)).andReturn(galaxies);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxiesByDateAndFlag/" + DATE + "_" + true)
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxiesByDateAndFlag/" + DATE + "_" + true)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-                                "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]"));
+                        .string(SET_WE_GET));
 
         verify(galaxyService);
     }
@@ -283,16 +273,13 @@ public class GalaxyRestControllerMockTest {
         expect(galaxyService.getGalaxiesByDate(DATE, topBorder)).andReturn(galaxies);
         replay(galaxyService);
 
-        mockMvc.perform(get("/galaxies/galaxiesByTwoDate/" + DATE + "_" + topBorder)
+        mockMvc.perform(get(GALAXY_REST_ROOT + "/galaxiesByTwoDate/" + DATE + "_" + topBorder)
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .string("[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-                                "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-                                "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]"));
+                        .string(SET_WE_GET));
 
         verify(galaxyService);
     }

@@ -18,7 +18,7 @@ import java.sql.Date;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/galaxies")
+@RequestMapping("/restGalaxy")
 public class GalaxyRestController {
     @Resource
     private GalaxyService galaxyService;
