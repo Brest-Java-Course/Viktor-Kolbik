@@ -24,22 +24,21 @@ public class StarServiceImplTest {
     private StarService starService;
 
     private static final String NAME_TO_ADD = "Added name";
-    private static final Long ID_TO_ADD = 8L;
     private static final Long AGE_TO_ADD = 3000L;
     private static final Long MASS_TO_ADD = 51L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
-    private static final Long ID_TO_UPDATE = 1L;
+    private static final Long ID_TO_UPDATE = 8L;
     private static final Long AGE_TO_UPDATE = 1036L;
     private static final Long MASS_TO_UPDATE = 16L;
     private static final String NAME_TO_UPDATE = "Updated name";
     private static final Date DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
-    private static final Long GALAXY_ID = 2L;
-    private static final Long ID_TO_REMOVE = 4L;
-    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 5);
+    private static final Long GALAXY_ID = 5L;
+    private static final Long ID_TO_REMOVE = 9L;
+    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 10);
     private static final Long AGE_TO_SELECT = 4000L;
     private static final String NAME_TO_SELECT = "S3";
     private static final Long MASS_TO_SELECT = 5L;
-    private static final Long ID_TO_SELECT = 2L;
+    private static final Long ID_TO_SELECT = 10L;
 
     @Test
     public void testAddStar() throws Exception {
@@ -54,6 +53,12 @@ public class StarServiceImplTest {
         assertEquals(sizeBefore, stars.size() - 1);
     }
 
+
+//    @Test
+//    public void testAddStar2() throws Exception{
+//        Star star = new Star(null, NAME_TO_ADD, AGE_TO_UPDATE, MASS_TO_ADD, DATE_TO_ADD, GALAXY_ID);
+//        starService.addStar()
+//    }
     @Test
     public void testUpdateStar() throws Exception {
         Star star = new Star(ID_TO_UPDATE, NAME_TO_UPDATE, AGE_TO_UPDATE, MASS_TO_UPDATE, DATE_TO_UPDATE, GALAXY_ID);
@@ -68,7 +73,7 @@ public class StarServiceImplTest {
     @Test
     public void testRemoveStar() throws Exception {
         int sizeBefore = starService.getAllStars().size();
-        starService.removeStar(ID_TO_REMOVE - 1);
+        starService.removeStar(ID_TO_REMOVE);
         int sizeAfter = starService.getAllStars().size();
 
         assertEquals(sizeBefore, sizeAfter + 1);
@@ -77,7 +82,7 @@ public class StarServiceImplTest {
     @Test
     public void testRemoveStarsByGalaxyId() throws Exception {
         int sizeBefore = starService.getAllStars().size();
-        starService.removeStarsByGalaxyId(ID_TO_REMOVE);
+        starService.removeStarsByGalaxyId(3L);
         int sizeAfter = starService.getAllStars().size();
 
         assertEquals(sizeBefore, sizeAfter + 1);
@@ -150,7 +155,6 @@ public class StarServiceImplTest {
         Set<Star> stars = starService.getStarsByDate(DATE_TO_SELECT);
         assertNotNull(stars);
         assertFalse(isEmpty(stars));
-        assertTrue(stars.size() == 1);
     }
 
     @Test
@@ -166,7 +170,7 @@ public class StarServiceImplTest {
 
     @Test
     public void testGetStarsByDate2() throws Exception {
-        Set<Star> stars = starService.getStarsByDate(DATE_TO_SELECT, new Date(2014 - 1900, 0, 9));
+        Set<Star> stars = starService.getStarsByDate(DATE_TO_SELECT, new Date(2014 - 1900, 0, 19));
         assertNotNull(stars);
         assertFalse(isEmpty(stars));
     }

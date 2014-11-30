@@ -1,6 +1,8 @@
 package com.epam.brest.task.service;
 
+import com.epam.brest.task.dao.GalaxyDao;
 import com.epam.brest.task.dao.StarDao;
+import com.epam.brest.task.domain.Galaxy;
 import com.epam.brest.task.domain.Star;
 import com.epam.brest.task.service.exception.BadParameterException;
 import com.epam.brest.task.service.exception.TwoBadParametersException;
@@ -17,7 +19,10 @@ public class StarServiceImpl implements StarService {
     @Autowired
     private StarDao starDao;
 
-    private static final Logger LOGGER = LogManager.getLogger(StarService.class);
+    @Autowired
+    private GalaxyDao galaxyDao;
+
+    private static final Logger LOGGER = LogManager.getLogger(StarServiceImpl.class);
 
     private static final String OCCUPIED_LOGIN_MSG = "User with such login has already existed!";
     private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
@@ -30,7 +35,7 @@ public class StarServiceImpl implements StarService {
             Assert.isNull(star.getStarId());
             Assert.isTrue(star.getName() != null && !star.getName().trim().equals(""));
             Assert.notNull(star.getMass());
-            Assert.isTrue(!(star.getMass() <= 0.0001));
+            Assert.isTrue(!(star.getMass() <= 0));
             Assert.isTrue(!(star.getAge() <= 100L));
             Assert.notNull(star.getDate());
         } catch(IllegalArgumentException e){
@@ -43,11 +48,9 @@ public class StarServiceImpl implements StarService {
             LOGGER.debug(OCCUPIED_LOGIN_MSG + "\n -> " + star);
             throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
         }catch (EmptyResultDataAccessException e){
-                Set<Star> stars = starDao.getStarsByGalaxyId(star.getGalaxyId());
-                Assert.notEmpty(stars);                                 ////неперехватывается, незабыть исправить!,
+                galaxyDao.getGalaxyById(star.getGalaxyId());
                 return starDao.addStar(star);
         }
-
     }
 
     @Override
@@ -57,7 +60,7 @@ public class StarServiceImpl implements StarService {
             Assert.notNull(star.getStarId());
             Assert.isTrue(star.getName() != null && !star.getName().trim().equals(""));
             Assert.notNull(star.getMass());
-            Assert.isTrue(!(star.getMass() <= 0.0001));
+            Assert.isTrue(!(star.getMass() <= 0));
             Assert.isTrue(!(star.getAge() <= 100L));
             Assert.notNull(star.getDate());
         } catch(IllegalArgumentException e){
@@ -181,7 +184,7 @@ public class StarServiceImpl implements StarService {
         try {
             Assert.notNull(mass);
             Assert.notNull(mass);
-            Assert.isTrue(mass > 0.001);
+            Assert.isTrue(mass > 0);
 
             return starDao.getStarsByMass(mass, flag);
         } catch (IllegalArgumentException e) {
@@ -196,7 +199,7 @@ public class StarServiceImpl implements StarService {
             Assert.notNull(lowBorder);
             Assert.notNull(topBorder);
             Assert.isTrue(topBorder - lowBorder > 0);
-            Assert.isTrue(lowBorder > 0.001);
+            Assert.isTrue(lowBorder > 0);
 
             return starDao.getStarsByMass(lowBorder, topBorder);
         } catch (IllegalArgumentException e) {

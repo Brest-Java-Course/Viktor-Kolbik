@@ -26,10 +26,9 @@ public class GalaxyServiceImplTest extends AbstractTransactionalJUnit4SpringCont
     @Autowired
     private  StarService starService;
 
-    private static final Long ID_TO_UPDATE = 1L;
-    private static final Long ID_TO_ADD = 100L;
+    private static final Long ID_TO_UPDATE = 0L;
     private static final String NAME_TO_ADD = "Added name";
-    private static final Long ID_TO_REMOVE = 5L;
+    private static final Long ID_TO_REMOVE = 1L;
     private static final Long ID_TO_SELECT = 2L;
     private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 4, 2);
     private static final String NAME_TO_SELECT = "G2";
