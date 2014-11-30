@@ -1,14 +1,12 @@
 package com.epam.brest.task.web_server;
 
 import com.epam.brest.task.domain.Star;
-import com.epam.brest.task.service.GalaxyService;
 import com.epam.brest.task.service.StarService;
 import com.epam.brest.task.service.exception.BadParameterException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.Date;
 
 @Controller
-@RequestMapping("/mvcServer")
+@RequestMapping("/stars")
 public class StarController {
 
     @Autowired
@@ -26,14 +24,14 @@ public class StarController {
 
     @RequestMapping("/")
     public ModelAndView mainPage() {
-        ModelAndView modelAndView = new ModelAndView("mainPage", "stars", starService.getAllStars());
+        ModelAndView modelAndView = new ModelAndView("starPage", "stars", starService.getAllStars());
 
         return modelAndView;
     }
 
     @RequestMapping("/addStar")
     public ModelAndView addStar(@RequestParam("name") String name,
-                                @RequestParam("age") Long age, @RequestParam("mass") Double mass,
+                                @RequestParam("age") Long age, @RequestParam("mass") Long mass,
                                 @RequestParam("date") Date date, @RequestParam("galaxyId") Long galaxyId) {
 
         Star star = new Star(null, name, age, mass, date, galaxyId);
@@ -41,10 +39,10 @@ public class StarController {
 
         try {
             Long i = starService.addStar(star);
-            modelAndView = new ModelAndView("redirect:/mvcServer/");
+            modelAndView = new ModelAndView("redirect:/stars/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("mainPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
             modelAndView.addObject("creationError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }
@@ -54,7 +52,7 @@ public class StarController {
 
     @RequestMapping("/updateStar")
     public ModelAndView updateStar(@RequestParam("starId") Long starId, @RequestParam("name") String name,
-                                   @RequestParam("age") Long age, @RequestParam("mass") Double mass,
+                                   @RequestParam("age") Long age, @RequestParam("mass") Long mass,
                                    @RequestParam("date") Date date, @RequestParam("galaxyId") Long galaxyId) {
 
         Star star = new Star(starId, name, age, mass, date, galaxyId);
@@ -62,10 +60,10 @@ public class StarController {
 
         try {
             starService.updateStar(star);
-            modelAndView = new ModelAndView("redirect:/mvcServer/");
+            modelAndView = new ModelAndView("redirect:/stars/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("mainPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
             modelAndView.addObject("updatingError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }
@@ -75,7 +73,7 @@ public class StarController {
 /*
     @RequestMapping("/setUpdateStarForm")
     public ModelAndView setUpdateForm(@RequestParam("starId") Long starId, @RequestParam("name") String name,
-                                      @RequestParam("age") Long age, @RequestParam("mass") Double mass,
+                                      @RequestParam("age") Long age, @RequestParam("mass") Long mass,
                                       @RequestParam("date") Date date, @RequestParam("galaxyId") Long galaxyId) {
 
         Star star = new Star(starId, name, age, mass, date, galaxyId);
@@ -93,10 +91,10 @@ public class StarController {
 
         try {
             starService.removeStar(starId);
-            modelAndView = new ModelAndView("redirect:/mvcServer/");
+            modelAndView = new ModelAndView("redirect:/stars/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("mainPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
             modelAndView.addObject("removingError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }

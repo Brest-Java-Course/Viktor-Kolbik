@@ -8,117 +8,8 @@ pageEncoding="UTF-8"%>
     <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Main Page</title>
-        <style>
-            .main {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: blanchedalmond;
-            }
-            .test{
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: blanchedalmond;
-            }
-            html {
-                min-height: 100%
-            }
-            body {
-                min-height: 100%;
-                background: #fff;
-                font: 14px/125% Tahoma;
-            }
-            .row {
-                margin: 1em 0
-            }
-            label {
-                display: inline-block;
-                width: 120px;
-                text-align: left
-            }
-            input[type="text"] {
-                margin: 0;
-                padding: 2px;
-                border: 1px solid;
-                border-color: #999 #ccc #ccc;
-                border-radius: 2px
-            }
-            .features-table
-            {
-                width: 100%;
-                margin: 0 auto;
-                border-collapse: separate;
-                border-spacing: 0;
-                border: 0;
-                text-shadow: 0 1px 0 #fff;
-                color: #2a2a2a;
-                background: #fafafa;
-                background-image: -moz-linear-gradient(top, #fff, #eaeaea, #fff); /* Firefox 3.6 */
-                background-image: -webkit-gradient(linear,center bottom,center top,from(#fff),color-stop(0.5, #eaeaea),to(#fff));
-                margin-top:20px;
-                margin-bottom:20px;
-            }
-            .features-table td
-            {
-                height: 50px;
-                padding: 0 20px;
-                border-bottom: 1px solid #cdcdcd;
-                box-shadow: 0 1px 0 white;
-                -moz-box-shadow: 0 1px 0 white;
-                -webkit-box-shadow: 0 1px 0 white;
-                text-align: center;
-                vertical-align: middle;
-                display: table-cell;
-            }
-            .features-table tbody td
-            {
-                text-align: center;
-                width: 150px;
-            }
-            .features-table td.grey
-            {
-                background: #efefef;
-                background: rgba(144,144,144,0.15);
-                border-right: 0px;
-            }
-            .features-table td.green
-            {
-                background: #e7f3d4;
-                //                background: rgba(184,243,85,0.3);
-            }
-            .features-table td:nowrap
-            {
-                white-space: nowrap;
-            }
-            .features-table thead td
-            {
-                font-size: 120%;
-                font-weight: bold;
-                -moz-border-radius-topright: 10px;
-                -moz-border-radius-topleft: 10px;
-                border-top-right-radius: 10px;
-                border-top-left-radius: 10px;
-                border-top: 1px solid #eaeaea;
-            }
-            .features-table tfoot td
-            {
-                font-size: 120%;
-                font-weight: bold;
-                -moz-border-radius-bottomright: 10px;
-                -moz-border-radius-bottomleft: 10px;
-                border-bottom-right-radius: 10px;
-                border-bottom-left-radius: 10px;
-                border-bottom: 1px solid #dadada;
-            }
-                        .createStarForm{
-                                float: left;
-            }
-        </style>
+
+        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/page.css" />">
     </head>
 
     <body>
@@ -132,130 +23,131 @@ pageEncoding="UTF-8"%>
             <c:if test="${removingError}">
                 <script type="text/javascript"> alert("ERROR while removing star!")</script>
             </c:if>
-<div class="createGalaxyForm">
-            <form action="${pageContext.request.contextPath}/mvcGalaxiesServer/addGalaxy" method="post">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td><label for="name">Name</label></td><td><input type="text" id="createName" name="name" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="distance">Distance</label></td><td><input type="number" id="createDistance" name="distance" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="date">date</label></td><td><input type="date" id="createDate" name="date" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td></td><td><input type="reset" name="Reset" value="reset">
-                                <input type="submit" value="add the user" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-         </div>
-            <div class="updateGalaxyForm">
-<form id="updateGalaxyForm" action="${pageContext.request.contextPath}/mvcGalaxiesServer/updateGalaxy" method="put">
-                <table>
-                    <tbody>
+            <div class="createForm">
+                <form action="${pageContext.request.contextPath}/galaxies/addGalaxy" method="post">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="name">Name</label></td><td><input type="text" id="createName" name="name" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="distance">Distance</label></td><td><input type="number" id="createDistance" name="distance" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="date">date</label></td><td><input type="date" class="dateInput" id="createDate" name="date" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="reset" name="Reset" value="reset"><input type="submit" value="add the galaxy" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+             </div>
+            <div class="updateForm">
+                <form id="updateGalaxyForm" action="${pageContext.request.contextPath}/galaxies/updateGalaxy" method="put">
+                    <table>
+                        <tbody>
 
-                    <input type="text" id="updateGalaxyId" name="galaxyId" value="" hidden="true"/><br>
-                    <tr>
-                        <td><label for="name">Name</label></td>
-                        <td><input type="text" id="updateName" name="name" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="name">Distance</label></td>
-                        <td><input type="number" id="updateAge" name="age" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="name">Mass</label></td>
-                        <td><input type="number" id="updateMass" name="mass" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="name">Date</label></td>
-                        <td><input type="date" id="updateDate" name="date" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="name">Galaxy ID</label></td>
-                        <td><input type="number" id="updateGalaxyId" name="galaxyId" value="" /></td>
-                    </tr>
-                    <input type="reset" name="Reset" value="reset">
-                    <input type="submit" value="update the star" />
-                    </tbody>
-                </table>
-            </form>
+                            <input type="text" id="updateGalaxyId" name="galaxyId" value="" hidden="true"/>
+                            <tr>
+                                <td><label for="name">Name</label></td>
+                                <td><input type="text" id="updateName" name="name" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="distance">Distance</label></td>
+                                <td><input type="number" id="updateDistance" name="distance" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="date">Date</label></td>
+                                <td><input type="date" id="updateDate" class="dateInput" name="date" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="reset" name="Reset" value="reset"><input type="submit" value="update the galaxy" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
             </div>
-
 
         <table>
             <tbody>
-                <tr>
-                    <td><label for="lowBorder">LowBorder</label></td>
-                    <td><input type="date" id="lowBorder" name="lowBorder"/></td>
-                    <td><label for="topBorder">TopBorder</label></td>
-                    <td><input type="date" id="topBorder" name="topBorder"/></td>
-                    <input type="button" id="findBtn" name="findBtn" value="Find" onclick="filterByDate()"/>
-                </tr>
+                    <tr>
+                        <td><label for="lowBorder">LowBorder</label></td>
+                        <td><input type="date" id="lowBorder" class="dateInput" name="lowBorder"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="topBorder">TopBorder</label></td>
+                        <td><input type="date" id="topBorder" class="dateInput" name="topBorder"/></td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td><input type="button" id="findBtn" name="findBtn" value="Find by Date" onclick="filterByDate()"/></td>
+                     </tr>
             </tbody>
         </table>
 
-
-            <input type="button" id="findBtn" name="findBtn" value="TEST_CLEAR_TABLE" onclick="cleanMainTable()"/>
-            <TABLE class="features-table" id="mainTable" summary="list stars.">
-
-
-                        <CAPTION><a href="${pageContext.request.contextPath}/mvcServer/">GET ALL STARS</a></CAPTION>
-
-
-                <COLGROUP align="center"><COLGROUP align="left"> <COLGROUP align="center" span="2"><COLGROUP align="center" span="3">
-                <tr><td><h2>Id</h2><td><h2>Name</h2><td><h2>Age</h2><td><h2>Mass</h2><td><h2>Date</h2><td><h2>galaxy Id</h2><td><h2>Update</h2><td><h2>Delete</h2>
-
-                <!--<c:forEach var="star" items="${stars}">
-                    <TR>
-                        <TD class="grey"> <c:out value="${star.starId}"></c:out>
-                    <TD class="green"> <c:out value="${star.name}"></c:out>
-                    <TD class="green"> <c:out value="${star.age}"></c:out>
-                    <TD class="green"> <c:out value="${star.mass}"></c:out>
-                    <TD class="green"> <c:out value="${star.date}"></c:out>
-                    <td class="green"> <input type="button" id="updateStarButton" value=<c:out value="${star.galaxyId}"></c:out>>
-                    <TD class="grey"> <input type="button" id="updateStarButton" value="Update" onclick="fillInUpdateForm(${star.starId}, '${star.name}', ${star.age}, ${star.mass}, ${star.date}, ${star.galaxyId})"/>
-                    <td class="grey"><form action="${pageContext.request.contextPath}/mvcServer/removeStar" method="delete">
-                                                                 <input type="text" id="starId" name="starId" value="${star.starId}" hidden="true" />
-                                                                 <input type="submit" value="remove" />
-                                                             </form>
-                </c:forEach>-->
+        <table class="features-table" id="mainTable" summary="list stars.">
+            <caption><a href="${pageContext.request.contextPath}/galaxies/">GET ALL GALAIES</a></caption>
+                <tr>
+                    <td><h2>Id</h2></td>
+                    <td><h2>Name</h2></td>
+                    <td><h2>Distance</h2></td>
+                    <td><h2>averageMass</h2></td>
+                    <td><h2>averageAge</h2></td>
+                    <td><h2>Date</h2></td>
+                    <td><h2>Update</h2></td>
+                    <td><h2>Delete</h2></td>
+                </tr>
         </div>
 
-        <script type="text/javascript" language="javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/jquery.js"></script>
+
+
+        <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+        <script src="<c:url value="/resources/js/date.js" />"></script>
         <script type="text/javascript">
             $(fillInFullTable);
+            $(setCurrentDate);
+                             
+            function setCurrentDate(){
+            
+                    var currentDateString = (new Date()).toString('yyyy-MM-dd');
+                    var elements = document.getElementsByClassName('dateInput');
+                      
+                    for(var i = 0; i < elements.length; i ++){
+                        elements[i].setAttribute("value", currentDateString);
+                    }
+            }
+
+
+
         function fillInFullTable(){
+  
             var stringHtml = "";
 
-                                <c:forEach var="star" items="${stars}">
-                                    stringHtml += setStringHtml(${star.starId}, '${star.name}', ${star.age}, ${star.mass}, '${star.date}', ${star.galaxyId});
-                                </c:forEach>
+            <c:forEach var="galaxy" items="${galaxies}">
+                stringHtml += setStringHtml(${galaxy.galaxyId}, '${galaxy.name}', ${galaxy.distance}, ${galaxy.averageMass}, ${galaxy.averageAge}, '${galaxy.date}');
+            </c:forEach>
 
-                                $(document.getElementById("mainTable").getElementsByTagName("tbody")[0]).append(stringHtml);
+            $(document.getElementById("mainTable").getElementsByTagName("tbody")[0]).append(stringHtml);
         }
 
-        function fillInUpdateForm(starId, name, age, mass, date, galaxyId){
+        function fillInUpdateForm(galaxyId, name, distance, date){
 
-            $('#updateStarId').val(starId);
-            $('#updateName').val(name);
-            $('#updateAge').val(age);
-            $('#updateMass').val(mass);
             $('#updateGalaxyId').val(galaxyId);
+            $('#updateName').val(name);
+            $('#updateDistance').val(distance);
+            $('#updateDate').val(date);
         };
 
         function cleanMainTable(){
         var table = document.getElementById("mainTable");
         var rows = table.getElementsByTagName("tr");
         var length = rows.length;
+        
             for ( var i = 1; i < length; i++ )  {
-                table.deleteRow(1);                         //всегда удаляю первую, потому что после удаления первой строки, вторая становиться первой
-                                                            //можно было начать с конца, но так проще
-                                                            //нулевая - заголовок таблицы
+                table.deleteRow(1);                        
         }
       }
 
@@ -263,9 +155,7 @@ pageEncoding="UTF-8"%>
                     var tbody = document.getElementById("mainTable").getElementsByTagName("tbody")[0];
                     var lowBorder = $('#lowBorder').val();
                     var topBorder = $('#topBorder').val();
-                    var actionFlag;                         //0 - вывести все старше lowBorder,
-                                                            //1 - все младше topBorder
-                                                            //2 - диапазон между lowBorder, и topBorder
+                    var actionFlag;                         
                     var stringHtml = "";
 
                     if(lowBorder == "" && topBorder == ""){
@@ -283,34 +173,35 @@ pageEncoding="UTF-8"%>
                     cleanMainTable();
 
 
-                                <c:forEach var="star" items="${stars}">
-                                    if(actionFlag == 0 && "${star.date}" >= lowBorder){
+                    <c:forEach var="galaxy" items="${galaxies}">
+                        if(actionFlag == 0 && "${galaxy.date}" >= lowBorder){
 
-                                        stringHtml += setStringHtml(${star.starId}, '${star.name}', ${star.age}, ${star.mass}, '${star.date}', ${star.galaxyId});
-                                    } else if(actionFlag == 1 && "${star.date}" <= topBorder){
-                                        stringHtml += setStringHtml(${star.starId}, '${star.name}', ${star.age}, ${star.mass}, '${star.date}', ${star.galaxyId});
-                                    }else if(actionFlag == 2 && ("${star.date}" >= lowBorder && "${star.date}" <= topBorder)){
-                                        stringHtml += setStringHtml(${star.starId}, '${star.name}', ${star.age}, ${star.mass}, '${star.date}', ${star.galaxyId});
-                                    }
+                            stringHtml += setStringHtml(${galaxy.galaxyId}, '${galaxy.name}', ${galaxy.distance}, ${galaxy.averageMass}, ${galaxy.averageAge}, '${galaxy.date}');
+                        } else if(actionFlag == 1 && "${galaxy.date}" <= topBorder){
+                            stringHtml += setStringHtml(${galaxy.galaxyId}, '${galaxy.name}', ${galaxy.distance}, ${galaxy.averageMass}, ${galaxy.averageAge}, '${galaxy.date}');
+                        }else if(actionFlag == 2 && ("${galaxy.date}" >= lowBorder && "${galaxy.date}" <= topBorder)){
+                            stringHtml += setStringHtml(${galaxy.galaxyId}, '${galaxy.name}', ${galaxy.distance}, ${galaxy.averageMass}, ${galaxy.averageAge}, '${galaxy.date}');
+                        }
+                     </c:forEach>
 
-
-                                </c:forEach>
-
-                                $(document.getElementById("mainTable").getElementsByTagName("tbody")[0]).append(stringHtml);
+                     $(document.getElementById("mainTable").getElementsByTagName("tbody")[0]).append(stringHtml);
         }
 
-        function setStringHtml(starId, name, age, mass, date, galaxyId){
+        function setStringHtml(galaxyId, name, distance, averageMass, averageAge, date){
             var stringHtml = "";
+            var string2Html = "";
             var strName = "\'" + name + "\'";
-             stringHtml += "<tr><td class=\"grey\">" + starId;
+            var strDate = "\'" + date + "\'";
+
+             stringHtml += "<tr><td class=\"grey\">" + galaxyId;
              stringHtml += "<td class=\"green\">"  + name;
-             stringHtml += "<td class=\"green\">"  + age;
-             stringHtml += "<td class=\"green\">" + mass;
+             stringHtml += "<td class=\"green\">"  + distance;
+             stringHtml += "<td class=\"green\">" + averageMass;
+             stringHtml += "<td class=\"green\">" + averageAge;
              stringHtml += "<td class=\"green\">"  + date;
-             stringHtml += "<td class=\"green\">" + galaxyId;
-             stringHtml += "<td class=\"grey\">" + "<input type=\"button\" value=\"Update\" onClick=" + "\"fillInUpdateForm(" + starId + "," + strName + "," + age + "," + mass + "," + date + "," + galaxyId + ")\"" + ">";
-             stringHtml += "<td class=\"grey\">" + "<form action=\"${pageContext.request.contextPath}/mvcServer/removeStar\" method=\"delete\">" +
-                                                                 "<input type=\"text\" id=\"starId\" name=\"starId\" value=" + starId + " hidden=\"true\">" +
+             stringHtml += "<td class=\"grey\">" + "<input type=\"button\" value=\"Update\" onClick=" + "\"fillInUpdateForm(" + galaxyId + "," + strName + "," + distance + ", " + strDate + ")\"" + ">";
+             stringHtml += "<td class=\"grey\">" + "<form action=\"${pageContext.request.contextPath}/galaxies/removeGalaxy\" method=\"delete\">" +
+                                                                 "<input type=\"text\" id=\"galaxyId\" name=\"galaxyId\" value=" + galaxyId + " hidden=\"true\">" +
                                                                  "<input type=\"submit\" value=\"remove\" ></form>";
              return stringHtml;
         }

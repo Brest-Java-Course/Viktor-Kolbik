@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.Date;
 
 @Controller
-@RequestMapping("/mvcGalaxiesServer")
+@RequestMapping("/galaxies")
 public class GalaxyController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class GalaxyController {
         try {
 
             Long i = galaxyService.addGalaxy(galaxy);
-            modelAndView = new ModelAndView("redirect:/mvcGalaxiesServer/");
+            modelAndView = new ModelAndView("redirect:/galaxies/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
             modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxyService.getAllGalaxies());
@@ -60,7 +60,7 @@ public class GalaxyController {
 
         try{
             galaxyService.updateGalaxy(galaxy);
-            modelAndView = new ModelAndView("redirect:/mvcGalaxiesServer/");
+            modelAndView = new ModelAndView("redirect:/galaxies/");
         } catch(BadParameterException e){
             LOGGER.error(e.getMessage() + e.getObjectOfException());
             modelAndView = new ModelAndView("galaxyPage", "updatingError", true);
@@ -76,7 +76,7 @@ public class GalaxyController {
 
         try{
             galaxyService.removeGalaxy(galaxyId);
-            modelAndView = new ModelAndView("redirect:/mvcGalaxiesServer/");
+            modelAndView = new ModelAndView("redirect:/galaxies/");
         } catch (BadParameterException e){
             LOGGER.error(e.getMessage() + e.getObjectOfException());
             modelAndView = new ModelAndView("galaxyPage", "removingError", true);
