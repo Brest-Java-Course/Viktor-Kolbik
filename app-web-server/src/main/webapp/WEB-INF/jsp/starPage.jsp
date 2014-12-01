@@ -13,13 +13,13 @@
     <body>
         <div class="main">
             <c:if test="${creationError}">
-                <script type="text/javascript"> alert("ERROR while creating star")</script>
+                <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             <c:if test="${updatingError}">
                 <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             <c:if test="${removingError}">
-                <script type="text/javascript"> alert("ERROR while removing star!")</script>
+                <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             
             <div class="createForm">
@@ -203,14 +203,13 @@
                         
             $(document.getElementById("mainTable").getElementsByTagName("tbody")[0]).append(stringHtml);
         }
-        
-        
+
         function setStringHtml(starId, name, age, mass, date, galaxyId){
             var stringHtml = "";
             var string2Html = "";
             var strName = "\'" + name + "\'";
             var strDate = "\'" + date + "\'";
-            
+
             stringHtml += "<tr><td class=\"grey\">" + starId;
             stringHtml += "<td class=\"green\">"  + name;
             stringHtml += "<td class=\"green\">"  + age;

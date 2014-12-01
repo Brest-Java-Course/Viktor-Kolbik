@@ -1,4 +1,4 @@
-package com.brest.epam.task.dao;
+package com.epam.brest.task.dao;
 
 import com.epam.brest.task.dao.GalaxyDao;
 import com.epam.brest.task.domain.Galaxy;

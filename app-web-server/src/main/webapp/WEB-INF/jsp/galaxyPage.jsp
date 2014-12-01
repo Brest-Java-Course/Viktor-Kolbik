@@ -15,13 +15,13 @@ pageEncoding="UTF-8"%>
     <body>
         <div class="main">
             <c:if test="${creationError}">
-                <script type="text/javascript"> alert("ERROR while creating star")</script>
+                <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             <c:if test="${updatingError}">
-                <script type="text/javascript"> alert("ERROR while updating")</script>
+                <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             <c:if test="${removingError}">
-                <script type="text/javascript"> alert("ERROR while removing star!")</script>
+                <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             <div class="createForm">
                 <form action="${pageContext.request.contextPath}/galaxies/addGalaxy" method="post">

@@ -1,4 +1,4 @@
-package com.brest.epam.task.dao;
+package com.epam.brest.task.dao;
 
 import com.epam.brest.task.dao.GalaxyDao;
 import com.epam.brest.task.dao.StarDao;
@@ -19,6 +19,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring-dao-test.xml"})
 public class StarDaoImplTest {
+
     @Autowired
     private StarDao starDao;
 

@@ -13,7 +13,9 @@
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="classpath:spring-service.xml"/>
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.epam.brest.task"/>
+
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
 
@@ -22,13 +24,37 @@
         <jdbc:script location="WEB-INF/sql/populate-db-script.sql"/>
     </jdbc:initialize-database>
 
-    <mvc:annotation-driven/>
-    <context:component-scan base-package="com.epam.brest.task"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:hsqldb.properties</value>
+                <value>classpath:/sql-properties/galaxy-sql-script.properties</value>
+                <value>classpath:/sql-properties/star-sql-script.properties</value>
+            </list>
+        </property>
+        <!--
+        Set whether to ignore unresolvable placeholders.
+            Default is "false": An exception will be thrown if a placeholder cannot be resolved.-->
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.url}" />
+        <property name="password" value="${jdbc.password}" />
     </bean>
 
 </beans>

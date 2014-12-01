@@ -3,14 +3,19 @@ package com.epam.brest.task.dao;
 import com.epam.brest.task.domain.Star;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -18,6 +23,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository
 public class StarDaoImpl implements StarDao {
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert-into-star-path}')).inputStream)}")
     public String addStarSql;
@@ -68,7 +74,11 @@ public class StarDaoImpl implements StarDao {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public void setDataSource(final DataSource dataSource) {
+    @Autowired
+    private DataSource dataSource;
+
+    @PostConstruct
+    public void init() {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 

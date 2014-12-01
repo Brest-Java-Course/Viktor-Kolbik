@@ -37,8 +37,6 @@ public class GalaxyServiceImplTest extends AbstractTransactionalJUnit4SpringCont
     private static final Long DISTANCE_TO_UPDATE = 2876L;
     private static final Long DISTANCE_TO_SELECT = 2L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
-    private static final Date NEW_DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
-    private static final Date DATE_TO_UPDATE = new Date(2015 - 1900, 5, 5);
 
     @Test
     public void testAddGalaxy() throws Exception {
