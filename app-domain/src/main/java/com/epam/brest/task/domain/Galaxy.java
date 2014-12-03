@@ -132,6 +132,10 @@ public class Galaxy {
 
         Galaxy galaxy = (Galaxy) o;
 
+        if(galaxy.getDate() != null && this.date != null) {
+            galaxy.setDate(new Date(galaxy.getDate().getYear(), galaxy.getDate().getMonth(), galaxy.getDate().getDate()));
+        }
+
         if (averageAge != null ? !averageAge.equals(galaxy.averageAge) : galaxy.averageAge != null) return false;
         if (averageMass != null ? !averageMass.equals(galaxy.averageMass) : galaxy.averageMass != null) return false;
         if (date != null ? !date.equals(galaxy.date) : galaxy.date != null) return false;

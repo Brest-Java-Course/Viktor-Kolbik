@@ -119,7 +119,11 @@ public class Star {
         if (this == o) return true;
         if (!(o instanceof Star)) return false;
 
+
         Star star = (Star) o;
+        if(star.getDate() != null && this.date != null) {
+            star.setDate(new Date(star.getDate().getYear(), star.getDate().getMonth(), star.getDate().getDate()));
+        }
 
         if (age != null ? !age.equals(star.age) : star.age != null) return false;
         if (date != null ? !date.equals(star.date) : star.date != null) return false;
