@@ -25,7 +25,7 @@ public class GalaxyServiceImpl implements GalaxyService {
     @Autowired
     private StarDao starDao;
 
-    private static final String OCCUPIED_LOGIN_MSG = "User with such login has already existed!";
+    private static final String OCCUPIED_LOGIN_MSG = "Star with such name has already existed!";
     private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
 
     private static final Logger LOGGER = LogManager.getLogger(GalaxyService.class);

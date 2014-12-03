@@ -26,7 +26,7 @@ public class StarServiceImpl implements StarService {
 
     private static final Logger LOGGER = LogManager.getLogger(StarServiceImpl.class);
 
-    private static final String OCCUPIED_LOGIN_MSG = "User with such login has already existed!";
+    private static final String OCCUPIED_LOGIN_MSG = "Star with such name has already existed!";
     private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
 
     @Override
