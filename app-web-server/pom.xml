@@ -24,4 +24,9 @@
         </dependency>
     </dependencies>
 
+
+    <build>
+        <finalName>universeServer</finalName>
+    </build>
+
 </project>

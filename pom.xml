@@ -14,6 +14,8 @@
         <module>app-service</module>
         <module>app-rest-server</module>
         <module>app-web-server</module>
+        <module>app-rest-client</module>
+        <module>app-web-client</module>
     </modules>
 
     <properties>
@@ -42,6 +44,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>app-rest-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>app-rest-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -130,9 +137,6 @@
     </dependencyManagement>
 
     <build>
-
-        <finalName>universe</finalName>
-
         <pluginManagement>
             <plugins>
                 <plugin>
