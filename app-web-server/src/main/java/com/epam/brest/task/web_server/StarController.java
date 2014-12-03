@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/stars")
@@ -50,6 +51,25 @@ public class StarController {
         return modelAndView;
     }
 
+    @RequestMapping("/starsIntoGalaxy")
+    public ModelAndView getStarsInGalaxy(@RequestParam("galaxyId") Long galaxyId){
+        Set<Star> stars = null;
+        ModelAndView modelAndView = null;
+
+        try{
+            stars = starService.getStarsByGalaxyId(galaxyId);
+            modelAndView = new ModelAndView("starPage", "stars", stars);
+        } catch(BadParameterException e){
+            LOGGER.error(e.getMessage() + e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+            modelAndView.addObject("gettingError", true);
+            modelAndView.addObject("stars", starService.getAllStars());
+        }
+
+        return modelAndView;
+
+    }
+
     @RequestMapping("/updateStar")
     public ModelAndView updateStar(@RequestParam("starId") Long starId, @RequestParam("name") String name,
                                    @RequestParam("age") Long age, @RequestParam("mass") Long mass,
@@ -70,20 +90,7 @@ public class StarController {
 
         return modelAndView;
     }
-/*
-    @RequestMapping("/setUpdateStarForm")
-    public ModelAndView setUpdateForm(@RequestParam("starId") Long starId, @RequestParam("name") String name,
-                                      @RequestParam("age") Long age, @RequestParam("mass") Long mass,
-                                      @RequestParam("date") Date date, @RequestParam("galaxyId") Long galaxyId) {
 
-        Star star = new Star(starId, name, age, mass, date, galaxyId);
-        ModelAndView modelAndView = null;
-
-        modelAndView = new ModelAndView("updateStarFormPage", "star", star);
-
-        return modelAndView;
-    }
-*/
     @RequestMapping("/removeStar")
     public ModelAndView removeStar(@RequestParam("starId") Long starId) {
 

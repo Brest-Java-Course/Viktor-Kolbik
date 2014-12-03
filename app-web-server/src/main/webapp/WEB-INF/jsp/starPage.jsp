@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
     <head>
@@ -23,40 +23,48 @@
                 <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
 
-            <span style="float: right">
+            <span class="float_right">
                 <a href="?lang=en">en</a>
                 |
                 <a href="?lang=ru">ru</a>
             </span>
+
             <div class="createForm">
-                <form action="${pageContext.request.contextPath}/stars/addStar" method="post">
+                <form action="<spring:url value='/stars/addStar'/>" method="post">
                     <table>
                         <tbody>
                             <tr>
-                                <td><label for="name"><spring:message code="name"/></label></td><td><input type="text" id="createName" name="name" value="" /></td>
+                                <td><label for="name"><spring:message code="name"/></label></td>
+                                <td><input type="text" id="createName" name="name" value="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="age"><spring:message code="star.age"/></label></td><td><input type="number" id="createAge" name="age" value="" /></td>
+                                <td><label for="age"><spring:message code="star.age"/></label></td>
+                                <td><input type="number" id="createAge" name="age" value="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="mass"><spring:message code="star.mass"/></label></td><td><input type="number" id="createMass" name="mass" value="" /></td>
+                                <td><label for="mass"><spring:message code="star.mass"/></label>
+                                </td><td><input type="number" id="createMass" name="mass" value="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="date"><spring:message code="date"/></label></td><td><input type="date" id="createDate"  class="dateInput" name="date" value="" /></td>
+                                <td><label for="date"><spring:message code="date"/></label></td>
+                                <td><input type="date" id="createDate"  class="dateInput" name="date" value="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="galaxyId"><spring:message code="star.galaxyId"/></label></td><td><input type="number" id="createGalaxyId" name="galaxyId" value="" /></td>
+                                <td><label for="galaxyId"><spring:message code="star.galaxyId"/></label></td>
+                                <td><input type="number" id="createGalaxyId" name="galaxyId" value="" /></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type="reset" name="Reset" value=<spring:message code="reset"/>><input type="submit" value=<spring:message code="add"/> ></td>
+                                <td><input type="reset" name="Reset" value=<spring:message code="reset"/>>
+                                	<input type="submit" value=<spring:message code="add"/>>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
          </div>            
          <div class="updateForm">
-            <form id="updateStarForm" action="${pageContext.request.contextPath}/stars/updateStar" method="put">
+            <form id="updateStarForm" action="<spring:url value='/stars/updateStar'/>" method="put">
                 <table>
                     <tbody>
                     <input type="text" id="updateStarId" name="starId" value="" hidden="true"/>
@@ -82,7 +90,9 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="reset" name="Reset" value=<spring:message code="reset"/>><input type="submit" value=<spring:message code="update"/>></td>
+                        <td><input type="reset" name="Reset" value=<spring:message code="reset"/>>
+                        	<input type="submit" value=<spring:message code="update"/>>
+                        </td>
                     
                     </tbody>
                 </table>
@@ -102,30 +112,32 @@
                      </tr>
                      <tr>
                         <td></td>
-                        <td><input type="button" id="findBtn" name="findBtn" value="Find by Date" onclick="filterByDate()"/></td>
+                        <td><input type="button" id="findBtn" name="findBtn" value=<spring:message code="find"/> onclick="filterByDate()"/></td>
                      </tr>
                      
                 </tbody>
             </table>
         </div>    
-        
-        <table class="features-table" id="mainTable" summary="list stars.">
-                        <caption><a href="${pageContext.request.contextPath}/stars/"><spring:message code="star.get_all"/></a></caption>
-                <tr>
-                    <td><h2><spring:message code="id"/></h2></td>
-                    <td><h2><spring:message code="name"/></h2></td>
-                    <td><h2><spring:message code="star.mass"/></h2></td>
-                    <td><h2><spring:message code="star.age"/></h2></td>
-                    <td><h2><spring:message code="date"/></h2></td>
-                    <td><h2><spring:message code="star.galaxyId"/></h2></td>
-                    <td><h2><spring:message code="update"/></h2></td>
-                    <td><h2><spring:message code="remove"/></h2></td>
-                </tr>
-            <tbody>
+        <div>
+	        <table class="features-table" id="mainTable" summary="list stars.">
+	                        <caption><a href="<spring:url value='/stars/'/>"><spring:message code="star.get_all"/></a></caption>
+	                <tr>
+	                    <td><h2><spring:message code="id"/></h2></td>
+	                    <td><h2><spring:message code="name"/></h2></td>
+	                    <td><h2><spring:message code="star.mass"/></h2></td>
+	                    <td><h2><spring:message code="star.age"/></h2></td>
+	                    <td><h2><spring:message code="date"/></h2></td>
+	                    <td><h2><spring:message code="star.galaxyId"/></h2></td>
+	                    <td><h2><spring:message code="update"/></h2></td>
+	                    <td><h2><spring:message code="remove"/></h2></td>
+	                </tr>
+	            <tbody>
 
-            </tbody>
-         <table>
-         
+	            </tbody>
+	         </table>
+         </div>
+            <a class="float_right" href="<spring:url value='/galaxies/'/>"><spring:message code="to_galaxies_page"/></a>
+
          <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
          <script src="<c:url value="/resources/js/date.js" />"></script>
          <script type="text/javascript">
@@ -224,7 +236,7 @@
             stringHtml += "<td class=\"green\">" + galaxyId;
             stringHtml += "<td class=\"grey\">" + "<input type=\"button\" value=<spring:message code="update"/> onClick=" + "\"fillInUpdateForm(" + starId + "," + strName + "," + age + "," + mass + "," + strDate + "," + galaxyId + ")\"" + ">";
             
-             stringHtml += "<td class=\"grey\">" + "<form action=\"${pageContext.request.contextPath}/stars/removeStar\" method=\"delete\">" +
+             stringHtml += "<td class=\"grey\">" + "<form action=\"<spring:url value='/stars/removeStar'/>\" method=\"delete\">" +
                 "<input type=\"text\" id=\"starId\" name=\"starId\" value=" + starId + " hidden=\"true\">" + 
                 "<input type=\"submit\" value=<spring:message code="remove"/> ></form>";
              

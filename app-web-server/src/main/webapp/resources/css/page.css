@@ -84,3 +84,6 @@
             .updateForm{
                 float: left;
             }
+            span {
+                float: right;
+            }

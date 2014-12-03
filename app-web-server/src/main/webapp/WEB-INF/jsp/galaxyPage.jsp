@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
     <head>
@@ -25,33 +25,38 @@ pageEncoding="UTF-8"%>
                 <script type="text/javascript"> alert("${wrongParameter}")</script>
             </c:if>
             
-            <span style="float: right">
+            <span class="float_right">
                 <a href="?lang=en">en</a>
                 |
                 <a href="?lang=ru">ru</a>
             </span>
-            
+           
             <div class="createForm">
                 <form action="${pageContext.request.contextPath}/galaxies/addGalaxy" method="post">
                     <table>
                         <tbody>
                             <tr>
-                                <td><label for="name"><spring:message code="name"/></label></td><td><input type="text" id="createName" name="name" value="" /></td>
+                                <td><label for="name"><spring:message code="name"/></label></td>
+                                <td><input type="text" id="createName" name="name" value="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="distance"><spring:message code="galaxy.distance"/></label></td><td><input type="number" id="createDistance" name="distance" value="" /></td>
+                                <td><label for="distance"><spring:message code="galaxy.distance"/></label></td>
+                                <td><input type="number" id="createDistance" name="distance" value="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="date"><spring:message code="date"/></label></td><td><input type="date" class="dateInput" id="createDate" name="date" value="" /></td>
+                                <td><label for="date"><spring:message code="date"/></label></td>
+                                <td><input type="date" class="dateInput" id="createDate" name="date" value="" /></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type="reset" name="Reset" value=<spring:message code="reset"/>><input type="submit" value=<spring:message code="add"/>></td>
+                                <td><input type="reset" name="Reset" value=<spring:message code="reset"/>>
+                                	<input type="submit" value=<spring:message code="add"/>>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
-             </div>
+            </div>
             <div class="updateForm">
                 <form id="updateGalaxyForm" action="${pageContext.request.contextPath}/galaxies/updateGalaxy" method="put">
                     <table>
@@ -72,12 +77,15 @@ pageEncoding="UTF-8"%>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type="reset" name="Reset" value=<spring:message code="reset"/>><input type="submit" value=<spring:message code="update"/> ></td>
+                                <td><input type="reset" name="Reset" value=<spring:message code="reset"/>>
+                                	<input type="submit" value=<spring:message code="update"/> >
+                              	</td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
             </div>
+
 
         <table>
             <tbody>
@@ -95,7 +103,6 @@ pageEncoding="UTF-8"%>
                      </tr>
             </tbody>
         </table>
-
         <table class="features-table" id="mainTable" summary="list of stars.">
             <caption><a href="${pageContext.request.contextPath}/galaxies/"><spring:message code="galaxy.get_all"/></a></caption>
                 <tr>
@@ -108,13 +115,17 @@ pageEncoding="UTF-8"%>
                     <td><h2><spring:message code="update"/></h2></td>
                     <td><h2><spring:message code="remove"/></h2></td>
                 </tr>
-        </div>
+                <tbody>
 
+	            </tbody>
+        </table>
 
+        <a class="float_right" href="${pageContext.request.contextPath}/stars/"><spring:message code="to_stars_page"/></a>
 
         <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
         <script src="<c:url value="/resources/js/date.js" />"></script>
         <script type="text/javascript">
+
             $(fillInFullTable);
             $(setCurrentDate);
                              
@@ -123,7 +134,7 @@ pageEncoding="UTF-8"%>
                     var currentDateString = (new Date()).toString('yyyy-MM-dd');
                     var elements = document.getElementsByClassName('dateInput');
                       
-                    for(var i = 0; i < elements.length; i ++){
+                    for(var i = 0; i < elements.length; i++){
                         elements[i].setAttribute("value", currentDateString);
                     }
             }
@@ -150,13 +161,13 @@ pageEncoding="UTF-8"%>
         };
 
         function cleanMainTable(){
-        var table = document.getElementById("mainTable");
-        var rows = table.getElementsByTagName("tr");
-        var length = rows.length;
+        	var table = document.getElementById("mainTable");
+        	var rows = table.getElementsByTagName("tr");
+        	var length = rows.length;
         
             for ( var i = 1; i < length; i++ )  {
                 table.deleteRow(1);                        
-        }
+        	}
       }
 
         function filterByDate(){
@@ -201,7 +212,9 @@ pageEncoding="UTF-8"%>
             var strName = "\'" + name + "\'";
             var strDate = "\'" + date + "\'";
 
-             stringHtml += "<tr><td class=\"grey\">" + galaxyId;
+             stringHtml += "<tr><td class=\"grey\">" + "<form action=\"${pageContext.request.contextPath}/stars/starsIntoGalaxy\">" +
+                "<input type=\"text\" id=\"galaxyId\" name=\"galaxyId\" value=" + galaxyId + " hidden=\"true\">" + 
+                "<input type=\"submit\" value=" + galaxyId + " ></form>";
              stringHtml += "<td class=\"green\">"  + name;
              stringHtml += "<td class=\"green\">"  + distance;
              stringHtml += "<td class=\"green\">" + averageMass;
