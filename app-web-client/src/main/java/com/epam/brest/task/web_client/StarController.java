@@ -50,7 +50,7 @@ public class StarController {
 
         return modelAndView;
     }
-/*
+
     @RequestMapping("/starsIntoGalaxy")
     public ModelAndView getStarsInGalaxy(@RequestParam("galaxyId") Long galaxyId){
         Set<Star> stars = null;
@@ -70,7 +70,7 @@ public class StarController {
         return modelAndView;
 
     }
-*/
+
     @RequestMapping("/updateStar")
     public ModelAndView updateStar(@RequestParam("starId") Long starId, @RequestParam("name") String name,
                                    @RequestParam("age") Long age, @RequestParam("mass") Long mass,
