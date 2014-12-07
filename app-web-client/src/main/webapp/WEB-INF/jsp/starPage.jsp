@@ -14,13 +14,16 @@
     <body>
         <div class="main">
             <c:if test="${creationError}">
-                <script type="text/javascript"> alert("${wrongParameter}")</script>
+                <script type="text/javascript">
+                    alert("${wrongParameter}");
+                    setTimeout('window.location="${pageContext.request.contextPath}/stars/"',1);
+                </script>
             </c:if>
             <c:if test="${updatingError}">
-                <script type="text/javascript"> alert("${wrongParameter}")</script>
-            </c:if>
-            <c:if test="${removingError}">
-                <script type="text/javascript"> alert("${wrongParameter}")</script>
+                <script type="text/javascript">
+                    alert("${wrongParameter}");
+                    setTimeout('window.location="${pageContext.request.contextPath}/stars/"',1);
+                </script>
             </c:if>
 
             <span class="float_right">
@@ -39,11 +42,11 @@
                             </tr>
                             <tr>
                                 <td><label for="age"><spring:message code="star.age"/></label></td>
-                                <td><input type="number" id="createAge" name="age" value="" /></td>
+                                <td><input type="number" id="createAge" name="age" value="" min="100" max="15000000000"/></td>
                             </tr>
                             <tr>
                                 <td><label for="mass"><spring:message code="star.mass"/></label>
-                                </td><td><input type="number" id="createMass" name="mass" value="" /></td>
+                                </td><td><input type="number" id="createMass" name="mass" value="" min="1" /></td>
                             </tr>
                             <tr>
                                 <td><label for="date"><spring:message code="date"/></label></td>
@@ -51,7 +54,7 @@
                             </tr>
                             <tr>
                                 <td><label for="galaxyId"><spring:message code="star.galaxyId"/></label></td>
-                                <td><input type="number" id="createGalaxyId" name="galaxyId" value="" /></td>
+                                <td><input type="number" id="createGalaxyId" name="galaxyId" value="" min="0" /></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -74,11 +77,11 @@
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="star.age"/></label></td>
-                        <td><input type="number" id="updateAge" name="age" value="" /></td>
+                        <td><input type="number" id="updateAge" name="age" min="100" max="15000000000" /></td>
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="star.mass"/></label></td>
-                        <td><input type="number" id="updateMass" name="mass" value="" /></td>
+                        <td><input type="number" id="updateMass" name="mass" value="" min="1" /></td>
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="date"/></label></td>
@@ -86,7 +89,7 @@
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="star.galaxyId"/></label></td>
-                        <td><input type="number" id="updateGalaxyId" name="galaxyId" value="" /></td>
+                        <td><input type="number" id="updateGalaxyId" name="galaxyId" value="" min="0" /></td>
                     </tr>
                     <tr>
                         <td></td>

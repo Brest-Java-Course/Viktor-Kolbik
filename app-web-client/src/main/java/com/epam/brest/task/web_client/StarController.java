@@ -2,7 +2,6 @@ package com.epam.brest.task.web_client;
 
 import com.epam.brest.task.domain.Star;
 import com.epam.brest.task.rest_client.StarRestClient;
-import com.epam.brest.task.service.exception.BadParameterException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +40,9 @@ public class StarController {
         try {
             Long i = starRestClient.addStar(star);
             modelAndView = new ModelAndView("redirect:/stars/");
-        } catch (BadParameterException e) {
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getMessage());
             modelAndView.addObject("creationError", true);
             modelAndView.addObject("stars", starRestClient.getAllStars());
         }
@@ -60,9 +59,9 @@ public class StarController {
             System.out.println("!!!!!!!! + " + starRestClient);
             stars = starRestClient.getStarsByGalaxyId(galaxyId);
             modelAndView = new ModelAndView("starPage", "stars", stars);
-        } catch(BadParameterException e){
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getMessage());
             modelAndView.addObject("gettingError", true);
             modelAndView.addObject("stars", starRestClient.getAllStars());
         }
@@ -82,9 +81,9 @@ public class StarController {
         try {
             starRestClient.updateStar(star);
             modelAndView = new ModelAndView("redirect:/stars/");
-        } catch (BadParameterException e) {
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            modelAndView = new ModelAndView("starPage", "wrongParameter",e.getMessage());
             modelAndView.addObject("updatingError", true);
             modelAndView.addObject("stars", starRestClient.getAllStars());
         }
@@ -100,9 +99,9 @@ public class StarController {
         try {
             starRestClient.removeStar(starId);
             modelAndView = new ModelAndView("redirect:/stars/");
-        } catch (BadParameterException e) {
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            modelAndView = new ModelAndView("starPage", "wrongParameter",e.getMessage());
             modelAndView.addObject("removingError", true);
             modelAndView.addObject("stars", starRestClient.getAllStars());
         }

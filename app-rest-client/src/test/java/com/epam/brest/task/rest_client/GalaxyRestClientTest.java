@@ -1,8 +1,6 @@
 package com.epam.brest.task.rest_client;
 
 import com.epam.brest.task.domain.Galaxy;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +19,12 @@ public class GalaxyRestClientTest {
     @Autowired
     private GalaxyRestClient galaxyRestClient;
 
-
-    private static final Long ID_TO_UPDATE = 0L;
     private static final String NAME_TO_ADD = "Added name";
-    private static final Long ID_TO_REMOVE = 1L;
     private static final Long ID_TO_SELECT = 2L;
-    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 4, 2);
-    private static final String NAME_TO_SELECT = "G2";
     private static final String NAME_TO_UPDATE = "updated name";
     private static final Long DISTANCE_TO_ADD = 3000L;
     private static final Long DISTANCE_TO_UPDATE = 2876L;
-    private static final Long DISTANCE_TO_SELECT = 2L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
-
-    private static final Logger LOGGER = LogManager.getLogger(GalaxyRestClient.class);
-    private static final String OCCUPIED_LOGIN_MSG = "Star with such name has already existed!";
-    private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
-    private static final String SERVER_URL = "http://localhost:8080/universe/restGalaxy/";
 
     @Test
     public void testAddUpdateRemoveGalaxy() {

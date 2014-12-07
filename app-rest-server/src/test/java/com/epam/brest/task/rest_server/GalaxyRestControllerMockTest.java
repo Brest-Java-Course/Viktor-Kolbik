@@ -1,5 +1,6 @@
 package com.epam.brest.task.rest_server;
 
+import com.epam.brest.task.dao.util.ComparatorForTreeSet;
 import com.epam.brest.task.domain.Galaxy;
 import com.epam.brest.task.domain.Star;
 import com.epam.brest.task.service.GalaxyService;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static org.easymock.EasyMock.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,10 +48,8 @@ public class GalaxyRestControllerMockTest {
     private GalaxyService galaxyService;
 
     private static final String GALAXY_REST_ROOT = "/restGalaxy";
-    private static final String SET_WE_GET = "[{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001," +
-            "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
-            "{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000," +
-            "\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]";
+    private static final String SET_WE_GET = "[{\"galaxyId\":8,\"name\":\"name\",\"distance\":3000,\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}," +
+            "{\"galaxyId\":9,\"name\":\"name1\",\"distance\":3001,\"averageAge\":null,\"averageMass\":null,\"date\":\"2014-06-05\"}]";
 
 
     @Before
@@ -162,7 +162,7 @@ public class GalaxyRestControllerMockTest {
 
     @Test
     public void testGetAllGalaxies() throws Exception{
-        Set<Galaxy> galaxies = new HashSet<Galaxy>(2);
+        Set<Galaxy> galaxies = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         galaxies.add(new Galaxy(ID, NAME, DISTANCE, DATE));
         galaxies.add(new Galaxy(ID + 1, NAME + 1, DISTANCE + 1, DATE));
 
@@ -183,7 +183,7 @@ public class GalaxyRestControllerMockTest {
 
     @Test
     public void testGetGalaxiesByDistance0() throws Exception {
-        Set<Galaxy> galaxies = new HashSet<Galaxy>(2);
+        Set<Galaxy> galaxies = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         galaxies.add(new Galaxy(ID, NAME, DISTANCE, DATE));
         galaxies.add(new Galaxy(ID + 1, NAME + 1, DISTANCE + 1, DATE));
 
@@ -203,7 +203,7 @@ public class GalaxyRestControllerMockTest {
 
     @Test
     public void testGetGalaxiesByDistance1() throws Exception {
-        Set<Galaxy> galaxies = new HashSet<Galaxy>(2);
+        Set<Galaxy> galaxies = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         galaxies.add(new Galaxy(ID, NAME, DISTANCE, DATE));
         galaxies.add(new Galaxy(ID + 1, NAME + 1, DISTANCE + 1, DATE));
 
@@ -223,7 +223,7 @@ public class GalaxyRestControllerMockTest {
 
     @Test
     public void testGetGalaxyByDate0() throws Exception {
-        Set<Galaxy> galaxies = new HashSet<Galaxy>(2);
+        Set<Galaxy> galaxies = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         galaxies.add(new Galaxy(ID, NAME, DISTANCE, DATE));
         galaxies.add(new Galaxy(ID + 1, NAME + 1, DISTANCE + 1, DATE));
 
@@ -244,7 +244,7 @@ public class GalaxyRestControllerMockTest {
 
     @Test
     public void testGetGalaxyByDate1() throws Exception {
-        Set<Galaxy> galaxies = new HashSet<Galaxy>(2);
+        Set<Galaxy> galaxies = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         galaxies.add(new Galaxy(ID, NAME, DISTANCE, DATE));
         galaxies.add(new Galaxy(ID + 1, NAME + 1, DISTANCE + 1, DATE));
 
@@ -264,7 +264,7 @@ public class GalaxyRestControllerMockTest {
 
     @Test
     public void testGetGalaxyByDate2() throws Exception {
-        Set<Galaxy> galaxies = new HashSet<Galaxy>(2);
+        Set<Galaxy> galaxies = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         galaxies.add(new Galaxy(ID, NAME, DISTANCE, DATE));
         galaxies.add(new Galaxy(ID + 1, NAME + 1, DISTANCE + 1, DATE));
 

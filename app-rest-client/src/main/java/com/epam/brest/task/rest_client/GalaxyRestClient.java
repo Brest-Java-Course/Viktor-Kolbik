@@ -12,11 +12,9 @@ import java.util.Set;
 @Repository
 public class GalaxyRestClient {
 
-    private static final Logger LOGGER = LogManager.getLogger(StarRestClient.class);
+    private static final Logger LOGGER = LogManager.getLogger(GalaxyRestClient.class);
 
     private static final String SERVER_URL = "http://localhost:8080/universeServer/restGalaxy/";
-    private static final String OCCUPIED_LOGIN_MSG = "Star with such name has already existed!";
-    private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
 
     private RestTemplate restTemplate = new RestTemplate();
 

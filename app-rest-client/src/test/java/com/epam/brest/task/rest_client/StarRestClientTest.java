@@ -22,20 +22,12 @@ public class StarRestClientTest {
     private static final Long AGE_TO_ADD = 3000L;
     private static final Long MASS_TO_ADD = 51L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
-    private static final Long ID_TO_UPDATE = 8L;
     private static final Long AGE_TO_UPDATE = 1036L;
     private static final Long MASS_TO_UPDATE = 16L;
     private static final String NAME_TO_UPDATE = "Updated name";
     private static final Date DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
     private static final Long GALAXY_ID = 5L;
-    private static final Long ID_TO_REMOVE = 9L;
-    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 10);
-    private static final Long AGE_TO_SELECT = 4000L;
-    private static final String NAME_TO_SELECT = "S3";
-    private static final Long MASS_TO_SELECT = 5L;
     private static final Long ID_TO_SELECT = 7L;
-
-    private static final String SERVER_URL = "http://localhost:8080/universe/restStar/";
 
     @Test
     public void testAddUpdateRemoveStar(){

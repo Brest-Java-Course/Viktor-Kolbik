@@ -2,13 +2,13 @@
 ====================================
 
 It is a free project to perform the learning task. The project consists of:
-* app-domain layer, that stores two [POJO](http://en.wikipedia.org/wiki/Plain_Old_Java_Object "POJO")(Star and Galaxy) and 		tests(StarTest and GalaxyTest respectively).
-* app-dao layer, that provides access to db.
-* app-service hasn't been implemented yet.
-* app-rest-server hasn't been implemented yet.
-* app-rest-client hasn't been implemented yet.
-* app-web-server hasn't been implemented yet.
-* app-web-client hasn't been implemented yet.
+* app-domain, +.
+* app-dao, +.
+* app-service +.
+* app-rest-server +.
+* app-rest-client +.
+* app-web-server +.
+* app-web-client +.
 
 Required software:
 --------------

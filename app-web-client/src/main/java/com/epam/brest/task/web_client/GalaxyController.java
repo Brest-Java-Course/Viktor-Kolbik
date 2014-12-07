@@ -2,8 +2,6 @@ package com.epam.brest.task.web_client;
 
 import com.epam.brest.task.domain.Galaxy;
 import com.epam.brest.task.rest_client.GalaxyRestClient;
-import com.epam.brest.task.service.GalaxyService;
-import com.epam.brest.task.service.exception.BadParameterException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ public class GalaxyController {
 
     @RequestMapping("/")
     public ModelAndView galaxyPage() {
+
         ModelAndView modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxyRestClient.getAllGalaxies());
 
         return modelAndView;
@@ -41,8 +40,8 @@ public class GalaxyController {
 
             Long i = galaxyRestClient.addGalaxy(galaxy);
             modelAndView = new ModelAndView("redirect:/galaxies/");
-        } catch (BadParameterException e) {
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
             modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxyRestClient.getAllGalaxies());
             modelAndView.addObject("creationError", true);
         }
@@ -62,8 +61,8 @@ public class GalaxyController {
         try{
             galaxyRestClient.updateGalaxy(galaxy);
             modelAndView = new ModelAndView("redirect:/galaxies/");
-        } catch(BadParameterException e){
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage());
             modelAndView = new ModelAndView("galaxyPage", "updatingError", true);
             modelAndView.addObject("galaxies", galaxyRestClient.getAllGalaxies());
         }
@@ -78,8 +77,8 @@ public class GalaxyController {
         try{
             galaxyRestClient.removeGalaxy(galaxyId);
             modelAndView = new ModelAndView("redirect:/galaxies/");
-        } catch (BadParameterException e){
-            LOGGER.error(e.getMessage() + e.getObjectOfException());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage());
             modelAndView = new ModelAndView("galaxyPage", "removingError", true);
             modelAndView.addObject("galaxies", galaxyRestClient.getAllGalaxies());
         }
