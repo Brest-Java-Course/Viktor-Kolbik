@@ -1,5 +1,6 @@
 package com.epam.brest.task.dao;
 
+import com.epam.brest.task.dao.util.ComparatorForTreeSet;
 import com.epam.brest.task.domain.Galaxy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,17 +12,16 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Repository
 public class GalaxyDaoImpl implements GalaxyDao {
@@ -54,7 +54,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select-galaxies-by-distance-interval-path}')).inputStream)}")
     public String selectGalaxiesByDistanceIntervalSql;
 
-    private static final Logger LOGGER = LogManager.getLogger(GalaxyDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(GalaxyDaoImpl.class);
 
     private static final String GALAXY_ID = "galaxyId";
     private static final String NAME = "name";
@@ -141,8 +141,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
     @Override
     public Set<Galaxy> getAllGalaxies() {
         LOGGER.debug("starts");
-        Set<Galaxy> set = new HashSet<Galaxy>();
-
+        Set<Galaxy> set = new TreeSet<Galaxy>(new ComparatorForTreeSet());
         set.addAll(namedParameterJdbcTemplate.query(selectAllGalaxiesSql, new GalaxyMapper()));
 
         LOGGER.debug("ends with " + set + ". Its size is " + set.size());
@@ -154,9 +153,8 @@ public class GalaxyDaoImpl implements GalaxyDao {
         LOGGER.debug("starts with " + date);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE, date);
-        Set<Galaxy> set = new HashSet<Galaxy>();
-
-        set.addAll(namedParameterJdbcTemplate.query(selectGalaxiesByDateSql, parameters,new GalaxyMapper()));
+        Set<Galaxy> set = new TreeSet<Galaxy>(new ComparatorForTreeSet());
+        set.addAll(namedParameterJdbcTemplate.query(selectGalaxiesByDateSql, parameters, new GalaxyMapper()));
 
         LOGGER.debug("ends with " + set + ". Its size is " + set.size());
         return set;
@@ -167,7 +165,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
         LOGGER.debug("starts with " + date + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE, date);
-        Set<Galaxy> set = new HashSet<Galaxy>();
+        Set<Galaxy> set = new TreeSet<Galaxy>(new ComparatorForTreeSet());
 
         if(flag) {
             set.addAll(namedParameterJdbcTemplate.query(selectGalaxiesEarlierThanSql, parameters, new GalaxyMapper()));
@@ -185,7 +183,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE + 1, lowBorder)
                 .addValue(DATE + 2, topBorder);
-        Set<Galaxy> set = new HashSet<Galaxy>();
+        Set<Galaxy> set = new TreeSet<Galaxy>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectGalaxiesByPeriodOfTimeSql, parameters, new GalaxyMapper()));
 
@@ -198,7 +196,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
         LOGGER.debug("starts with distance = " + distance + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DISTANCE, distance);
-        Set<Galaxy> set = new HashSet<Galaxy>();
+        Set<Galaxy> set = new TreeSet<Galaxy>(new ComparatorForTreeSet());
 
         if(flag) {
             set.addAll(namedParameterJdbcTemplate.query(selectGalaxiesCloserThanSql, parameters, new GalaxyMapper()));
@@ -216,7 +214,7 @@ public class GalaxyDaoImpl implements GalaxyDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DISTANCE + 1, lowBorder)
                 .addValue(DISTANCE + 2, topBorder);
-        Set<Galaxy> set = new HashSet<Galaxy>();
+        Set<Galaxy> set = new TreeSet<Galaxy>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectGalaxiesByDistanceIntervalSql, parameters, new GalaxyMapper()));
 
