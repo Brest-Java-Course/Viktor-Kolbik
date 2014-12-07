@@ -12,8 +12,6 @@
 
     <context:component-scan base-package="com.epam.brest.task.dao"/>
 
-    <!--A property resource configurer that resolves placeholders in bean property values
-    of context definitions. It pulls values from a properties file into bean definitions.-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
@@ -22,10 +20,11 @@
                 <value>classpath:/sql-properties/star-sql-script.properties</value>
             </list>
         </property>
-        <!--
-        Set whether to ignore unresolvable placeholders.
-            Default is "false": An exception will be thrown if a placeholder cannot be resolved.-->
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

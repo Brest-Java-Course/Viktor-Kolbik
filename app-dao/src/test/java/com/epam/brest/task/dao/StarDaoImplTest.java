@@ -1,14 +1,13 @@
 package com.epam.brest.task.dao;
 
-import com.epam.brest.task.dao.GalaxyDao;
-import com.epam.brest.task.dao.StarDao;
-import com.epam.brest.task.domain.Galaxy;
 import com.epam.brest.task.domain.Star;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.Set;
@@ -16,41 +15,41 @@ import java.util.Set;
 import static org.junit.Assert.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring-dao-test.xml"})
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class StarDaoImplTest {
 
     @Autowired
     private StarDao starDao;
 
     private static final String NAME_TO_ADD = "Added name";
-    private static final Long ID_TO_ADD = 100L;
     private static final Long AGE_TO_ADD = 3000L;
     private static final Long MASS_TO_ADD = 51L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
-    private static final Long ID_TO_UPDATE = 1L;
+    private static final Long ID_TO_UPDATE = 0L;
     private static final Long AGE_TO_UPDATE = 1036L;
     private static final Long MASS_TO_UPDATE = 16L;
     private static final String NAME_TO_UPDATE = "Updated name";
     private static final Date DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
     private static final Long GALAXY_ID_TO_UPDATE = 0L;
-    private static final Long GALAXY_ID = 2L;
-    private static final Long ID_TO_REMOVE = 4L;
-    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 5);
+    private static final Long GALAXY_ID = 0L;
+    private static final Long ID_TO_REMOVE = 1L;
+    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 4);
     private static final Long AGE_TO_SELECT = 4000L;
     private static final String NAME_TO_SELECT = "S2";
-    private static final Long MASS_TO_SELECT = 9L;
-    private static final Long ID_TO_SELECT = 2L;
+    private static final Long MASS_TO_SELECT = 7L;
+    private static final Long ID_TO_SELECT = 3L;
 
     @Test
     public void testAddStar() throws Exception {
         Set<Star> stars = starDao.getAllStars();
 
         int sizeBefore = stars.size();
-        Star star = new Star(ID_TO_ADD, NAME_TO_ADD, AGE_TO_ADD, MASS_TO_ADD, DATE_TO_ADD, GALAXY_ID);
+        Star star = new Star(null, NAME_TO_ADD, AGE_TO_ADD, MASS_TO_ADD, DATE_TO_ADD, GALAXY_ID);
 
         Long id = starDao.addStar(star);
-        assertEquals(id, ID_TO_ADD);
 
         stars = starDao.getAllStars();
         assertEquals(sizeBefore, stars.size() - 1);

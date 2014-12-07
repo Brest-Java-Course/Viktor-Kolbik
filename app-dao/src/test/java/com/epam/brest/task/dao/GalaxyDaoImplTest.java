@@ -1,12 +1,13 @@
 package com.epam.brest.task.dao;
 
-import com.epam.brest.task.dao.GalaxyDao;
 import com.epam.brest.task.domain.Galaxy;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.Set;
@@ -14,16 +15,17 @@ import java.util.Set;
 import static org.junit.Assert.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring-dao-test.xml"})
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class GalaxyDaoImplTest {
 
     @Autowired
     private GalaxyDao galaxyDao;
 
-    private static final Long GALAXY_ID_TO_UPDATE = 1L;
-    private static final Long GALAXY_ID_TO_ADD = 100L;
-    private static final Long GALAXY_ID_TO_REMOVE = 0L;
+    private static final Long GALAXY_ID_TO_UPDATE = 0L;
+    private static final Long GALAXY_ID_TO_REMOVE = 1L;
     private static final Long GALAXY_ID_TO_SELECT = 2L;
     private static final Long GALAXY_DISTANCE_TO_SELECT = 2L;
     private static final Date GALAXY_DATE_TO_SELECT = new Date(2014 - 1900, 4, 2);
@@ -40,10 +42,9 @@ public class GalaxyDaoImplTest {
         Set<Galaxy> galaxies = galaxyDao.getAllGalaxies();
 
         int sizeBefore = galaxies.size();
-        Galaxy galaxy = new Galaxy(GALAXY_ID_TO_ADD, NAME, DISTANCE_TO_ADD, DATE_TO_ADD);
+        Galaxy galaxy = new Galaxy(null, NAME, DISTANCE_TO_ADD, DATE_TO_ADD);
 
         Long id = galaxyDao.addGalaxy(galaxy);
-        assertEquals(id, GALAXY_ID_TO_ADD);
 
         galaxies = galaxyDao.getAllGalaxies();
         assertEquals(sizeBefore, galaxies.size() - 1);
@@ -82,7 +83,7 @@ public class GalaxyDaoImplTest {
 
     @Test
     public void testGetGalaxiesByDate(){
-        Set<Galaxy> galaxies = galaxyDao.getGalaxiesByDate(new Date(2014 - 1900, 4, 3));
+        Set<Galaxy> galaxies = galaxyDao.getGalaxiesByDate(GALAXY_DATE_TO_SELECT);
         assertNotNull(galaxies);
         assertFalse(isEmpty(galaxies));
     }

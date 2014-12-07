@@ -1,18 +1,18 @@
 package com.epam.brest.task.dao;
 
+import com.epam.brest.task.dao.util.ComparatorForTreeSet;
+import com.epam.brest.task.domain.Galaxy;
 import com.epam.brest.task.domain.Star;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Repository
 public class StarDaoImpl implements StarDao {
@@ -174,7 +175,7 @@ public class StarDaoImpl implements StarDao {
     @Override
     public Set<Star> getAllStars() {
         LOGGER.debug("starts");
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectAllStarsSql, new StarMapper()));
 
@@ -189,7 +190,7 @@ public class StarDaoImpl implements StarDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(GALAXY_ID, id);
 
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectStarsByGalaxyIdSql, parameters, new StarMapper()));
 
@@ -203,7 +204,7 @@ public class StarDaoImpl implements StarDao {
         LOGGER.debug("starts with " + age + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(AGE, age);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         if (flag) {
             set.addAll(namedParameterJdbcTemplate.query(selectStarsYoungerThanSql, parameters, new StarMapper()));
@@ -221,7 +222,7 @@ public class StarDaoImpl implements StarDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(AGE + 1, lowBorder)
                 .addValue(AGE + 2, topBorder);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectStarsByAgeDiapasonSql, parameters, new StarMapper()));
 
@@ -235,7 +236,7 @@ public class StarDaoImpl implements StarDao {
         LOGGER.debug("starts with " + mass + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(MASS, mass);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         if (flag) {
             set.addAll(namedParameterJdbcTemplate.query(selectStarsLighterThanSql, parameters, new StarMapper()));
@@ -253,7 +254,7 @@ public class StarDaoImpl implements StarDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(MASS + 1, lowBorder)
                 .addValue(MASS + 2, topBorder);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectStarsByMassDiapasonSql, parameters, new StarMapper()));
 
@@ -267,7 +268,7 @@ public class StarDaoImpl implements StarDao {
         LOGGER.debug("starts with " + date);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE, date);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectStarsByDateSql, parameters, new StarMapper()));
 
@@ -280,7 +281,7 @@ public class StarDaoImpl implements StarDao {
         LOGGER.debug("starts with " + date + " and flag = " + flag);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE, date);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         if (flag) {
             set.addAll(namedParameterJdbcTemplate.query(selectStarsEarlierThanSql, parameters, new StarMapper()));
@@ -298,7 +299,7 @@ public class StarDaoImpl implements StarDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue(DATE + 1, lowBorder)
                 .addValue(DATE + 2, topBorder);
-        Set<Star> set = new HashSet<Star>();
+        Set<Star> set = new TreeSet<Star>(new ComparatorForTreeSet());
 
         set.addAll(namedParameterJdbcTemplate.query(selectStarsByDateDiapasonSql, parameters, new StarMapper()));
 
