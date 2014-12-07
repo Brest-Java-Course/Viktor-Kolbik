@@ -2,7 +2,6 @@ package com.epam.brest.task.service;
 
 import com.epam.brest.task.dao.GalaxyDao;
 import com.epam.brest.task.dao.StarDao;
-import com.epam.brest.task.domain.Galaxy;
 import com.epam.brest.task.domain.Star;
 import com.epam.brest.task.service.exception.BadParameterException;
 import com.epam.brest.task.service.exception.TwoBadParametersException;
@@ -28,7 +27,7 @@ public class StarServiceImpl implements StarService {
 
     private static final String OCCUPIED_LOGIN_MSG = "Star with such name has already existed!";
     private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
-
+    private static final String GALAXY_DOES_NOT_EXIST = "Galaxy with such ID doesn't exist";
     @Override
     public Long addStar(final Star star) {
 
@@ -49,9 +48,14 @@ public class StarServiceImpl implements StarService {
             starDao.getStarByName(star.getName());
             LOGGER.debug(OCCUPIED_LOGIN_MSG + "\n -> " + star);
             throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
-        }catch (EmptyResultDataAccessException e){
+        } catch(EmptyResultDataAccessException e) {
+            try {
                 galaxyDao.getGalaxyById(star.getGalaxyId());
                 return starDao.addStar(star);
+            } catch (EmptyResultDataAccessException e2) {
+                LOGGER.debug(GALAXY_DOES_NOT_EXIST + "\n -> " + star);
+                throw new BadParameterException(GALAXY_DOES_NOT_EXIST, star);
+            }
         }
     }
 
@@ -70,15 +74,19 @@ public class StarServiceImpl implements StarService {
             throw new BadParameterException(BAD_PARAMETER_MSG, star);
         }
 
-
-            try{
-                starDao.getStarsByGalaxyId(star.getGalaxyId());
+        try{
+            starDao.getStarByName(star.getName());
+            LOGGER.debug(OCCUPIED_LOGIN_MSG + "\n -> " + star);
+            throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
+        } catch(EmptyResultDataAccessException e) {
+            try {
+                galaxyDao.getGalaxyById(star.getGalaxyId());
                 starDao.updateStar(star);
-            } catch(EmptyResultDataAccessException e2){
-                LOGGER.debug(BAD_PARAMETER_MSG + "\n -> " + star);
-                throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
+            } catch (EmptyResultDataAccessException e2) {
+                LOGGER.debug(GALAXY_DOES_NOT_EXIST + "\n -> " + star);
+                throw new BadParameterException(GALAXY_DOES_NOT_EXIST, star);
             }
-
+        }
 
     }
 

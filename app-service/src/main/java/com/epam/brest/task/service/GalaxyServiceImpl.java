@@ -28,7 +28,7 @@ public class GalaxyServiceImpl implements GalaxyService {
     private static final String OCCUPIED_LOGIN_MSG = "Star with such name has already existed!";
     private static final String BAD_PARAMETER_MSG = "Bad parameters exception occurred. Wrong or null parameters were passed";
 
-    private static final Logger LOGGER = LogManager.getLogger(GalaxyService.class);
+    private static final Logger LOGGER = LogManager.getLogger(GalaxyServiceImpl.class);
 
     @Override
     public Long addGalaxy(final Galaxy galaxy) {
@@ -168,7 +168,7 @@ public class GalaxyServiceImpl implements GalaxyService {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDate(Date date) {
+    public Set<Galaxy> getGalaxiesByDate(final Date date) {
         try {
             Assert.notNull(date);
 
@@ -180,7 +180,7 @@ public class GalaxyServiceImpl implements GalaxyService {
     }
 
     @Override
-    public Set<Galaxy> getGalaxiesByDate(Date date, Boolean flag) {
+    public Set<Galaxy> getGalaxiesByDate(final Date date, final Boolean flag) {
         try {
             Assert.notNull(date);
             Assert.notNull(flag);

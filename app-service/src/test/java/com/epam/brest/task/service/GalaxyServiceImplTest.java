@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.Set;
@@ -16,8 +18,10 @@ import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring-service-test.xml"})
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class GalaxyServiceImplTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -29,7 +33,7 @@ public class GalaxyServiceImplTest extends AbstractTransactionalJUnit4SpringCont
     private static final Long ID_TO_UPDATE = 0L;
     private static final String NAME_TO_ADD = "Added name";
     private static final Long ID_TO_REMOVE = 1L;
-    private static final Long ID_TO_SELECT = 2L;
+    private static final Long ID_TO_SELECT = 0L;
     private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 4, 2);
     private static final String NAME_TO_SELECT = "G2";
     private static final String NAME_TO_UPDATE = "updated name";
@@ -73,7 +77,7 @@ public class GalaxyServiceImplTest extends AbstractTransactionalJUnit4SpringCont
 
         galaxyService.removeGalaxy(ID_TO_REMOVE);
 
-        assertEquals(starSizeBefore, starService.getAllStars().size() + 2);
+        assertEquals(starSizeBefore, starService.getAllStars().size() + 1);
         assertEquals(galaxySizeBefore, galaxyService.getAllGalaxies().size() + 1);
     }
 

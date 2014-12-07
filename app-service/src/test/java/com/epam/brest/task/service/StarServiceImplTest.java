@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.Set;
@@ -13,11 +15,12 @@ import java.util.Set;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring-service-test.xml"})
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class StarServiceImplTest {
 
     @Autowired
@@ -27,25 +30,25 @@ public class StarServiceImplTest {
     private static final Long AGE_TO_ADD = 3000L;
     private static final Long MASS_TO_ADD = 51L;
     private static final Date DATE_TO_ADD = new Date(2014 - 1900, 5, 5);
-    private static final Long ID_TO_UPDATE = 8L;
+    private static final Long ID_TO_UPDATE = 0L;
     private static final Long AGE_TO_UPDATE = 1036L;
     private static final Long MASS_TO_UPDATE = 16L;
     private static final String NAME_TO_UPDATE = "Updated name";
     private static final Date DATE_TO_UPDATE = new Date(1993 - 1900, 1, 1);
-    private static final Long GALAXY_ID = 5L;
-    private static final Long ID_TO_REMOVE = 9L;
-    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 10);
+    private static final Long GALAXY_ID = 0L;
+    private static final Long ID_TO_REMOVE = 1L;
+    private static final Date DATE_TO_SELECT = new Date(2014 - 1900, 0, 3);
     private static final Long AGE_TO_SELECT = 4000L;
-    private static final String NAME_TO_SELECT = "S3";
+    private static final String NAME_TO_SELECT = "S2";
     private static final Long MASS_TO_SELECT = 5L;
-    private static final Long ID_TO_SELECT = 10L;
+    private static final Long ID_TO_SELECT = 0L;
 
     @Test
     public void testAddStar() throws Exception {
         Set<Star> stars = starService.getAllStars();
 
         int sizeBefore = stars.size();
-        Star star = new Star(null, NAME_TO_ADD, AGE_TO_UPDATE, MASS_TO_ADD, DATE_TO_ADD, GALAXY_ID);
+        Star star = new Star(null, NAME_TO_ADD, AGE_TO_ADD, MASS_TO_ADD, DATE_TO_ADD, GALAXY_ID);
 
         Long id = starService.addStar(star);
 
@@ -53,12 +56,6 @@ public class StarServiceImplTest {
         assertEquals(sizeBefore, stars.size() - 1);
     }
 
-
-//    @Test
-//    public void testAddStar2() throws Exception{
-//        Star star = new Star(null, NAME_TO_ADD, AGE_TO_UPDATE, MASS_TO_ADD, DATE_TO_ADD, GALAXY_ID);
-//        starService.addStar()
-//    }
     @Test
     public void testUpdateStar() throws Exception {
         Star star = new Star(ID_TO_UPDATE, NAME_TO_UPDATE, AGE_TO_UPDATE, MASS_TO_UPDATE, DATE_TO_UPDATE, GALAXY_ID);
@@ -82,7 +79,7 @@ public class StarServiceImplTest {
     @Test
     public void testRemoveStarsByGalaxyId() throws Exception {
         int sizeBefore = starService.getAllStars().size();
-        starService.removeStarsByGalaxyId(3L);
+        starService.removeStarsByGalaxyId(2L);
         int sizeAfter = starService.getAllStars().size();
 
         assertEquals(sizeBefore, sizeAfter + 1);
