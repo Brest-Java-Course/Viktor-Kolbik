@@ -18,11 +18,14 @@
             <artifactId>app-rest-client</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
     </dependencies>
-
 
     <build>
         <finalName>universeClient</finalName>

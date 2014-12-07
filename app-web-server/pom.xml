@@ -12,7 +12,6 @@
 
     <artifactId>app-web-server</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.epam.brest.task</groupId>
@@ -23,7 +22,6 @@
             <artifactId>jstl</artifactId>
         </dependency>
     </dependencies>
-
 
     <build>
         <finalName>universeServer</finalName>

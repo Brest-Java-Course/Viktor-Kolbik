@@ -12,10 +12,6 @@
         <version>1.0.0-SNAPHOST</version>
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.epam.brest.task</groupId>
