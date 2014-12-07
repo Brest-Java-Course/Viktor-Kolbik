@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/galaxies")
@@ -24,36 +25,38 @@ public class GalaxyController {
 
     @RequestMapping("/")
     public ModelAndView galaxyPage() {
-        ModelAndView modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxyService.getAllGalaxies());
+
+        Set<Galaxy> galaxies = galaxyService.getAllGalaxies();
+        ModelAndView modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxies);
 
         return modelAndView;
     }
 
     @RequestMapping("/addGalaxy")
-    public ModelAndView addGalaxy(@RequestParam("name") String name,
-                                  @RequestParam("distance") Long distance,
-                                  @RequestParam("date") Date date) {
+    public ModelAndView addGalaxy(@RequestParam("name") final String name,
+                                  @RequestParam("distance") final Long distance,
+                                  @RequestParam("date") final Date date) {
         Galaxy galaxy = new Galaxy(null, name, distance, date);
         ModelAndView modelAndView = null;
 
         try {
-
             Long i = galaxyService.addGalaxy(galaxy);
             modelAndView = new ModelAndView("redirect:/galaxies/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
             modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxyService.getAllGalaxies());
             modelAndView.addObject("creationError", true);
+            modelAndView.addObject("wrongParameter", e.getMessage() + e.getObjectOfException());
         }
 
         return modelAndView;
     }
 
     @RequestMapping("/updateGalaxy")
-    public ModelAndView updateGalaxy(@RequestParam("galaxyId") Long galaxyId,
-                                     @RequestParam("name") String name,
-                                     @RequestParam("distance") Long distance,
-                                     @RequestParam("date") Date date) {
+    public ModelAndView updateGalaxy(@RequestParam("galaxyId") final  Long galaxyId,
+                                     @RequestParam("name") final String name,
+                                     @RequestParam("distance") final Long distance,
+                                     @RequestParam("date") final Date date) {
 
         Galaxy galaxy = new Galaxy(galaxyId, name, distance, date);
         ModelAndView modelAndView = null;
@@ -65,13 +68,14 @@ public class GalaxyController {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
             modelAndView = new ModelAndView("galaxyPage", "updatingError", true);
             modelAndView.addObject("galaxies", galaxyService.getAllGalaxies());
+            modelAndView.addObject("wrongParameter", e.getMessage() + e.getObjectOfException());
         }
 
         return modelAndView;
     }
 
     @RequestMapping("/removeGalaxy")
-    public ModelAndView removeGalaxy(@RequestParam("galaxyId") Long galaxyId){
+    public ModelAndView removeGalaxy(@RequestParam("galaxyId") final Long galaxyId){
         ModelAndView modelAndView = null;
 
         try{
@@ -81,6 +85,7 @@ public class GalaxyController {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
             modelAndView = new ModelAndView("galaxyPage", "removingError", true);
             modelAndView.addObject("galaxies", galaxyService.getAllGalaxies());
+            modelAndView.addObject("wrongParameter", e.getMessage() + e.getObjectOfException());
         }
 
         return modelAndView;

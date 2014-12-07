@@ -16,15 +16,18 @@ pageEncoding="UTF-8"%>
     <body>
         <div class="main">
             <c:if test="${creationError}">
-                <script type="text/javascript"> alert("${wrongParameter}")</script>
+                <script type="text/javascript">
+                    alert("${wrongParameter}");
+                    setTimeout('window.location="${pageContext.request.contextPath}/galaxies/"',1);
+                </script>
             </c:if>
             <c:if test="${updatingError}">
-                <script type="text/javascript"> alert("${wrongParameter}")</script>
+                <script type="text/javascript">
+                    alert("${wrongParameter}");
+                    setTimeout('window.location="${pageContext.request.contextPath}/galaxies/"',1);
+                </script>
             </c:if>
-            <c:if test="${removingError}">
-                <script type="text/javascript"> alert("${wrongParameter}")</script>
-            </c:if>
-            
+
             <span class="float_right">
                 <a href="?lang=en">en</a>
                 |
@@ -41,7 +44,7 @@ pageEncoding="UTF-8"%>
                             </tr>
                             <tr>
                                 <td><label for="distance"><spring:message code="galaxy.distance"/></label></td>
-                                <td><input type="number" id="createDistance" name="distance" value="" /></td>
+                                <td><input type="number" id="createDistance" name="distance" value="" min="0"/></td>
                             </tr>
                             <tr>
                                 <td><label for="date"><spring:message code="date"/></label></td>
@@ -58,7 +61,7 @@ pageEncoding="UTF-8"%>
                 </form>
             </div>
             <div class="updateForm">
-                <form id="updateGalaxyForm" action="${pageContext.request.contextPath}/galaxies/updateGalaxy" method="put">
+                <form id="updateGalaxyForm" action="<spring:url value='/galaxies/updateGalaxy'/>" method="put">
                     <table>
                         <tbody>
 
@@ -69,7 +72,7 @@ pageEncoding="UTF-8"%>
                             </tr>
                             <tr>
                                 <td><label for="distance"><spring:message code="galaxy.distance"/></label></td>
-                                <td><input type="number" id="updateDistance" name="distance" value="" /></td>
+                                <td><input type="number" id="updateDistance" name="distance" value="" min="0" /></td>
                             </tr>
                             <tr>
                                 <td><label for="date"><spring:message code="date"/></label></td>
@@ -85,7 +88,6 @@ pageEncoding="UTF-8"%>
                     </table>
                 </form>
             </div>
-
 
         <table>
             <tbody>
@@ -104,7 +106,7 @@ pageEncoding="UTF-8"%>
             </tbody>
         </table>
         <table class="features-table" id="mainTable" summary="list of stars.">
-            <caption><a href="${pageContext.request.contextPath}/galaxies/"><spring:message code="galaxy.get_all"/></a></caption>
+            <caption><a href="<spring:url value='/galaxies/'/>"><spring:message code="galaxy.get_all"/></a></caption>
                 <tr>
                     <td><h2><spring:message code="id"/></h2></td>
                     <td><h2><spring:message code="name"/></h2></td>
@@ -120,7 +122,7 @@ pageEncoding="UTF-8"%>
 	            </tbody>
         </table>
 
-        <a class="float_right" href="${pageContext.request.contextPath}/stars/"><spring:message code="to_stars_page"/></a>
+        <a class="float_right" href="<spring:url value='/stars/'/>"><spring:message code="to_stars_page"/></a>
 
         <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
         <script src="<c:url value="/resources/js/date.js" />"></script>
@@ -212,7 +214,7 @@ pageEncoding="UTF-8"%>
             var strName = "\'" + name + "\'";
             var strDate = "\'" + date + "\'";
 
-             stringHtml += "<tr><td class=\"grey\">" + "<form action=\"${pageContext.request.contextPath}/stars/starsIntoGalaxy\">" +
+             stringHtml += "<tr><td class=\"grey\">" + "<form action=\"<spring:url value='/stars/starsIntoGalaxy/'/>\">" +
                 "<input type=\"text\" id=\"galaxyId\" name=\"galaxyId\" value=" + galaxyId + " hidden=\"true\">" + 
                 "<input type=\"submit\" value=" + galaxyId + " ></form>";
              stringHtml += "<td class=\"green\">"  + name;
@@ -221,7 +223,7 @@ pageEncoding="UTF-8"%>
              stringHtml += "<td class=\"green\">" + averageAge;
              stringHtml += "<td class=\"green\">"  + date;
              stringHtml += "<td class=\"grey\">" + "<input type=\"button\" value=<spring:message code="update"/> onClick=" + "\"fillInUpdateForm(" + galaxyId + "," + strName + "," + distance + ", " + strDate + ")\"" + ">";
-             stringHtml += "<td class=\"grey\">" + "<form action=\"${pageContext.request.contextPath}/galaxies/removeGalaxy\" method=\"delete\">" +
+             stringHtml += "<td class=\"grey\">" + "<form action=\"<spring:url value='/galaxies/removeGalaxy'/>\" method=\"delete\">" +
                                                                  "<input type=\"text\" id=\"galaxyId\" name=\"galaxyId\" value=" + galaxyId + " hidden=\"true\">" +
                                                                  "<input type=\"submit\" value=<spring:message code="remove"/> ></form>";
              return stringHtml;

@@ -31,9 +31,9 @@ public class StarController {
     }
 
     @RequestMapping("/addStar")
-    public ModelAndView addStar(@RequestParam("name") String name,
-                                @RequestParam("age") Long age, @RequestParam("mass") Long mass,
-                                @RequestParam("date") Date date, @RequestParam("galaxyId") Long galaxyId) {
+    public ModelAndView addStar(@RequestParam("name") final String name,
+                                @RequestParam("age") final Long age, @RequestParam("mass") final Long mass,
+                                @RequestParam("date") final Date date, @RequestParam("galaxyId") final Long galaxyId) {
 
         Star star = new Star(null, name, age, mass, date, galaxyId);
         ModelAndView modelAndView = null;
@@ -43,7 +43,7 @@ public class StarController {
             modelAndView = new ModelAndView("redirect:/stars/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getMessage() + e.getObjectOfException());
             modelAndView.addObject("creationError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }
@@ -52,7 +52,7 @@ public class StarController {
     }
 
     @RequestMapping("/starsIntoGalaxy")
-    public ModelAndView getStarsInGalaxy(@RequestParam("galaxyId") Long galaxyId){
+    public ModelAndView getStarsInGalaxy(@RequestParam("galaxyId") final Long galaxyId){
         Set<Star> stars = null;
         ModelAndView modelAndView = null;
 
@@ -61,7 +61,7 @@ public class StarController {
             modelAndView = new ModelAndView("starPage", "stars", stars);
         } catch(BadParameterException e){
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getMessage() + e.getObjectOfException());
             modelAndView.addObject("gettingError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }
@@ -71,9 +71,9 @@ public class StarController {
     }
 
     @RequestMapping("/updateStar")
-    public ModelAndView updateStar(@RequestParam("starId") Long starId, @RequestParam("name") String name,
-                                   @RequestParam("age") Long age, @RequestParam("mass") Long mass,
-                                   @RequestParam("date") Date date, @RequestParam("galaxyId") Long galaxyId) {
+    public ModelAndView updateStar(@RequestParam("starId") final Long starId, @RequestParam("name") final String name,
+                                   @RequestParam("age") final Long age, @RequestParam("mass") final Long mass,
+                                   @RequestParam("date") final Date date, @RequestParam("galaxyId") final Long galaxyId) {
 
         Star star = new Star(starId, name, age, mass, date, galaxyId);
         ModelAndView modelAndView = null;
@@ -83,7 +83,7 @@ public class StarController {
             modelAndView = new ModelAndView("redirect:/stars/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getMessage() + e.getObjectOfException());
             modelAndView.addObject("updatingError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }
@@ -92,7 +92,7 @@ public class StarController {
     }
 
     @RequestMapping("/removeStar")
-    public ModelAndView removeStar(@RequestParam("starId") Long starId) {
+    public ModelAndView removeStar(@RequestParam("starId") final Long starId) {
 
         ModelAndView modelAndView = null;
 
@@ -101,7 +101,7 @@ public class StarController {
             modelAndView = new ModelAndView("redirect:/stars/");
         } catch (BadParameterException e) {
             LOGGER.error(e.getMessage() + e.getObjectOfException());
-            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getObjectOfException());
+            modelAndView = new ModelAndView("starPage", "wrongParameter", e.getMessage() + e.getObjectOfException());
             modelAndView.addObject("removingError", true);
             modelAndView.addObject("stars", starService.getAllStars());
         }
