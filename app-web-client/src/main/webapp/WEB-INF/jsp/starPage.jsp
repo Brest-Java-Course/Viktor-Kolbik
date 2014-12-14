@@ -38,23 +38,23 @@
                         <tbody>
                             <tr>
                                 <td><label for="name"><spring:message code="name"/></label></td>
-                                <td><input type="text" id="createName" name="name" value="" /></td>
+                                <td><input type="text" id="createName" name="name" value="" required="true" /></td>
                             </tr>
                             <tr>
                                 <td><label for="age"><spring:message code="star.age"/></label></td>
-                                <td><input type="number" id="createAge" name="age" value="" min="100" max="15000000000"/></td>
+                                <td><input type="number" id="createAge" name="age" value="" min="100" max="15000000000" required="true"/></td>
                             </tr>
                             <tr>
                                 <td><label for="mass"><spring:message code="star.mass"/></label>
-                                </td><td><input type="number" id="createMass" name="mass" value="" min="1" /></td>
+                                </td><td><input type="number" id="createMass" name="mass" value="" min="1" required="true"/></td>
                             </tr>
                             <tr>
                                 <td><label for="date"><spring:message code="date"/></label></td>
-                                <td><input type="date" id="createDate"  class="dateInput" name="date" value="" /></td>
+                                <td><input type="date" id="createDate"  class="dateInput" name="date" value="" required="true"/></td>
                             </tr>
                             <tr>
                                 <td><label for="galaxyId"><spring:message code="star.galaxyId"/></label></td>
-                                <td><input type="number" id="createGalaxyId" name="galaxyId" value="" min="0" /></td>
+                                <td><input type="number" id="createGalaxyId" name="galaxyId" value="" min="0" required="true"/></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -70,26 +70,26 @@
             <form id="updateStarForm" action="<spring:url value='/stars/updateStar'/>" method="put">
                 <table>
                     <tbody>
-                    <input type="text" id="updateStarId" name="starId" value="" hidden="true"/>
+                    <input type="text" id="updateStarId" name="starId" value="" hidden="true" required="true"/>
                     <tr>
                         <td><label for="name"><spring:message code="name"/></label></td>
-                        <td><input type="text" id="updateName" name="name" value="" /></td>
+                        <td><input type="text" id="updateName" name="name" value="" required="true"/></td>
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="star.age"/></label></td>
-                        <td><input type="number" id="updateAge" name="age" min="100" max="15000000000" /></td>
+                        <td><input type="number" id="updateAge" name="age" min="100" max="15000000000" required="true"/></td>
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="star.mass"/></label></td>
-                        <td><input type="number" id="updateMass" name="mass" value="" min="1" /></td>
+                        <td><input type="number" id="updateMass" name="mass" value="" min="1" required="true"/></td>
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="date"/></label></td>
-                        <td><input type="date" id="updateDate" class="dateInput" name="date" value="" /></td>
+                        <td><input type="date" id="updateDate" class="dateInput" name="date" value="" required="true" pattern="{4}-{2}-{2} "/></td>
                     </tr>
                     <tr>
                         <td><label for="name"><spring:message code="star.galaxyId"/></label></td>
-                        <td><input type="number" id="updateGalaxyId" name="galaxyId" value="" min="0" /></td>
+                        <td><input type="number" id="updateGalaxyId" name="galaxyId" value="" min="0" required="true"/></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -107,11 +107,11 @@
                 <tbody>
                     <tr>
                         <td><label for="lowBorder"><spring:message code="lowBorder"/></label></td>
-                        <td><input type="date" id="lowBorder" class="dateInput" name="lowBorder"/></td>
+                        <td><input type="date" id="lowBorder" class="dateInput" name="lowBorder" required="true"/></td>
                     </tr>
                     <tr>
                         <td><label for="topBorder"><spring:message code="topBorder"/></label></td>
-                        <td><input type="date" id="topBorder" class="dateInput" name="topBorder"/></td>
+                        <td><input type="date" id="topBorder" class="dateInput" name="topBorder" required="true"/></td>
                      </tr>
                      <tr>
                         <td></td>
@@ -120,7 +120,11 @@
                      
                 </tbody>
             </table>
-        </div>    
+        </div> 
+        
+                <div class="place" id="place">
+
+        </div>   
         <div>
 	        <table class="features-table" id="mainTable" summary="list stars.">
 	                        <caption><a href="<spring:url value='/stars/'/>"><spring:message code="star.get_all"/></a></caption>
@@ -143,9 +147,28 @@
 
          <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
          <script src="<c:url value="/resources/js/date.js" />"></script>
+         <script src="<c:url value="/resources/js/detect.js" />"></script>
          <script type="text/javascript">
+            $(changeInput);
             $(fillInFullTable);
             $(setCurrentDate);
+            
+            function changeInput(){
+                        var user = detect.parse(navigator.userAgent);
+                        
+                        var regExp = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
+                        
+                        if(user.browser.family === "Firefox"){
+                                                    $(document.getElementById("place")).append("<br><br><br><br><br><br>");
+                        
+                            $("#createDate").replaceWith("<input type='text' id='createDate'  class='dateInput' name='date' value='' required='true' pattern='" + regExp + "'/>");
+                            $("#updateDate").replaceWith("<input type='text' id='updateDate'  class='dateInput' name='date' value='' required='true' pattern='" + regExp + "'/>");
+                            $("#topBorder").replaceWith("<input type='text' id='topBorder'  class='dateInput' name='date' value='' required='true' pattern='" + regExp + "'/>");
+                            $("#lowBorder").replaceWith("<input type='text' id='lowBorder'  class='dateInput' name='date' value='' pattern='" + regExp + "'/>");
+                            
+                        }
+            }
+                  
                              
             function setCurrentDate(){
             
@@ -245,7 +268,8 @@
              
              return stringHtml;
         }
-       
+
+
         </script>
     </body>
 </html>

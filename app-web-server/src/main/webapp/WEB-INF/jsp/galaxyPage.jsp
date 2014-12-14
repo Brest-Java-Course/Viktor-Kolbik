@@ -35,20 +35,20 @@ pageEncoding="UTF-8"%>
             </span>
            
             <div class="createForm">
-                <form action="${pageContext.request.contextPath}/galaxies/addGalaxy" method="post">
+                <form action="<spring:url value='/galaxies/addGalaxy'/>" method="post">
                     <table>
                         <tbody>
                             <tr>
                                 <td><label for="name"><spring:message code="name"/></label></td>
-                                <td><input type="text" id="createName" name="name" value="" /></td>
+                                <td><input type="text" id="createName" name="name" value="" required="true" /></td>
                             </tr>
                             <tr>
                                 <td><label for="distance"><spring:message code="galaxy.distance"/></label></td>
-                                <td><input type="number" id="createDistance" name="distance" value="" min="0"/></td>
+                                <td><input type="number" id="createDistance" name="distance" value="" min="0" required="true" /></td>
                             </tr>
                             <tr>
                                 <td><label for="date"><spring:message code="date"/></label></td>
-                                <td><input type="date" class="dateInput" id="createDate" name="date" value="" /></td>
+                                <td><input type="date" class="dateInput" id="createDate" name="date" value="" required="true" /></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -68,15 +68,15 @@ pageEncoding="UTF-8"%>
                             <input type="text" id="updateGalaxyId" name="galaxyId" value="" hidden="true"/>
                             <tr>
                                 <td><label for="name"><spring:message code="name"/></label></td>
-                                <td><input type="text" id="updateName" name="name" value="" /></td>
+                                <td><input type="text" id="updateName" name="name" value="" required="true" /></td>
                             </tr>
                             <tr>
                                 <td><label for="distance"><spring:message code="galaxy.distance"/></label></td>
-                                <td><input type="number" id="updateDistance" name="distance" value="" min="0" /></td>
+                                <td><input type="number" id="updateDistance" name="distance" value="" min="0" required="true" /></td>
                             </tr>
                             <tr>
                                 <td><label for="date"><spring:message code="date"/></label></td>
-                                <td><input type="date" id="updateDate" class="dateInput" name="date" value="" /></td>
+                                <td><input type="date" id="updateDate" class="dateInput" name="date" value="" required="true" /></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -88,48 +88,71 @@ pageEncoding="UTF-8"%>
                     </table>
                 </form>
             </div>
-
-        <table>
-            <tbody>
-                    <tr>
-                        <td><label for="lowBorder"><spring:message code="lowBorder"/></label></td>
-                        <td><input type="date" id="lowBorder" class="dateInput" name="lowBorder"/></td>
-                    </tr>
-                    <tr>
-                        <td><label for="topBorder"><spring:message code="topBorder"/></label></td>
-                        <td><input type="date" id="topBorder" class="dateInput" name="topBorder"/></td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td><input type="button" id="findBtn" name="findBtn" value=<spring:message code="find"/> onclick="filterByDate()"/></td>
-                     </tr>
-            </tbody>
-        </table>
-        <table class="features-table" id="mainTable" summary="list of stars.">
-            <caption><a href="<spring:url value='/galaxies/'/>"><spring:message code="galaxy.get_all"/></a></caption>
-                <tr>
-                    <td><h2><spring:message code="id"/></h2></td>
-                    <td><h2><spring:message code="name"/></h2></td>
-                    <td><h2><spring:message code="galaxy.distance"/></h2></td>
-                    <td><h2><spring:message code="galaxy.average_mass"/></h2></td>
-                    <td><h2><spring:message code="galaxy.average_age"/></h2></td>
-                    <td><h2><spring:message code="date"/></h2></td>
-                    <td><h2><spring:message code="update"/></h2></td>
-                    <td><h2><spring:message code="remove"/></h2></td>
-                </tr>
+        <div>
+            <table>
                 <tbody>
+                        <tr>
+                            <td><label for="lowBorder"><spring:message code="lowBorder"/></label></td>
+                            <td><input type="date" id="lowBorder" class="dateInput" name="lowBorder" required="true" /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="topBorder"><spring:message code="topBorder"/></label></td>
+                            <td><input type="date" id="topBorder" class="dateInput" name="topBorder" required="true" /></td>
+                         </tr>
+                         <tr>
+                            <td></td>
+                            <td><input type="button" id="findBtn" name="findBtn" value=<spring:message code="find"/> onclick="filterByDate()"/></td>
+                         </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="place" id="place">
 
-	            </tbody>
-        </table>
+        </div>
+        <div>
+            <table class="features-table" id="mainTable" summary="list of stars.">
+                <caption><a href="<spring:url value='/galaxies/'/>"><spring:message code="galaxy.get_all"/></a></caption>
+                    <tr>
+                        <td><h2><spring:message code="id"/></h2></td>
+                        <td><h2><spring:message code="name"/></h2></td>
+                        <td><h2><spring:message code="galaxy.distance"/></h2></td>
+                        <td><h2><spring:message code="galaxy.average_mass"/></h2></td>
+                        <td><h2><spring:message code="galaxy.average_age"/></h2></td>
+                        <td><h2><spring:message code="date"/></h2></td>
+                        <td><h2><spring:message code="update"/></h2></td>
+                        <td><h2><spring:message code="remove"/></h2></td>
+                    </tr>
+                    <tbody>
 
+	                </tbody>
+            </table>
+        </div>
         <a class="float_right" href="<spring:url value='/stars/'/>"><spring:message code="to_stars_page"/></a>
 
         <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
         <script src="<c:url value="/resources/js/date.js" />"></script>
+        <script src="<c:url value="/resources/js/detect.js" />"></script>
         <script type="text/javascript">
-
+            $(changeInput);
             $(fillInFullTable);
             $(setCurrentDate);
+            
+                        function changeInput(){
+                                                                        
+                        var user = detect.parse(navigator.userAgent);
+                        var regExp = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
+                        
+                        if(user.browser.family === "Firefox"){
+                            $(document.getElementById("place")).append("<br><br><br><br><br><br>");
+                            
+                            $("#createDate").replaceWith("<input type='text' id='createDate'  class='dateInput' name='date' value='' required='true' pattern='" + regExp + "'/>");
+                            $("#updateDate").replaceWith("<input type='text' id='updateDate'  class='dateInput' name='date' value='' required='true' pattern='" + regExp + "'/>");
+                            $("#topBorder").replaceWith("<input type='text' id='topBorder'  class='dateInput' name='date' value='' required='true' pattern='" + regExp + "'/>");
+                            $("#lowBorder").replaceWith("<input type='text' id='lowBorder'  class='dateInput' name='date' value='' pattern='" + regExp + "'/>");
+                            
+                        }
+            }
                              
             function setCurrentDate(){
             

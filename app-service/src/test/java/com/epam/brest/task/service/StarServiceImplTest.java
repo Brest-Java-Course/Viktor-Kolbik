@@ -68,6 +68,14 @@ public class StarServiceImplTest {
     }
 
     @Test
+    public void testUpdateEqualsStar() throws Exception {
+        Star star = new Star(ID_TO_UPDATE, NAME_TO_UPDATE, AGE_TO_UPDATE, MASS_TO_UPDATE, DATE_TO_UPDATE, GALAXY_ID);
+
+        Star updatedStar = starService.getStarById(ID_TO_UPDATE);
+        starService.updateStar(updatedStar);
+    }
+
+    @Test
     public void testRemoveStar() throws Exception {
         int sizeBefore = starService.getAllStars().size();
         starService.removeStar(ID_TO_REMOVE);

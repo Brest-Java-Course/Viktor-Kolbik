@@ -44,6 +44,7 @@ public class GalaxyController {
             LOGGER.error(e.getMessage());
             modelAndView = new ModelAndView("galaxyPage", "galaxies", galaxyRestClient.getAllGalaxies());
             modelAndView.addObject("creationError", true);
+            modelAndView.addObject("wrongParameter", e.getMessage());
         }
 
         return modelAndView;
@@ -65,6 +66,7 @@ public class GalaxyController {
             LOGGER.error(e.getMessage());
             modelAndView = new ModelAndView("galaxyPage", "updatingError", true);
             modelAndView.addObject("galaxies", galaxyRestClient.getAllGalaxies());
+            modelAndView.addObject("wrongParameter", e.getMessage());
         }
 
         return modelAndView;

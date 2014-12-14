@@ -46,6 +46,7 @@ public class StarServiceImpl implements StarService {
 
         try{
             starDao.getStarByName(star.getName());
+
             LOGGER.debug(OCCUPIED_LOGIN_MSG + "\n -> " + star);
             throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
         } catch(EmptyResultDataAccessException e) {
@@ -75,7 +76,13 @@ public class StarServiceImpl implements StarService {
         }
 
         try{
-            starDao.getStarByName(star.getName());
+            Star tempStar = starDao.getStarByName(star.getName());
+            if(tempStar.getStarId() == star.getStarId()){
+                galaxyDao.getGalaxyById(star.getGalaxyId());
+                starDao.updateStar(star);
+                return;
+            }
+
             LOGGER.debug(OCCUPIED_LOGIN_MSG + "\n -> " + star);
             throw new BadParameterException(OCCUPIED_LOGIN_MSG, star);
         } catch(EmptyResultDataAccessException e) {
